@@ -66,6 +66,8 @@ Never place a mechanism inferred only from the Storyboard into `teaching_points`
 
 Record cross-node logic as explicit reference-graph relationships, including preview-to-payoff, problem-to-solution, claim-to-proof, and reason-to-buy-to-CTA links.
 
+When one breakdown contains multiple complete benchmark replays, lock one lane per benchmark and score the shared creator observations against every lane. Select the primary lane by `effective_coverage_rate`, then `T`; if both are exactly tied, use the declared lane order as a deterministic tie-breaker and record that tie. Keep the alternate lane summaries and their scores in the report. Do not treat mechanisms unique to the unselected lane as primary-lane omissions.
+
 Version the graph as a `reference_bundle`. Lock it before scoring a batch. Bind its `content_hash` to the path-free content identities of the breakdown video and Storyboard. A changed source creates a new bundle identity and requires anchor revalidation. Read [scoring-model.md](references/scoring-model.md) for point and node rubrics.
 
 ### 3. Blindly observe the creator video
@@ -121,6 +123,8 @@ python3 scripts/validate_report.py /absolute/path/to/report.json
 ```
 
 Fix every validation error. Disclose warnings, missing media channels, provisional weights, absent anchors, and unresolved manual candidates.
+
+Evidence records must declare whether they are a functional `segment` or a complete `full_video` absence scope, and must link the Storyboard nodes they actually observe. A `full_video` record must span the declared creator-video duration, can verify a clear absence only, and cannot support a positive L, S, or relationship score. Positive overall logic assessments need segment evidence; positive relationship assessments must contain eligible segment evidence for both endpoint nodes. This prevents a generic whole-video note from inflating Storyboard or logic scores.
 
 For a batch, bind drafts to the actual source files and produce reports plus group adoption statistics with:
 

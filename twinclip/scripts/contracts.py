@@ -11,11 +11,11 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "1.2"
+SCHEMA_VERSION = "1.3"
 CALIBRATION_REGISTRY_SCHEMA_VERSION = "1.1"
 PREPARE_MANIFEST_SCHEMA_VERSION = "1.2"
 QA_HISTORY_SCHEMA_VERSION = "1.2"
-ANALYSIS_VERSION = "1.1"
+ANALYSIS_VERSION = "1.2"
 TOLERANCE = 0.02
 MIN_L_WEIGHT = 0.50
 DEFAULT_L_WEIGHT = 0.70
@@ -35,6 +35,7 @@ BANDS = [
 ]
 BAND_LABELS = tuple(label for _, _, label in BANDS)
 VALID_CLARITY = {"clear", "ambiguous", "unavailable"}
+VALID_EVIDENCE_SCOPES = {"segment", "full_video"}
 VALID_FAILURES = {None, "L", "S", "A"}
 VALID_ADAPTATION_REQUIRED = {"yes", "no", "unclear"}
 VALID_ADAPTATION_RESULTS = {"not_needed", "successful", "partial", "failed", "pending"}

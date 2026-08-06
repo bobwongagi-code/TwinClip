@@ -21,9 +21,9 @@ A Storyboard node may be covered while its attached teaching point receives only
 
 Use a guided candidate only after blind extraction. Require human confirmation before it becomes scoring-eligible.
 
-The report validator is the enforcement boundary. Every scoring-eligible evidence record must have a real creator-video path, a finite timestamp range, an independently recognizable observed function, and a non-empty inspection scope. Blind records marked rejected or pending are ineligible. A zero score with `evidence_clarity=clear` still needs an eligible, complete-scope observation before it can count as a verified absence.
+The report validator is the enforcement boundary. Every scoring-eligible evidence record must have a real creator-video path, a finite timestamp range, an independently recognizable observed function, a non-empty inspection scope, and explicit Storyboard-node links. Use a `segment` record for a functional observation and a `full_video` record only for complete-scope absence checking; `full_video` must span the declared creator-video duration. Blind records marked rejected or pending are ineligible. A zero score with `evidence_clarity=clear` still needs an eligible, complete-scope `full_video` observation before it can count as a verified absence.
 
-L and S must consume the same evidence records and the same functional observations. If a teaching point claims depth 2 or 3 while every linked Storyboard node is scored absent, the report is invalid. A primary failure also gets one unique failure ID; the same evidence cannot carry different failure dimensions.
+L and S must consume the same evidence records and the same functional observations. Positive node scores must use evidence linked to that node, positive relationship scores must use evidence for both endpoints, and a positive overall logic assessment must use segment evidence. If a teaching point claims depth 2 or 3 while every linked Storyboard node is scored absent, the report is invalid. A primary failure also gets one unique failure ID; the same evidence cannot carry different failure dimensions.
 
 ### Third-party recognizability rule
 

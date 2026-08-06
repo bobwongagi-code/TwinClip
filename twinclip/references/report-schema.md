@@ -1,17 +1,20 @@
 # TwinClip Report Schema
 
-Emit UTF-8 JSON with `schema_version: "1.2"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
+Emit UTF-8 JSON with `schema_version: "1.3"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
 
 ## Top-level structure
 
 ```json
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "reference_bundle": {},
   "scoring_config": {},
-  "analysis": {}
+  "analysis": {},
+  "multi_reference": {}
 }
 ```
+
+`multi_reference` is optional. When one breakdown contains multiple complete benchmark replays, include one lane summary per benchmark. The selected lane must maximize `effective_coverage_rate`, then `T_center`; an exact tie uses the declared lane order and must set `selection_tie=true` with `tie_breaker=declared_lane_order`. The selected lane's `L`, `S`, and `T_center` must equal the report's primary scores. Keep alternate lanes separate and do not treat their unique teaching points as omissions from the selected lane.
 
 ## Reference bundle
 
@@ -105,7 +108,7 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 {
   "analysis_id": "deterministic-id-from-reference-creator-and-method",
   "provenance": {
-    "analysis_version": "1.1",
+    "analysis_version": "1.2",
     "observation_method": "agent_multimodal_review",
     "model_id": "model-name-or-human-review",
     "prompt_version": "twinclip-prompt-1",
@@ -142,15 +145,19 @@ Every report must include an `analysis.provenance` object. It identifies the sem
   "observed_function": "Result proof",
   "coverage_scope": "The complete 32-50 second proof segment",
   "scope_complete": true,
+  "evidence_scope": "segment",
+  "storyboard_node_ids": ["SB04"],
   "observation_mode": "blind",
   "human_confirmation": "not_required",
   "candidate_id": null
 }
 ```
 
-Every evidence record requires a real creator-video file, a finite non-empty time range inside that video's declared duration, all four observation strings, an independently recognizable `observed_function`, and a scope description. At least one observation channel must contain something other than `unknown`. Empty evidence cannot support a score or E.
+Every evidence record requires a real creator-video file, a finite non-empty time range inside that video's declared duration, all four observation strings, an independently recognizable `observed_function`, a scope description, an `evidence_scope`, and a list of linked Storyboard node IDs. Use `evidence_scope=segment` for a functional clip. Use `evidence_scope=full_video` only for a complete inspected video-wide absence record; it must cover every Storyboard node, span the declared creator-video duration, and cannot support a positive L, S, or relationship score. At least one observation channel must contain something other than `unknown`. Empty evidence cannot support a score or E.
 
 Blind evidence is eligible only with `human_confirmation=not_required` or `confirmed`. Guided evidence is eligible only with `human_confirmation=confirmed` and must be bound to a confirmed candidate with the same teaching point. Rejected or pending evidence never scores.
+
+Positive Storyboard-node evidence must link that node. A positive sales-logic relationship must have eligible segment evidence for both its source and target nodes. A positive overall logic assessment must use eligible segment evidence; a clear zero decision marked `absence_verified=true` must use a `full_video` record.
 
 ## Assessments
 

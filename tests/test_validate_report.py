@@ -135,6 +135,8 @@ class ReportFixture(unittest.TestCase):
                         "observed_function": "Problem demonstration",
                         "coverage_scope": "Hook segment",
                         "scope_complete": True,
+                        "evidence_scope": "segment",
+                        "storyboard_node_ids": ["SB01"],
                         "observation_mode": "blind",
                         "human_confirmation": "not_required",
                     },
@@ -149,6 +151,24 @@ class ReportFixture(unittest.TestCase):
                         "observed_function": "Transition to proof",
                         "coverage_scope": "Transition through end of video",
                         "scope_complete": True,
+                        "evidence_scope": "segment",
+                        "storyboard_node_ids": ["SB02"],
+                        "observation_mode": "blind",
+                        "human_confirmation": "not_required",
+                    },
+                    {
+                        "id": "EV-FULL",
+                        "creator_video": creator,
+                        "start_seconds": 0.0,
+                        "end_seconds": 2.0,
+                        "visual": "The complete creator video was inspected",
+                        "onscreen_text": "unknown",
+                        "transcript": "unknown",
+                        "observed_function": "Complete video scope inspection",
+                        "coverage_scope": "Entire creator video",
+                        "scope_complete": True,
+                        "evidence_scope": "full_video",
+                        "storyboard_node_ids": ["SB01", "SB02"],
                         "observation_mode": "blind",
                         "human_confirmation": "not_required",
                     },
@@ -189,7 +209,7 @@ class ReportFixture(unittest.TestCase):
                         "function_score": 0,
                         "element_score": None,
                         "support_score": 0,
-                        "evidence_ids": ["EV02"],
+                        "evidence_ids": ["EV-FULL"],
                         "reason": "The transition is not a scored persuasion element",
                         "manual_review": False,
                         "evidence_clarity": "clear",
@@ -456,6 +476,145 @@ class ReportFixture(unittest.TestCase):
         )
         self.assertTrue(any("hide required elements" in error for error in errors))
 
+    def test_full_video_scope_cannot_support_positive_node(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["evidence_records"][0].update(
+                {
+                    "evidence_scope": "full_video",
+                    "storyboard_node_ids": ["SB01", "SB02"],
+                }
+            )
+        )
+        self.assertTrue(any("cannot use full_video evidence for a positive" in error for error in errors))
+
+    def test_full_video_scope_must_span_creator_duration(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["evidence_records"][2].update(
+                {"end_seconds": 1.5}
+            )
+        )
+        self.assertTrue(any("must span the declared creator-video duration" in error for error in errors))
+
+    def test_positive_logic_requires_segment_evidence(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["logic_assessment"].update(
+                {"evidence_ids": ["EV-FULL"]}
+            )
+        )
+        self.assertTrue(any("logic assessment cannot use full_video evidence" in error for error in errors))
+
+    def test_multi_reference_primary_lane_is_validated(self) -> None:
+        def mutate(report: dict) -> None:
+            report["multi_reference"] = {
+                "run_mode": "provisional_multi_reference",
+                "primary_reference_lane": "REF-A",
+                "selection_rule": "effective coverage, then T, then lane order",
+                "storyboard_scope": "shared Storyboard",
+                "lane_comparison": {
+                    "REF-A": {
+                        "label": "Reference A",
+                        "L": 66.6666667,
+                        "effective_coverage_rate": 1.0,
+                        "coverage_rate": 1.0,
+                        "S_storyboard": 53.3333333,
+                        "T_center": 62.6666667,
+                        "depths": [2],
+                    },
+                    "REF-B": {
+                        "label": "Reference B",
+                        "L": 0.0,
+                        "effective_coverage_rate": 0.0,
+                        "coverage_rate": 0.0,
+                        "S_storyboard": 0.0,
+                        "T_center": 0.0,
+                        "depths": [0],
+                    },
+                },
+            }
+
+        errors = self.errors_for(mutate)
+        self.assertEqual(errors, [])
+
+    def test_multi_reference_cannot_select_weaker_lane(self) -> None:
+        def mutate(report: dict) -> None:
+            report["multi_reference"] = {
+                "run_mode": "provisional_multi_reference",
+                "primary_reference_lane": "REF-B",
+                "selection_rule": "effective coverage, then T, then lane order",
+                "storyboard_scope": "shared Storyboard",
+                "lane_comparison": {
+                    "REF-A": {
+                        "label": "Reference A",
+                        "L": 66.6666667,
+                        "effective_coverage_rate": 1.0,
+                        "coverage_rate": 1.0,
+                        "S_storyboard": 53.3333333,
+                        "T_center": 62.6666667,
+                        "depths": [2],
+                    },
+                    "REF-B": {
+                        "label": "Reference B",
+                        "L": 0.0,
+                        "effective_coverage_rate": 0.0,
+                        "coverage_rate": 0.0,
+                        "S_storyboard": 0.0,
+                        "T_center": 0.0,
+                        "depths": [0],
+                    },
+                },
+            }
+
+        errors = self.errors_for(mutate)
+        self.assertTrue(any("must follow effective coverage" in error for error in errors))
+
+    def test_multi_reference_exact_tie_requires_explicit_tie_breaker(self) -> None:
+        def mutate(report: dict) -> None:
+            report["multi_reference"] = {
+                "run_mode": "provisional_multi_reference",
+                "primary_reference_lane": "REF-A",
+                "selection_rule": "effective coverage, then T, then lane order",
+                "storyboard_scope": "shared Storyboard",
+                "lane_comparison": {
+                    "REF-A": {
+                        "label": "Reference A",
+                        "L": 66.6666667,
+                        "effective_coverage_rate": 1.0,
+                        "coverage_rate": 1.0,
+                        "S_storyboard": 53.3333333,
+                        "T_center": 62.6666667,
+                        "depths": [2],
+                    },
+                    "REF-B": {
+                        "label": "Reference B",
+                        "L": 66.6666667,
+                        "effective_coverage_rate": 1.0,
+                        "coverage_rate": 1.0,
+                        "S_storyboard": 53.3333333,
+                        "T_center": 62.6666667,
+                        "depths": [2],
+                    },
+                },
+            }
+
+        errors = self.errors_for(mutate)
+        self.assertTrue(any("selection_tie=true" in error for error in errors))
+
+    def test_positive_node_requires_linked_segment_evidence(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["storyboard_node_assessments"][0].update(
+                {"evidence_ids": ["EV02"]}
+            )
+        )
+        self.assertTrue(any("segment evidence unrelated" in error for error in errors))
+
+    def test_positive_relationship_requires_both_endpoint_segments(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["relationship_assessments"][0].update(
+                {"evidence_ids": ["EV01"]}
+            )
+        )
+        self.assertTrue(any("both endpoints" in error for error in errors))
+
     def test_shared_evidence_rejects_l_s_contradiction(self) -> None:
         errors = self.errors_for(
             lambda report: report["analysis"]["storyboard_node_assessments"][0].update(
@@ -515,6 +674,8 @@ class ReportFixture(unittest.TestCase):
                 "observed_function": "Possible proof cue",
                 "coverage_scope": "Candidate segment",
                 "scope_complete": False,
+                "evidence_scope": "segment",
+                "storyboard_node_ids": ["SB02"],
                 "observation_mode": "guided",
                 "human_confirmation": "pending",
                 "candidate_id": "C-PENDING",
@@ -685,6 +846,8 @@ class ReportFixture(unittest.TestCase):
                     "observed_function": "Candidate transition",
                     "coverage_scope": "Transition",
                     "scope_complete": False,
+                    "evidence_scope": "segment",
+                    "storyboard_node_ids": ["SB02"],
                     "observation_mode": "guided",
                     "human_confirmation": "confirmed",
                     "candidate_id": "C01",

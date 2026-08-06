@@ -27,6 +27,7 @@ from contracts import (  # noqa: E402
     VALID_ADAPTATION_REQUIRED,
     VALID_ADAPTATION_RESULTS,
     VALID_CLARITY,
+    VALID_EVIDENCE_SCOPES,
     VALID_FAILURES,
     analysis_id,
     provenance_fingerprint,
@@ -54,6 +55,111 @@ from validation_scoring import (  # noqa: E402
     validate_anchor_placement,
     validate_confidence_and_adaptation,
 )
+
+
+def validate_multi_reference(
+    value: Any,
+    *,
+    scores: dict[str, Any],
+    l_weight: Any,
+    s_weight: Any,
+    errors: list[str],
+) -> None:
+    """Validate optional per-lane summaries without mixing them into primary scores."""
+    if value is None:
+        return
+    if not isinstance(value, dict):
+        errors.append("multi_reference must be an object when provided")
+        return
+    for key in ("run_mode", "primary_reference_lane", "selection_rule", "storyboard_scope"):
+        if not non_empty_string(value.get(key)):
+            errors.append(f"multi_reference.{key} must be a non-empty string")
+    lanes = value.get("lane_comparison")
+    if not isinstance(lanes, dict) or len(lanes) < 2:
+        errors.append("multi_reference.lane_comparison must contain at least two lanes")
+        return
+
+    lane_ids = list(lanes)
+    lane_values: dict[str, dict[str, float]] = {}
+    for lane_id, lane in lanes.items():
+        if not non_empty_string(lane_id) or not isinstance(lane, dict):
+            errors.append(f"multi_reference lane {lane_id} must be a non-empty lane object")
+            continue
+        if not non_empty_string(lane.get("label")):
+            errors.append(f"multi_reference lane {lane_id}.label must be a non-empty string")
+        for key in ("L", "S_storyboard", "T_center"):
+            if not is_number(lane.get(key)) or not 0 <= float(lane.get(key)) <= 100:
+                errors.append(f"multi_reference lane {lane_id}.{key} must be a number from 0 to 100")
+        for key in ("coverage_rate", "effective_coverage_rate"):
+            if not is_number(lane.get(key)) or not 0 <= float(lane.get(key)) <= 1:
+                errors.append(f"multi_reference lane {lane_id}.{key} must be a ratio from 0 to 1")
+        depths = lane.get("depths")
+        if not isinstance(depths, list) or not depths:
+            errors.append(f"multi_reference lane {lane_id}.depths must be a non-empty array")
+            continue
+        if any(not isinstance(depth, int) or isinstance(depth, bool) or depth not in range(4) for depth in depths):
+            errors.append(f"multi_reference lane {lane_id}.depths must contain only integers 0-3")
+            continue
+        count = len(depths)
+        expected_l = 100 * sum(depths) / (3 * count)
+        expected_coverage = sum(depth >= 1 for depth in depths) / count
+        expected_effective = sum(depth >= 2 for depth in depths) / count
+        if not close(lane.get("L"), expected_l):
+            errors.append(f"multi_reference lane {lane_id}.L must equal {expected_l:.2f}")
+        if not close(lane.get("coverage_rate"), expected_coverage):
+            errors.append(f"multi_reference lane {lane_id}.coverage_rate must equal {expected_coverage:.4f}")
+        if not close(lane.get("effective_coverage_rate"), expected_effective):
+            errors.append(
+                f"multi_reference lane {lane_id}.effective_coverage_rate must equal {expected_effective:.4f}"
+            )
+        if is_number(lane.get("L")) and is_number(lane.get("S_storyboard")) and is_number(l_weight) and is_number(s_weight):
+            expected_t = float(lane["L"]) * float(l_weight) + float(lane["S_storyboard"]) * float(s_weight)
+            if not close(lane.get("T_center"), expected_t):
+                errors.append(f"multi_reference lane {lane_id}.T_center must equal {expected_t:.2f}")
+        if all(is_number(lane.get(key)) for key in ("L", "S_storyboard", "T_center", "effective_coverage_rate")):
+            lane_values[lane_id] = {
+                "effective_coverage_rate": float(lane["effective_coverage_rate"]),
+                "T_center": float(lane["T_center"]),
+            }
+
+    primary = value.get("primary_reference_lane")
+    if primary not in lane_values:
+        errors.append("multi_reference.primary_reference_lane must name a valid lane")
+        return
+    if not lane_values:
+        return
+    best_effective = max(item["effective_coverage_rate"] for item in lane_values.values())
+    effective_candidates = [
+        lane_id for lane_id in lane_ids
+        if lane_id in lane_values and math.isclose(
+            lane_values[lane_id]["effective_coverage_rate"], best_effective, abs_tol=1e-9
+        )
+    ]
+    best_t = max(lane_values[lane_id]["T_center"] for lane_id in effective_candidates)
+    t_candidates = [
+        lane_id for lane_id in effective_candidates
+        if math.isclose(lane_values[lane_id]["T_center"], best_t, abs_tol=1e-9)
+    ]
+    expected_primary = t_candidates[0]
+    if len(t_candidates) > 1:
+        if value.get("selection_tie") is not True:
+            errors.append("multi_reference exact ties must set selection_tie=true")
+        if value.get("tie_breaker") != "declared_lane_order":
+            errors.append("multi_reference exact ties must use tie_breaker=declared_lane_order")
+    elif "selection_tie" in value and not isinstance(value.get("selection_tie"), bool):
+        errors.append("multi_reference.selection_tie must be boolean when provided")
+    if primary != expected_primary:
+        errors.append(
+            "multi_reference.primary_reference_lane must follow effective coverage, then T, then declared lane order"
+        )
+    primary_lane = lanes.get(primary)
+    if isinstance(primary_lane, dict):
+        for score_key, lane_key in (("L", "L"), ("S", "S_storyboard"), ("T_center", "T_center")):
+            if is_number(scores.get(score_key)) and is_number(primary_lane.get(lane_key)) and not close(
+                scores.get(score_key), float(primary_lane[lane_key])
+            ):
+                errors.append(f"analysis.scores.{score_key} must match the selected multi-reference lane")
+
 
 def validate_report(
     data: dict[str, Any], *, allow_draft: bool = False, hash_cache: dict[str, str] | None = None
@@ -317,6 +423,29 @@ def validate_report(
             errors.append(f"evidence {evidence_id} has invalid human_confirmation")
         if not isinstance(record.get("scope_complete"), bool):
             errors.append(f"evidence {evidence_id}.scope_complete must be boolean")
+        evidence_scope = record.get("evidence_scope")
+        if evidence_scope not in VALID_EVIDENCE_SCOPES:
+            errors.append(f"evidence {evidence_id}.evidence_scope must be segment or full_video")
+        linked_node_ids = validate_id_list(
+            record.get("storyboard_node_ids"),
+            f"evidence {evidence_id}.storyboard_node_ids",
+            node_id_set,
+            errors,
+        )
+        if evidence_scope == "full_video":
+            if record.get("scope_complete") is not True:
+                errors.append(f"full_video evidence {evidence_id} requires scope_complete=true")
+            if set(linked_node_ids) != node_id_set:
+                errors.append(f"full_video evidence {evidence_id} must cover every Storyboard node")
+            if creator_video and creator_video in media_durations:
+                duration = float(media_durations[creator_video])
+                if not (
+                    is_number(record.get("start_seconds"))
+                    and is_number(record.get("end_seconds"))
+                    and math.isclose(float(record["start_seconds"]), 0.0, abs_tol=TOLERANCE)
+                    and math.isclose(float(record["end_seconds"]), duration, abs_tol=TOLERANCE)
+                ):
+                    errors.append(f"full_video evidence {evidence_id} must span the declared creator-video duration")
         candidate_id = record.get("candidate_id")
         if record.get("observation_mode") == "guided" and not non_empty_string(candidate_id):
             errors.append(f"guided evidence {evidence_id} must name its candidate_id")
@@ -461,7 +590,22 @@ def validate_report(
             errors.append(f"teaching point {point_id} depth must be an integer 0-3")
             continue
         depths.append(depth)
-        validate_decision(assessment, f"teaching point {point_id}", depth > 0, depth == 0, {point_id})
+        point = point_by_id[point_id]
+        eligible_ids = validate_decision(assessment, f"teaching point {point_id}", depth > 0, depth == 0, {point_id})
+        linked_nodes = set(point.get("storyboard_node_ids", []))
+        eligible_records = [evidence[evidence_id] for evidence_id in eligible_ids]
+        if depth > 0:
+            if any(record.get("evidence_scope") == "full_video" for record in eligible_records):
+                errors.append(f"teaching point {point_id} cannot use full_video evidence for a positive depth")
+            if linked_nodes and not any(
+                set(record.get("storyboard_node_ids", [])) & linked_nodes
+                for record in eligible_records
+            ):
+                errors.append(f"teaching point {point_id} has no eligible evidence linked to its Storyboard node")
+        elif assessment.get("absence_verified") is True and not any(
+            record.get("evidence_scope") == "full_video" for record in eligible_records
+        ):
+            errors.append(f"teaching point {point_id} requires full_video evidence to verify absence")
         required = assessment.get("adaptation_required")
         result = assessment.get("adaptation_result")
         if required not in VALID_ADAPTATION_REQUIRED:
@@ -517,13 +661,29 @@ def validate_report(
         if values["element_score"] is not None:
             element_scores.append(int(values["element_score"] or 0))
         positive = any(value is not None and value > 0 for value in values.values())
-        validate_decision(
+        eligible_ids = validate_decision(
             assessment,
             f"Storyboard node {node_id}",
             positive,
             not positive,
             set(node_point_ids.get(node_id, set())),
         )
+        eligible_records = [evidence[evidence_id] for evidence_id in eligible_ids]
+        for record in eligible_records:
+            record_nodes = set(record.get("storyboard_node_ids", []))
+            if record.get("evidence_scope") == "segment" and node_id not in record_nodes:
+                errors.append(f"Storyboard node {node_id} uses segment evidence unrelated to that node")
+            if positive and record.get("evidence_scope") == "full_video":
+                errors.append(f"Storyboard node {node_id} cannot use full_video evidence for a positive score")
+        if positive and not any(
+            record.get("evidence_scope") == "segment" and node_id in set(record.get("storyboard_node_ids", []))
+            for record in eligible_records
+        ):
+            errors.append(f"Storyboard node {node_id} has no eligible segment evidence linked to that node")
+        if not positive and assessment.get("absence_verified") is True and not any(
+            record.get("evidence_scope") == "full_video" for record in eligible_records
+        ):
+            errors.append(f"Storyboard node {node_id} requires full_video evidence to verify absence")
 
     if set(node_assessment_by_id) != node_id_set:
         errors.append("Storyboard-node assessments must cover every node exactly once")
@@ -538,7 +698,17 @@ def validate_report(
         errors.append("logic_assessment.score must be a finite number from 0 to 3")
         logic_score = 0
     logic_relationship_ids = validate_id_list(logic.get("relationship_ids", []), "logic_assessment.relationship_ids", relationship_id_set, errors)
-    validate_decision(logic, "logic assessment", logic_score > 0, logic_score == 0, point_id_set)
+    logic_eligible_ids = validate_decision(logic, "logic assessment", logic_score > 0, logic_score == 0, point_id_set)
+    logic_eligible_records = [evidence[evidence_id] for evidence_id in logic_eligible_ids]
+    if logic_score > 0:
+        if any(record.get("evidence_scope") == "full_video" for record in logic_eligible_records):
+            errors.append("logic assessment cannot use full_video evidence for a positive score")
+        if not any(record.get("evidence_scope") == "segment" for record in logic_eligible_records):
+            errors.append("logic assessment needs eligible segment evidence for a positive score")
+    elif logic.get("absence_verified") is True and not any(
+        record.get("evidence_scope") == "full_video" for record in logic_eligible_records
+    ):
+        errors.append("logic assessment requires full_video evidence to verify absence")
 
     relationship_assessments = require_list(analysis, "relationship_assessments", "analysis", errors)
     relationship_assessment_by_id: dict[str, dict[str, Any]] = {}
@@ -561,7 +731,41 @@ def validate_report(
             score = 0
         relationship_scores.append(score)
         allowed_points = set(relationship_by_id[relationship_id].get("teaching_point_ids", []))
-        validate_decision(assessment, f"relationship {relationship_id}", score > 0, score == 0, allowed_points)
+        eligible_ids = validate_decision(assessment, f"relationship {relationship_id}", score > 0, score == 0, allowed_points)
+        from_nodes = {
+            node_id
+            for node_id in relationship_by_id[relationship_id].get("from_node_ids", [])
+            if isinstance(node_id, str)
+        }
+        to_nodes = {
+            node_id
+            for node_id in relationship_by_id[relationship_id].get("to_node_ids", [])
+            if isinstance(node_id, str)
+        }
+        eligible_records = [evidence[evidence_id] for evidence_id in eligible_ids]
+        for record in eligible_records:
+            record_nodes = set(record.get("storyboard_node_ids", []))
+            if record.get("evidence_scope") == "segment" and not (record_nodes & (from_nodes | to_nodes)):
+                errors.append(f"relationship {relationship_id} uses segment evidence unrelated to its endpoint nodes")
+            if score > 0 and record.get("evidence_scope") == "full_video":
+                errors.append(f"relationship {relationship_id} cannot use full_video evidence for a positive score")
+        if score > 0:
+            has_from = any(
+                record.get("evidence_scope") == "segment"
+                and set(record.get("storyboard_node_ids", [])) & from_nodes
+                for record in eligible_records
+            )
+            has_to = any(
+                record.get("evidence_scope") == "segment"
+                and set(record.get("storyboard_node_ids", [])) & to_nodes
+                for record in eligible_records
+            )
+            if not has_from or not has_to:
+                errors.append(f"relationship {relationship_id} needs eligible segment evidence for both endpoints")
+        elif assessment.get("absence_verified") is True and not any(
+            record.get("evidence_scope") == "full_video" for record in eligible_records
+        ):
+            errors.append(f"relationship {relationship_id} requires full_video evidence to verify absence")
     if set(relationship_assessment_by_id) != relationship_id_set:
         errors.append("relationship assessments must cover every reference relationship exactly once")
     if relationship_scores:
@@ -644,6 +848,14 @@ def validate_report(
         errors.append("scores.formula_band is invalid")
     elif is_number(t_center) and scores.get("formula_band") != score_band(float(t_center)):
         errors.append("scores.formula_band must follow scores.T_center")
+
+    validate_multi_reference(
+        data.get("multi_reference"),
+        scores=scores,
+        l_weight=l_weight,
+        s_weight=s_weight,
+        errors=errors,
+    )
 
     valid_band_names = {label for _, _, label in BANDS}
     if scores.get("band") not in valid_band_names:
