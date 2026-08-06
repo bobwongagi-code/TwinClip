@@ -1,0 +1,4 @@
+interface:
+  display_name: "TwinClip"
+  short_description: "基于拆解视频和 Storyboard 评估达人短视频学习落地、脚本相似与借鉴证据"
+  default_prompt: "使用 $twinclip 分析达人视频相对拆解视频和 Storyboard 的学习落地情况。"
