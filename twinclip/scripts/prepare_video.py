@@ -20,6 +20,8 @@ import subprocess
 import sys
 import tempfile
 
+from contracts import PREPARE_MANIFEST_SCHEMA_VERSION, sha256_file  # noqa: E402
+
 
 COMMAND_TIMEOUT_SECONDS = 180
 MAX_INPUT_BYTES = 2 * 1024 * 1024 * 1024
@@ -271,8 +273,9 @@ def main() -> int:
             )
 
         manifest = {
-            "schema_version": "1.1",
+            "schema_version": PREPARE_MANIFEST_SCHEMA_VERSION,
             "source_video": str(video),
+            "source_sha256": sha256_file(video),
             "source_bytes": video.stat().st_size,
             "duration_seconds": round(duration, 3),
             "width": video_stream.get("width"),
@@ -284,6 +287,7 @@ def main() -> int:
             "transcript": None,
             "transcript_status": "unknown",
             "ocr_status": "not_run",
+            "preparation_version": "1.0",
             "frames": [
                 {
                     "path": f"frames/{frame_file.name}",

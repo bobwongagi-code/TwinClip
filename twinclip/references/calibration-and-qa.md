@@ -2,7 +2,7 @@
 
 ## Initial anchors
 
-Bind every anchor set to one exact `reference_bundle.id` and `reference_bundle.version`. Do not reuse product-specific anchors across materially different source videos, Storyboards, teaching-point graphs, prompts, or models. Store the locked anchor-set record in an independent calibration registry JSON and reference that file from the report. The registry contains the anchor-set ID, lower and upper anchor records, resolved band, boundary clarity, and weights version; the validator checks the report against the registry rather than trusting a boolean `has_anchors` flag.
+Bind every anchor set to one exact `reference_bundle.id`, `reference_bundle.version`, and `reference_bundle.content_hash`. Do not reuse product-specific anchors across materially different source videos, Storyboards, teaching-point graphs, prompts, or models. Store the locked anchor-set record in an independent calibration registry JSON with its own content hash and reference it from the report. The registry locks the actual calibrated T/S weights, not just a version label. The shared registry contains anchor records and boundary clarity by lower/upper band pair. Candidate-specific placement, resolved band, and formula-conflict state belong in the report. The validator checks numeric bracketing and boundary membership rather than trusting a boolean `has_anchors` flag.
 
 Select about five representative creator videos for the initial five bands. Ask human reviewers only to confirm:
 
@@ -14,7 +14,7 @@ Do not ask reviewers to assign exact scores.
 
 ## Weight veto test
 
-Run the default scoring formula on the initial anchors. Treat five anchors as a veto test, not a training set.
+Run the default scoring formula on the initial anchors. Treat five anchors as a veto test, not a training set. A candidate placement is valid only when its T center is between the selected lower and upper anchor centers, its band is between their bands, and its displayed interval overlaps its human-resolved band.
 
 - Keep the prior weights when anchor ordering is correct.
 - When a clearly different band is reversed, identify the responsible dimension from evidence.
@@ -47,14 +47,14 @@ Review 100% of low-confidence reports.
 
 During initial operation:
 
-1. After every 20 completed non-anchor analyses, randomly sample five for band-only human review.
+1. Combine exactly 20 completed non-anchor analysis records and use `scripts/select_qa_sample.py` to randomly sample five. Do not include draft reports, anchor reports, or an analysis ID already present in QA history.
 2. Pass when at least four of five bands agree and no result differs by two or more bands.
 3. Pause batch scoring and recalibrate after a failed sample.
 4. After three consecutive passing samples, reduce monitoring to five random reports per 50 analyses.
 
-Use `scripts/qa_check.py` to record this band-only comparison and the current cadence in a history JSON. It deliberately does not compare exact L, S, or T values.
+Use `scripts/qa_check.py` to record this band-only comparison and the current cadence in a history JSON. It requires the sample manifest, rejects drafts, anchors, duplicate/reused populations, and mixed reference/method scopes, and writes history atomically. It deliberately does not compare exact L, S, or T values.
 
-Re-run all anchors whenever any of these changes:
+Re-run all anchors whenever any of these changes, and increment `analysis_version` for analysis-contract changes:
 
 - unified reference graph or teaching points;
 - scoring weights or thresholds;
@@ -72,6 +72,6 @@ Track these operational signals:
 - repeated blind-miss reasons;
 - formula-versus-anchor conflicts.
 
-Keep the QA sample decisions and completion state with the batch manifest. A green validator run proves structural consistency; it does not replace the band-only human sample review described above.
+Keep the QA sample manifest, comparisons, and completion state with the same reference/method scope as the batch manifests. A green validator run proves structural consistency; it does not replace the band-only human sample review described above.
 
 When low confidence remains high, improve evidence extraction or reference definitions before relaxing confidence thresholds.

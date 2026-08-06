@@ -5,7 +5,7 @@ description: Analyze creator shoppable short videos against a breakdown or teach
 
 # TwinClip
 
-Analyze whether one or more creator videos learned and applied the mechanisms taught by a breakdown video and Storyboard. Produce one validated report per creator plus a batch manifest with four core outputs per report: overall learning result, breakdown-point similarity, Storyboard similarity, and structured borrowing analysis.
+Analyze whether one or more creator videos learned and applied the mechanisms taught by a breakdown video and Storyboard. Produce one validated report per creator video plus a batch manifest with four core outputs per report: overall learning result, breakdown-point similarity, Storyboard similarity, and structured borrowing analysis.
 
 ## Required inputs
 
@@ -66,7 +66,7 @@ Never place a mechanism inferred only from the Storyboard into `teaching_points`
 
 Record cross-node logic as explicit reference-graph relationships, including preview-to-payoff, problem-to-solution, claim-to-proof, and reason-to-buy-to-CTA links.
 
-Version the graph as a `reference_bundle`. Lock it before scoring a batch. Read [scoring-model.md](references/scoring-model.md) for point and node rubrics.
+Version the graph as a `reference_bundle`. Lock it before scoring a batch. Bind its `content_hash` to the path-free content identities of the breakdown video and Storyboard. A changed source creates a new bundle identity and requires anchor revalidation. Read [scoring-model.md](references/scoring-model.md) for point and node rubrics.
 
 ### 3. Blindly observe the creator video
 
@@ -101,7 +101,7 @@ Apply [scoring-model.md](references/scoring-model.md).
 
 Read [calibration-and-qa.md](references/calibration-and-qa.md) whenever anchors, multiple creator videos, weight changes, prompt changes, model changes, or production monitoring are involved.
 
-Use five initial anchors only as an ordering veto test. Do not freely optimize weights against five samples. Bind anchors to the exact reference-bundle version.
+Use five initial anchors only as an ordering veto test. Do not freely optimize weights against five samples. Bind anchors to the exact reference-bundle ID, version, and content hash. Candidate anchor placement must be numerically bracketed and cannot leave an unresolved formula conflict in a final report.
 
 ### 7. Produce and validate the report
 
@@ -133,13 +133,23 @@ python3 scripts/run_analysis.py \
   --output-dir /absolute/path/twinclip-run
 ```
 
-Repeat `--creator-video` and `--draft-report` in matching order for multiple creators. The draft contains the structured observations and assessments produced after inspecting the prepared media; `run_analysis.py` binds source paths, derives durations, validates final reports, and writes `batch.json`. Use `--allow-draft` only while human confirmation is pending. A final run must pass without it.
+Repeat `--creator-video` and `--draft-report` in matching order for multiple creators. The draft contains the structured observations and assessments produced after inspecting the prepared media, plus the observation method, model, prompt, and extraction versions. `run_analysis.py` binds source paths, computes source hashes, derives durations, validates final reports, and writes `batch.json`. Each report contains exactly one creator video. Use `--allow-draft` only while human confirmation is pending. A final run must pass without it; unresolved candidates and formula conflicts are rejected even when `review_status` is incorrectly set to completed.
 
-After the first 20 non-anchor analyses, ask a human reviewer to label five bands and compare only those labels with `batch.json`:
+After 20 completed non-anchor analyses, combine the relevant batch manifests and create a random five-report QA sample:
+
+```bash
+python3 scripts/select_qa_sample.py \
+  --batch-json /absolute/path/batch-01.json \
+  --batch-json /absolute/path/batch-02.json \
+  --output /absolute/path/twinclip-qa-sample.json \
+  --population-size 20
+```
+
+Ask a human reviewer to label only those five bands, then compare those labels with the sample:
 
 ```bash
 python3 scripts/qa_check.py \
-  --batch-json /absolute/path/twinclip-run/batch.json \
+  --batch-json /absolute/path/twinclip-qa-sample.json \
   --expected-bands /absolute/path/human-band-labels.json \
   --history /absolute/path/twinclip-qa-history.json
 ```
@@ -153,4 +163,4 @@ The QA command passes only when at least four of five bands agree and no result 
 - When an anchor placement conflicts with the formula band, do not silently clamp the score. Mark a calibration conflict and request review.
 - When no anchors exist, use the default weights and bands provisionally; cap confidence at medium.
 - When a guided-only candidate remains unconfirmed, keep it out of L, S, and T.
-- When a final report has low confidence, pending candidates, manual-review decisions, or an anchor conflict, require `review_status=completed`; otherwise keep it as a draft.
+- When a final report has low confidence or resolved manual-review decisions, require `review_status=completed`. Pending candidates and anchor conflicts keep it pending and block final delivery.

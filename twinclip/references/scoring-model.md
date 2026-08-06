@@ -117,9 +117,11 @@ S = 35% sales_logic
 
 Validate these weights against anchors. Do not treat them as universal constants.
 
-The sales-logic component is assessed through the explicit reference-graph relationships. There is one relationship assessment per relationship, and the overall logic score is the rounded mean of those assessments. This keeps the preference for a smooth selling argument separate from exact Storyboard order or duration.
+The sales-logic component is assessed through the explicit reference-graph relationships. There is one relationship assessment per relationship, and the overall logic score is the unrounded mean of those assessments. This keeps the preference for a smooth selling argument continuous and separate from exact Storyboard order or duration.
 
 If a node has required persuasion elements, it must receive a non-null element score. If no node has required elements, set the elements weight to zero and renormalize the remaining S weights. A null element score cannot remove a required node from the denominator.
+
+If the reference graph has no relationships, set the logic score and logic weight to zero and renormalize the remaining S dimensions. Never replace missing relationships with a free-form logic impression.
 
 ## 4. Total learning score T
 
@@ -149,13 +151,13 @@ Treat the center as an internal ranking index, not an objective truth. Display a
 - medium confidence: center +/- 6;
 - low confidence: center +/- 10 and mandatory review.
 
-Round interval endpoints to whole numbers and clamp them to 0-100. Version and recalibrate these widths with anchor evidence.
+Round interval endpoints to whole numbers using deterministic positive-value half-up rounding, then clamp them to 0-100. Use the same rule when mapping the center to a band. Version and recalibrate these widths with anchor evidence.
 
-When anchor comparison establishes a band, treat it as primary. If the formula center falls outside that band, report a calibration conflict rather than silently changing either result.
+When anchor comparison establishes a band, treat it as primary only when the candidate center is bracketed by the selected anchors and the displayed interval overlaps the human-resolved band. If the formula center or interval falls outside that band, report a calibration conflict and keep the report pending rather than silently changing either result.
 
 When no anchors exist, derive a provisional band from the default numeric ranges and cap confidence at medium.
 
-The interval is deterministic: round and clamp center +/- 3 for high, +/- 6 for medium, or +/- 10 for low. Low confidence, unresolved guided candidates, manual-review decisions, and formula-anchor conflicts keep the report in review until a human completes the review state.
+The interval is deterministic: round and clamp center +/- 3 for high, +/- 6 for medium, or +/- 10 for low. Low confidence and resolved manual-review decisions require a completed review. Unresolved guided candidates and formula-anchor conflicts keep the report pending and block final delivery.
 
 ## 5. Borrowing analysis
 
@@ -236,4 +238,4 @@ Determine the overall level by the weakest gate:
 
 Cap confidence at medium without anchors. Require human review for low confidence. Show E, M, and R with the level.
 
-Final delivery requires `review_status=completed` whenever the weakest gate is low, a manual-review decision exists, a guided candidate is pending, or a formula-versus-anchor conflict exists. Use `--allow-draft` only for an intermediate report that has not yet passed this gate.
+Final delivery requires `review_status=completed` whenever the weakest gate is low or a manual-review decision has been resolved. A guided candidate that is pending, or a formula-versus-anchor conflict, keeps the report pending and blocks final delivery. Use `--allow-draft` only for an intermediate report that has not yet passed this gate.

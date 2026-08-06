@@ -1,12 +1,12 @@
 # TwinClip Report Schema
 
-Emit UTF-8 JSON with `schema_version: "1.1"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to a regular local file and must pass `scripts/validate_report.py` without `--allow-draft`.
+Emit UTF-8 JSON with `schema_version: "1.2"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
 
 ## Top-level structure
 
 ```json
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "reference_bundle": {},
   "scoring_config": {},
   "analysis": {}
@@ -19,9 +19,14 @@ Emit UTF-8 JSON with `schema_version: "1.1"`. Use decimal ratios from 0 to 1 and
 {
   "id": "product-source-id",
   "version": "1.0",
+  "content_hash": "sha256-of-the-locked-reference-graph",
   "source_inputs": {
     "breakdown_video": "/absolute/path/breakdown.mp4",
     "storyboard_pdf": "/absolute/path/storyboard.pdf"
+  },
+  "source_content_hashes": {
+    "breakdown_video": {"sha256": "...", "bytes": 123},
+    "storyboard_pdf": {"sha256": "...", "bytes": 123}
   },
   "skeleton_mode": "storyboard",
   "status": "locked",
@@ -69,7 +74,7 @@ Emit UTF-8 JSON with `schema_version: "1.1"`. Use decimal ratios from 0 to 1 and
 
 Use `skeleton_mode=storyboard` only after completeness and identity checks. Otherwise use `merged`. Allow an empty `storyboard_node_ids` list and multiple linked node IDs. Never put a Storyboard-only inference into `teaching_points`.
 
-Use `status=draft` and `score_ready=false` while the source identity, teaching list, or required media remains unresolved. A final scored report requires `status=locked` and `score_ready=true`.
+`content_hash` is computed from the locked semantic graph plus the path-free content identities in `source_content_hashes`. Runtime source paths are excluded from this graph hash. The same source identities are repeated under `analysis.provenance.source_hashes` with their bound paths for audit. A changed breakdown video or Storyboard therefore creates a new reference identity and requires anchor revalidation. Use `status=draft` and `score_ready=false` while the source identity, teaching list, or required media remains unresolved. A final scored report requires `status=locked`, `score_ready=true`, and a matching graph hash.
 
 Teaching points require all of the semantic fields shown above, a verifiable source locator, source ranges, minimum evidence, and false-positive guards. This prevents an underspecified point from contributing to 70% of T.
 
@@ -90,7 +95,38 @@ Teaching points require all of the semantic fields shown above, a verifiable sou
 }
 ```
 
-Every weight group must sum to 1. L must retain at least 0.50 weight. Reports without anchors must use the default T weights `0.70/0.30` and the default S weights. When no node has required persuasion elements, the S elements weight must be zero and the remaining S weights must be renormalized. Reports with anchors must point to an independent locked calibration registry file.
+Every weight group must sum to 1. L must retain at least 0.50 weight. Reports without anchors must use the default T weights `0.70/0.30` and the default S weights. When no node has required persuasion elements, the S elements weight must be zero and the remaining S weights must be renormalized. When no reference relationships exist, the S logic weight and logic score must be zero and the other S weights must be renormalized. Reports with anchors must point to an independent locked calibration registry file whose own content hash, reference-bundle hash, anchor boundaries, and anchor records all match the report.
+
+## Analysis provenance
+
+Every report must include an `analysis.provenance` object. It identifies the semantic observation method and binds the report to the exact source bytes:
+
+```json
+{
+  "analysis_id": "deterministic-id-from-reference-creator-and-method",
+  "provenance": {
+    "analysis_version": "1.1",
+    "observation_method": "agent_multimodal_review",
+    "model_id": "model-name-or-human-review",
+    "prompt_version": "twinclip-prompt-1",
+    "extraction_version": "asr-ocr-workflow-1",
+    "reference_bundle_hash": "...",
+    "media_preparation": {
+      "manifest_schema_version": "1.2",
+      "interval_seconds": 1.0,
+      "max_frames": 300
+    },
+    "source_hashes": {
+      "breakdown_video": {"path": "...", "sha256": "...", "bytes": 123},
+      "storyboard_pdf": {"path": "...", "sha256": "...", "bytes": 123},
+      "creator_video": {"path": "...", "sha256": "...", "bytes": 123}
+    },
+    "method_fingerprint": "sha256-of-the-method-fields"
+  }
+}
+```
+
+`analysis_id` and `method_fingerprint` are deterministic. A changed source file, reference graph, prompt, model, extraction workflow, or media-preparation setting must produce a new identity and trigger anchor revalidation.
 
 ## Evidence records
 
@@ -180,7 +216,7 @@ When the reference graph contains relationships, add exactly one assessment per 
 }
 ```
 
-`logic_assessment.relationship_ids` must cover every relationship, and its score must equal the rounded mean of the relationship scores. This makes S's logic component an aggregation of explicit claim, proof, problem, solution, reason-to-buy, and CTA links rather than an unsupported free-text impression.
+`logic_assessment.relationship_ids` must cover every relationship, and its score must equal the unrounded mean of the relationship scores. This keeps S's logic component continuous while making it an aggregation of explicit claim, proof, problem, solution, reason-to-buy, and CTA links rather than an unsupported free-text impression.
 
 ## Candidate matches
 
@@ -194,7 +230,7 @@ When the reference graph contains relationships, add exactly one assessment per 
 }
 ```
 
-Allowed statuses are `manual_pending`, `confirmed`, and `rejected`. Candidate IDs and fingerprints must be unique. Pending candidates do not affect scores and make the report a draft until resolved.
+Allowed statuses are `manual_pending`, `confirmed`, and `rejected`. Candidate IDs and fingerprints must be unique. Pending candidates do not affect scores and make the report a draft until resolved; a report with any pending candidate cannot pass final validation.
 
 ## Scores, confidence, and review
 
@@ -221,7 +257,7 @@ Allowed statuses are `manual_pending`, `confirmed`, and `rejected`. Candidate ID
 
 `T_center=70%L+30%S`. `formula_band` is always derived from the center. Without anchors, `band=formula_band`, `provisional=true`, and confidence is capped at medium. The interval must be exactly rounded center +/- 3, 6, or 10 for high, medium, or low confidence, clamped to 0-100.
 
-E, M, and R are recomputed from decision records. Low confidence, manual-review decisions, pending candidates, and formula-anchor conflicts require `review_status=completed` for final delivery. Use `review_status=pending` only with `--allow-draft`.
+E, M, and R are recomputed from decision records. Low confidence and resolved manual-review decisions require `review_status=completed` for final delivery. Pending candidates and formula-anchor conflicts keep `review_status=pending` and block final delivery. Use `review_status=pending` only with `--allow-draft`.
 
 ## Anchor placement
 
@@ -231,6 +267,7 @@ E, M, and R are recomputed from decision records. Low confidence, manual-review 
   "anchor_set_id": null,
   "reference_bundle_id": null,
   "reference_bundle_version": null,
+  "reference_bundle_hash": null,
   "weights_version": null,
   "lower_anchor": null,
   "upper_anchor": null,
@@ -240,9 +277,9 @@ E, M, and R are recomputed from decision records. Low confidence, manual-review 
 }
 ```
 
-When anchors exist, include `anchor_set_id`, matching reference-bundle ID/version, the matching weights version, lower and upper anchor objects with IDs, bands, T centers, and matching bundle metadata, plus the human-resolved `anchor_band`. `scores.band` must equal that band. `formula_conflict` must exactly state whether it differs from `formula_band`; it is never a free boolean.
+When anchors exist, include `anchor_set_id`, matching reference-bundle ID/version/hash, the matching weights version, lower and upper anchor objects with IDs, bands, T centers, and matching bundle metadata, plus the human-resolved `anchor_band`. The candidate `T_center` must be numerically bracketed by the two anchors, and the candidate band must be bracketed by their bands. `scores.band` must equal the human-resolved band, and `T_range` must overlap it. `formula_conflict` must exactly state whether it differs from `formula_band`; it is never a free boolean. A formula conflict keeps the report pending until calibration weights are corrected.
 
-The registry JSON must contain `schema_version: "1.0"`, `status: "locked"`, the same anchor-set/bundle/weights metadata, `boundary_clarity`, `anchor_band`, and an `anchors` array containing the referenced lower and upper anchor IDs and values. The validator checks the report against this file.
+The registry JSON must contain `schema_version: "1.1"`, `status: "locked"`, its own `content_hash`, the same anchor-set/bundle metadata, the exact calibrated `weights` values, a `boundaries` array containing lower/upper band pairs and their clarity, and an `anchors` array containing the referenced lower and upper anchor IDs and values. Candidate-specific `anchor_band` and `boundary_clarity` belong in the report placement, not in the shared registry. The validator checks the report against this file; a matching `weights_version` string alone is insufficient.
 
 ## Adaptation diagnosis
 
@@ -266,15 +303,17 @@ The status is derived: unresolved applicability is `unknown`; failed with no suc
 
 ## Complete analysis fields
 
-The `analysis` object must contain `creator_videos` (one or more paths), `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`.
+The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
 
 Keep detailed borrowing prose and adaptation explanation under backend fields. Keep the four core outputs at the top of any rendered human report.
 
 ## Batch manifest
 
-`scripts/run_analysis.py` emits one validated report per creator video and a `batch.json` containing each video's T/L/S/band plus, for every teaching point:
+`scripts/run_analysis.py` emits one validated report per creator video and a `batch.json` containing the shared reference-bundle content hash, analysis-method fingerprint, each video's immutable analysis ID and source hash, T/L/S/band, final `review_status`, plus, for every teaching point:
 
 - group adoption rate, effective adoption rate, innovation rate, and persistence rate;
 - per-creator depth;
 - first appearance timestamp from eligible evidence;
 - evidence count and whether persistence was observed through multiple evidence records.
+
+To perform continuous QA, combine exactly 20 or 50 non-anchor batch reports with `scripts/select_qa_sample.py`. It creates a system-random five-report sample with a population manifest. Run `scripts/qa_check.py` on that sample. The QA history is scoped to the exact reference-bundle and analysis-method fingerprints; mixed histories are rejected.

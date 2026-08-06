@@ -17,202 +17,51 @@ import stat
 import sys
 from typing import Any
 
-
-SCHEMA_VERSION = "1.1"
-TOLERANCE = 0.02
-MIN_L_WEIGHT = 0.50
-MAX_REPORT_BYTES = 20 * 1024 * 1024
-DEFAULT_L_WEIGHT = 0.70
-DEFAULT_S_WEIGHT = 0.30
-DEFAULT_S_WEIGHTS = {
-    "logic": 0.35,
-    "function": 0.30,
-    "elements": 0.25,
-    "support": 0.10,
-}
-BANDS = [
-    (0, 19, "未采纳"),
-    (20, 39, "表层模仿"),
-    (40, 59, "单点机制迁移"),
-    (60, 79, "多点结构化迁移"),
-    (80, 100, "二次创新"),
-]
-VALID_CLARITY = {"clear", "ambiguous", "unavailable"}
-VALID_FAILURES = {None, "L", "S", "A"}
-VALID_ADAPTATION_REQUIRED = {"yes", "no", "unclear"}
-VALID_ADAPTATION_RESULTS = {"not_needed", "successful", "partial", "failed", "pending"}
-VALID_REVIEW_STATUS = {"pending", "completed"}
-
-
-def is_number(value: Any) -> bool:
-    return (
-        isinstance(value, (int, float))
-        and not isinstance(value, bool)
-        and math.isfinite(float(value))
-    )
-
-
-def close(actual: Any, expected: float, tolerance: float = TOLERANCE) -> bool:
-    return is_number(actual) and math.isclose(
-        float(actual), expected, abs_tol=tolerance
-    )
-
-
-def non_empty_string(value: Any) -> bool:
-    return isinstance(value, str) and bool(value.strip())
-
-
-def require_mapping(
-    parent: dict[str, Any], key: str, path: str, errors: list[str]
-) -> dict[str, Any]:
-    value = parent.get(key)
-    if not isinstance(value, dict):
-        errors.append(f"{path}.{key} must be an object")
-        return {}
-    return value
-
-
-def require_list(
-    parent: dict[str, Any], key: str, path: str, errors: list[str]
-) -> list[Any]:
-    value = parent.get(key)
-    if not isinstance(value, list):
-        errors.append(f"{path}.{key} must be an array")
-        return []
-    return value
-
-
-def validate_weight_group(values: list[Any], label: str, errors: list[str]) -> bool:
-    if not values or not all(is_number(value) and float(value) >= 0 for value in values):
-        errors.append(f"{label} weights must be finite non-negative numbers")
-        return False
-    if not math.isclose(sum(float(value) for value in values), 1.0, abs_tol=1e-6):
-        errors.append(f"{label} weights must sum to 1")
-        return False
-    return True
-
-
-def valid_string_list(value: Any, label: str, errors: list[str]) -> list[str]:
-    if not isinstance(value, list):
-        errors.append(f"{label} must be an array")
-        return []
-    result: list[str] = []
-    for index, item in enumerate(value):
-        if not non_empty_string(item):
-            errors.append(f"{label}[{index}] must be a non-empty string")
-            continue
-        result.append(item)
-    return result
-
-
-def validate_id_list(
-    value: Any, label: str, known: set[str], errors: list[str], *, allow_empty: bool = True
-) -> list[str]:
-    items = valid_string_list(value, label, errors)
-    if not allow_empty and not items:
-        errors.append(f"{label} must not be empty")
-    if len(items) != len(set(items)):
-        errors.append(f"{label} must not contain duplicate ids")
-    unknown = set(items) - known
-    if unknown:
-        errors.append(f"{label} references unknown ids: {sorted(unknown)}")
-    return items
-
-
-def collect_ids(items: list[Any], label: str, errors: list[str]) -> tuple[list[str], dict[str, dict[str, Any]]]:
-    ids: list[str] = []
-    by_id: dict[str, dict[str, Any]] = {}
-    for index, item in enumerate(items):
-        if not isinstance(item, dict):
-            errors.append(f"{label}[{index}] must be an object")
-            continue
-        item_id = item.get("id")
-        if not non_empty_string(item_id):
-            errors.append(f"{label}[{index}].id must be a non-empty string")
-            continue
-        if item_id in by_id:
-            errors.append(f"duplicate {label} id: {item_id}")
-            continue
-        ids.append(item_id)
-        by_id[item_id] = item
-    return ids, by_id
-
-
-def validate_range(value: Any, label: str, errors: list[str]) -> None:
-    if not isinstance(value, list) or len(value) != 2 or not all(is_number(item) for item in value):
-        errors.append(f"{label} must be a finite [start, end] pair")
-        return
-    if float(value[0]) < 0 or float(value[1]) <= float(value[0]):
-        errors.append(f"{label} must satisfy 0 <= start < end")
-
-
-def validate_regular_file(value: Any, label: str, errors: list[str]) -> str | None:
-    if not non_empty_string(value):
-        errors.append(f"{label} must be a non-empty file path")
-        return None
-    path = Path(value).expanduser()
-    try:
-        mode = path.stat().st_mode
-    except OSError as exc:
-        errors.append(f"{label} is not readable: {exc}")
-        return None
-    if not stat.S_ISREG(mode):
-        errors.append(f"{label} must reference a regular file")
-        return None
-    return str(path.resolve())
-
-
-def read_json_file(path: str, label: str, errors: list[str]) -> dict[str, Any] | None:
-    try:
-        if Path(path).stat().st_size > MAX_REPORT_BYTES:
-            errors.append(f"{label} exceeds {MAX_REPORT_BYTES} bytes")
-            return None
-        value = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
-        errors.append(f"{label} cannot be read: {exc}")
-        return None
-    if not isinstance(value, dict):
-        errors.append(f"{label} must contain a JSON object")
-        return None
-    return value
-
-
-def eligible_evidence(record: dict[str, Any]) -> bool:
-    if record.get("observation_mode") == "blind":
-        confirmation_ok = record.get("human_confirmation") in {"not_required", "confirmed"}
-    else:
-        confirmation_ok = record.get("human_confirmation") == "confirmed"
-    fields = ("visual", "onscreen_text", "transcript", "observed_function")
-    has_observation = any(record.get(field) != "unknown" for field in fields)
-    return confirmation_ok and has_observation and non_empty_string(record.get("observed_function")) and record.get("observed_function") != "unknown"
-
-
-def score_band(center: float) -> str:
-    rounded = min(100, max(0, int(round(center))))
-    for low, high, label in BANDS:
-        if low <= rounded <= high:
-            return label
-    raise AssertionError("unreachable")
-
-
-def band_index(label: str) -> int:
-    return next(index for index, (_, _, name) in enumerate(BANDS) if name == label)
-
-
-def expected_confidence(e_value: float, m_value: float, r_value: float) -> str:
-    if e_value >= 0.85 and m_value == 1 and r_value <= 0.10:
-        return "high"
-    if e_value >= 0.65 and m_value >= 0.5 and r_value <= 0.30:
-        return "medium"
-    return "low"
-
+from contracts import (  # noqa: E402
+    ANALYSIS_VERSION,
+    BANDS,
+    MIN_L_WEIGHT,
+    PREPARE_MANIFEST_SCHEMA_VERSION,
+    SCHEMA_VERSION,
+    TOLERANCE,
+    VALID_ADAPTATION_REQUIRED,
+    VALID_ADAPTATION_RESULTS,
+    VALID_CLARITY,
+    VALID_FAILURES,
+    analysis_id,
+    provenance_fingerprint,
+    reference_bundle_hash,
+)
+from validation_support import (  # noqa: E402
+    MAX_REPORT_BYTES,
+    close,
+    collect_ids,
+    eligible_evidence,
+    is_number,
+    non_empty_string,
+    require_list,
+    require_mapping,
+    score_band,
+    validate_id_list,
+    validate_content_identity,
+    validate_range,
+    validate_regular_file,
+    validate_source_hash,
+    validate_weight_group,
+    valid_string_list,
+)
+from validation_scoring import (  # noqa: E402
+    validate_anchor_placement,
+    validate_confidence_and_adaptation,
+)
 
 def validate_report(
-    data: dict[str, Any], *, allow_draft: bool = False
+    data: dict[str, Any], *, allow_draft: bool = False, hash_cache: dict[str, str] | None = None
 ) -> tuple[list[str], list[str], dict[str, float]]:
     errors: list[str] = []
     warnings: list[str] = []
     metrics: dict[str, float] = {}
+    hash_cache = hash_cache if hash_cache is not None else {}
 
     if not isinstance(data, dict):
         return ["report root must be an object"], warnings, metrics
@@ -227,8 +76,34 @@ def validate_report(
         if not non_empty_string(reference.get(key)):
             errors.append(f"reference_bundle.{key} must be a non-empty string")
     source_inputs = require_mapping(reference, "source_inputs", "reference_bundle", errors)
-    for key in ("breakdown_video", "storyboard_pdf"):
-        validate_regular_file(source_inputs.get(key), f"reference_bundle.source_inputs.{key}", errors)
+    reference_hash = reference.get("content_hash")
+    if not isinstance(reference_hash, str) or len(reference_hash) != 64:
+        errors.append("reference_bundle.content_hash must be a SHA-256 digest")
+    elif reference_hash != reference_bundle_hash(reference):
+        errors.append("reference_bundle.content_hash does not match the locked reference graph")
+    breakdown_path = validate_regular_file(
+        source_inputs.get("breakdown_video"), "reference_bundle.source_inputs.breakdown_video", errors
+    )
+    storyboard_path = validate_regular_file(
+        source_inputs.get("storyboard_pdf"), "reference_bundle.source_inputs.storyboard_pdf", errors
+    )
+    source_content_hashes = require_mapping(reference, "source_content_hashes", "reference_bundle", errors)
+    if breakdown_path:
+        validate_content_identity(
+            source_content_hashes.get("breakdown_video"),
+            breakdown_path,
+            "reference_bundle.source_content_hashes.breakdown_video",
+            errors,
+            hash_cache,
+        )
+    if storyboard_path:
+        validate_content_identity(
+            source_content_hashes.get("storyboard_pdf"),
+            storyboard_path,
+            "reference_bundle.source_content_hashes.storyboard_pdf",
+            errors,
+            hash_cache,
+        )
 
     if reference.get("skeleton_mode") not in {"storyboard", "merged"}:
         errors.append("reference_bundle.skeleton_mode must be storyboard or merged")
@@ -319,6 +194,11 @@ def validate_report(
     s_weights = require_mapping(config, "s_weights", "scoring_config", errors)
     s_weight_values = [s_weights.get(key) for key in ("logic", "function", "elements", "support")]
     s_weights_valid = validate_weight_group(s_weight_values, "S", errors)
+    has_relationships = bool(relationship_ids)
+    if has_relationships and is_number(s_weights.get("logic")) and float(s_weights.get("logic")) <= 0:
+        errors.append("S logic weight must be positive when reference relationships exist")
+    if not has_relationships and is_number(s_weights.get("logic")) and not math.isclose(float(s_weights.get("logic")), 0.0, abs_tol=1e-6):
+        errors.append("S logic weight must be 0 when no reference relationships exist")
     if any_required_elements and is_number(s_weights.get("elements")) and float(s_weights.get("elements")) <= 0:
         errors.append("S elements weight must be positive when any node has required elements")
     if not any_required_elements and is_number(s_weights.get("elements")) and not math.isclose(float(s_weights.get("elements")), 0.0, abs_tol=1e-6):
@@ -334,8 +214,8 @@ def validate_report(
         )
 
     creator_videos_raw = analysis.get("creator_videos")
-    if not isinstance(creator_videos_raw, list) or not creator_videos_raw:
-        errors.append("analysis.creator_videos must contain at least one video path")
+    if not isinstance(creator_videos_raw, list) or len(creator_videos_raw) != 1:
+        errors.append("analysis.creator_videos must contain exactly one video path per report")
         creator_videos_raw = []
     creator_videos: list[str] = []
     for index, video in enumerate(creator_videos_raw):
@@ -347,6 +227,57 @@ def validate_report(
     if "creator_video" in analysis:
         errors.append("analysis.creator_video is obsolete; use analysis.creator_videos")
     creator_video_set = set(creator_videos)
+
+    provenance = require_mapping(analysis, "provenance", "analysis", errors)
+    if provenance.get("analysis_version") != ANALYSIS_VERSION:
+        errors.append(f"analysis.provenance.analysis_version must be '{ANALYSIS_VERSION}'")
+    for key in ("observation_method", "model_id", "prompt_version", "extraction_version"):
+        if not non_empty_string(provenance.get(key)):
+            errors.append(f"analysis.provenance.{key} must be a non-empty string")
+    if not isinstance(provenance.get("reference_bundle_hash"), str):
+        errors.append("analysis.provenance.reference_bundle_hash must be a string")
+    elif provenance.get("reference_bundle_hash") != reference.get("content_hash"):
+        errors.append("analysis.provenance.reference_bundle_hash must equal reference_bundle.content_hash")
+    media_preparation = require_mapping(provenance, "media_preparation", "analysis.provenance", errors)
+    if media_preparation.get("manifest_schema_version") != PREPARE_MANIFEST_SCHEMA_VERSION:
+        errors.append(
+            f"analysis.provenance.media_preparation.manifest_schema_version must be '{PREPARE_MANIFEST_SCHEMA_VERSION}'"
+        )
+    for key in ("interval_seconds", "max_frames"):
+        if not is_number(media_preparation.get(key)) or float(media_preparation.get(key)) <= 0:
+            errors.append(f"analysis.provenance.media_preparation.{key} must be positive")
+    source_hashes = require_mapping(provenance, "source_hashes", "analysis.provenance", errors)
+    if breakdown_path:
+        validate_source_hash(
+            source_hashes.get("breakdown_video"),
+            breakdown_path,
+            "analysis.provenance.source_hashes.breakdown_video",
+            errors,
+            hash_cache,
+        )
+    if storyboard_path:
+        validate_source_hash(
+            source_hashes.get("storyboard_pdf"),
+            storyboard_path,
+            "analysis.provenance.source_hashes.storyboard_pdf",
+            errors,
+            hash_cache,
+        )
+    if creator_videos:
+        validate_source_hash(
+            source_hashes.get("creator_video"),
+            creator_videos[0],
+            "analysis.provenance.source_hashes.creator_video",
+            errors,
+            hash_cache,
+        )
+    expected_method_fingerprint = provenance_fingerprint(provenance)
+    if provenance.get("method_fingerprint") != expected_method_fingerprint:
+        errors.append("analysis.provenance.method_fingerprint does not match the analysis method contract")
+    creator_hash_value = source_hashes.get("creator_video", {}).get("sha256") if isinstance(source_hashes.get("creator_video"), dict) else None
+    expected_analysis_id = analysis_id(str(reference.get("content_hash")), str(creator_hash_value), expected_method_fingerprint)
+    if analysis.get("analysis_id") != expected_analysis_id:
+        errors.append("analysis.analysis_id does not match the reference, creator, and method identities")
 
     media_durations = require_mapping(analysis, "media_durations", "analysis", errors)
     for video in creator_videos:
@@ -523,8 +454,8 @@ def validate_report(
             continue
         teaching_by_id[point_id] = assessment
         for key in ("done_well", "missing_or_misused"):
-            if not non_empty_string(assessment.get(key)):
-                errors.append(f"teaching point {point_id}.{key} must be a non-empty string")
+            if key in assessment and assessment.get(key) is not None and not non_empty_string(assessment.get(key)):
+                errors.append(f"teaching point {point_id}.{key} must be a non-empty string when provided")
         depth = assessment.get("depth")
         if not isinstance(depth, int) or isinstance(depth, bool) or depth not in range(4):
             errors.append(f"teaching point {point_id} depth must be an integer 0-3")
@@ -603,8 +534,8 @@ def validate_report(
 
     logic = require_mapping(analysis, "logic_assessment", "analysis", errors)
     logic_score = logic.get("score")
-    if not isinstance(logic_score, int) or isinstance(logic_score, bool) or logic_score not in range(4):
-        errors.append("logic_assessment.score must be an integer 0-3")
+    if not is_number(logic_score) or not 0 <= float(logic_score) <= 3:
+        errors.append("logic_assessment.score must be a finite number from 0 to 3")
         logic_score = 0
     logic_relationship_ids = validate_id_list(logic.get("relationship_ids", []), "logic_assessment.relationship_ids", relationship_id_set, errors)
     validate_decision(logic, "logic assessment", logic_score > 0, logic_score == 0, point_id_set)
@@ -634,13 +565,15 @@ def validate_report(
     if set(relationship_assessment_by_id) != relationship_id_set:
         errors.append("relationship assessments must cover every reference relationship exactly once")
     if relationship_scores:
-        if logic_relationship_ids != relationship_ids:
+        if set(logic_relationship_ids) != relationship_id_set:
             errors.append("logic_assessment.relationship_ids must cover every relationship")
-        relationship_expected = int(round(sum(relationship_scores) / len(relationship_scores)))
-        if logic_score != relationship_expected:
-            errors.append(f"logic_assessment.score must equal the rounded relationship mean: {relationship_expected}")
+        relationship_expected = sum(relationship_scores) / len(relationship_scores)
+        if not close(logic_score, relationship_expected, tolerance=1e-6):
+            errors.append(f"logic_assessment.score must equal the relationship mean: {relationship_expected:.4f}")
     elif logic_relationship_ids:
         errors.append("logic_assessment.relationship_ids must be empty when no relationships exist")
+    elif not close(logic_score, 0, tolerance=1e-6):
+        errors.append("logic_assessment.score must be 0 when no relationships exist")
 
     for evidence_id, dimensions in failure_evidence_dimensions.items():
         if len(dimensions) > 1:
@@ -718,218 +651,39 @@ def validate_report(
     if not isinstance(scores.get("provisional"), bool):
         errors.append("scores.provisional must be boolean")
 
-    anchor = require_mapping(analysis, "anchor_placement", "analysis", errors)
-    has_anchors = anchor.get("has_anchors")
-    if not isinstance(has_anchors, bool):
-        errors.append("anchor_placement.has_anchors must be boolean")
-        has_anchors = False
-    formula_conflict = anchor.get("formula_conflict")
-    if not isinstance(formula_conflict, bool):
-        errors.append("anchor_placement.formula_conflict must be boolean")
-        formula_conflict = False
-    boundary_clarity = anchor.get("boundary_clarity")
-    if boundary_clarity not in {0, 0.5, 1}:
-        errors.append("anchor_placement.boundary_clarity must be 0, 0.5, or 1")
-        boundary_clarity = 0
-    if not has_anchors:
-        if calibration_registry_path is not None:
-            errors.append("scoring_config.calibration_registry must be null without anchors")
-        if anchor.get("anchor_set_id") is not None or anchor.get("lower_anchor") is not None or anchor.get("upper_anchor") is not None:
-            errors.append("anchor details must be null when anchors are absent")
-        if boundary_clarity != 0.5:
-            errors.append("anchor_placement.boundary_clarity must be 0.5 without anchors")
-        if formula_conflict:
-            errors.append("formula_conflict must be false without anchors")
-        if scores.get("provisional") is not True:
-            errors.append("scores.provisional must be true when anchors are absent")
-        if not close(l_weight, DEFAULT_L_WEIGHT) or not close(s_weight, DEFAULT_S_WEIGHT):
-            errors.append("reports without anchors must use the default T weights 0.70/0.30")
-        default_s_weights = dict(DEFAULT_S_WEIGHTS)
-        if not any_required_elements:
-            remainder = 1.0 - DEFAULT_S_WEIGHTS["elements"]
-            default_s_weights = {
-                "logic": DEFAULT_S_WEIGHTS["logic"] / remainder,
-                "function": DEFAULT_S_WEIGHTS["function"] / remainder,
-                "elements": 0.0,
-                "support": DEFAULT_S_WEIGHTS["support"] / remainder,
-            }
-        for key, expected in default_s_weights.items():
-            if not close(s_weights.get(key), expected, tolerance=1e-6):
-                errors.append(f"reports without anchors must use the default S weight for {key}: {expected:.6f}")
-        if is_number(t_center) and scores.get("band") != score_band(float(t_center)):
-            errors.append(f"without anchors, scores.band must follow the formula band: {score_band(float(t_center))}")
-    else:
-        if calibration_registry_path is None:
-            errors.append("scoring_config.calibration_registry is required when anchors exist")
-        if not non_empty_string(anchor.get("anchor_set_id")):
-            errors.append("anchor_placement.anchor_set_id is required when anchors exist")
-        if anchor.get("reference_bundle_id") != reference.get("id") or anchor.get("reference_bundle_version") != reference.get("version"):
-            errors.append("anchors must bind to the exact reference bundle id and version")
-        if anchor.get("weights_version") != config.get("weights_version"):
-            errors.append("anchor_placement.weights_version must equal scoring_config.weights_version")
-        lower = anchor.get("lower_anchor")
-        upper = anchor.get("upper_anchor")
-        for name, item in (("lower_anchor", lower), ("upper_anchor", upper)):
-            if not isinstance(item, dict) or not non_empty_string(item.get("id")) or item.get("band") not in valid_band_names or not is_number(item.get("T_center")):
-                errors.append(f"anchor_placement.{name} must include id, band, and finite T_center")
-            elif item.get("reference_bundle_id") != reference.get("id") or item.get("reference_bundle_version") != reference.get("version"):
-                errors.append(f"anchor_placement.{name} must bind to the exact reference bundle")
-        if isinstance(lower, dict) and isinstance(upper, dict) and lower.get("band") in valid_band_names and upper.get("band") in valid_band_names and band_index(lower["band"]) >= band_index(upper["band"]):
-            errors.append("lower_anchor.band must be below upper_anchor.band")
-        anchor_band = anchor.get("anchor_band")
-        if anchor_band not in valid_band_names:
-            errors.append("anchor_placement.anchor_band is invalid")
-        elif scores.get("band") != anchor_band:
-            errors.append("scores.band must equal the human-resolved anchor band")
-        if is_number(t_center) and scores.get("formula_band") in valid_band_names:
-            expected_conflict = scores.get("band") != scores.get("formula_band")
-            if formula_conflict != expected_conflict:
-                errors.append("anchor_placement.formula_conflict must equal the formula-versus-anchor band mismatch")
-        if scores.get("provisional") is not False:
-            errors.append("scores.provisional must be false when anchors exist")
-        registry = read_json_file(calibration_registry_path, "scoring_config.calibration_registry", errors) if calibration_registry_path else None
-        if registry is not None:
-            if registry.get("schema_version") != "1.0" or registry.get("status") != "locked":
-                errors.append("calibration registry must have schema_version=1.0 and status=locked")
-            for key, expected in {
-                "anchor_set_id": anchor.get("anchor_set_id"),
-                "reference_bundle_id": reference.get("id"),
-                "reference_bundle_version": reference.get("version"),
-                "weights_version": config.get("weights_version"),
-                "anchor_band": anchor.get("anchor_band"),
-                "boundary_clarity": boundary_clarity,
-            }.items():
-                if registry.get(key) != expected:
-                    errors.append(f"calibration registry {key} does not match the report")
-            registry_anchors: dict[str, dict[str, Any]] = {}
-            registry_anchor_list = registry.get("anchors")
-            if not isinstance(registry_anchor_list, list):
-                errors.append("calibration registry anchors must be an array")
-            else:
-                for item in registry_anchor_list:
-                    if isinstance(item, dict) and non_empty_string(item.get("id")):
-                        registry_anchors[item["id"]] = item
-            for name, report_anchor in (("lower_anchor", lower), ("upper_anchor", upper)):
-                if not isinstance(report_anchor, dict) or not non_empty_string(report_anchor.get("id")):
-                    continue
-                registered = registry_anchors.get(report_anchor["id"])
-                if registered is None:
-                    errors.append(f"{name} is missing from the calibration registry")
-                    continue
-                for key in ("band", "T_center", "reference_bundle_id", "reference_bundle_version"):
-                    if registered.get(key) != report_anchor.get(key):
-                        errors.append(f"{name}.{key} does not match the calibration registry")
+    anchor, has_anchors, formula_conflict, boundary_clarity = validate_anchor_placement(
+        analysis=analysis,
+        config=config,
+        reference=reference,
+        scores=scores,
+        t_center=t_center,
+        t_range=t_range,
+        l_weight=l_weight,
+        s_weight=s_weight,
+        s_weights=s_weights,
+        any_required_elements=any_required_elements,
+        has_relationships=has_relationships,
+        calibration_registry_path=calibration_registry_path,
+        errors=errors,
+    )
 
-    confidence = require_mapping(analysis, "confidence", "analysis", errors)
-    clear_supported = 0
-    manual_review_count = 0
-    for decision in decisions:
-        if decision.get("manual_review") is True:
-            manual_review_count += 1
-        evidence_ids = decision.get("evidence_ids") if isinstance(decision.get("evidence_ids"), list) else []
-        eligible_ids = [evidence_id for evidence_id in evidence_ids if isinstance(evidence_id, str) and evidence_id in evidence and eligible_evidence(evidence[evidence_id])]
-        if decision.get("evidence_clarity") == "clear" and (eligible_ids or decision.get("absence_verified") is True):
-            clear_supported += 1
-    decision_count = len(decisions)
-    e_expected = clear_supported / decision_count if decision_count else 0.0
-    review_denominator = decision_count + pending_candidates
-    r_expected = (manual_review_count + pending_candidates) / review_denominator if review_denominator else 0.0
-    metrics["E"] = e_expected
-    metrics["R"] = r_expected
-    if not close(confidence.get("E"), e_expected):
-        errors.append(f"confidence.E must equal {e_expected:.4f}")
-    if not close(confidence.get("R"), r_expected):
-        errors.append(f"confidence.R must equal {r_expected:.4f}")
-    m_value = confidence.get("M")
-    if m_value not in {0, 0.5, 1}:
-        errors.append("confidence.M must be 0, 0.5, or 1")
-        m_value = 0
-    if boundary_clarity != m_value:
-        errors.append("confidence.M must equal anchor_placement.boundary_clarity")
-    level_expected = expected_confidence(e_expected, float(m_value), r_expected)
-    if not has_anchors and level_expected == "high":
-        level_expected = "medium"
-    if confidence.get("level") != level_expected:
-        errors.append(f"confidence.level must be {level_expected}")
-    level = confidence.get("level") if confidence.get("level") in {"high", "medium", "low"} else level_expected
-    if is_number(t_center) and isinstance(t_range, list) and len(t_range) == 2:
-        width = {"high": 3, "medium": 6, "low": 10}[level]
-        expected_range = [max(0, int(round(float(t_center) - width))), min(100, int(round(float(t_center) + width)))]
-        if t_range != expected_range:
-            errors.append(f"scores.T_range must equal {expected_range} for {level} confidence")
-
-    review_status = analysis.get("review_status")
-    if review_status not in VALID_REVIEW_STATUS:
-        errors.append("analysis.review_status must be pending or completed")
-    needs_review = level == "low" or manual_review_count > 0 or pending_candidates > 0 or formula_conflict
-    if needs_review and review_status != "completed":
-        if allow_draft:
-            warnings.append("report remains a draft because required human review is incomplete")
-        else:
-            errors.append("analysis.review_status must be completed before final delivery")
-    if level == "low":
-        warnings.append("low-confidence report requires human review")
-
-    adaptation = require_mapping(analysis, "adaptation_diagnostic", "analysis", errors)
-    if "A" in scores or "adaptation_score" in scores or "score" in adaptation:
-        errors.append("adaptation must not be emitted as a numeric score")
-    adaptation_statuses = {"aligned", "conditional", "mismatch", "unknown"}
-    if adaptation.get("status") not in adaptation_statuses:
-        errors.append("adaptation_diagnostic.status is invalid")
-    adaptation_counts = {"successful": 0, "partial": 0, "failed": 0, "pending": 0, "unclear": 0}
-    required_count = 0
-    for assessment in teaching_assessments:
-        if not isinstance(assessment, dict):
-            continue
-        required = assessment.get("adaptation_required")
-        result = assessment.get("adaptation_result")
-        if required == "yes":
-            required_count += 1
-            if result in adaptation_counts:
-                adaptation_counts[result] += 1
-        elif required == "unclear":
-            adaptation_counts["unclear"] += 1
-    expected_adaptation_fields = {
-        "required_count": required_count,
-        "successful_count": adaptation_counts["successful"],
-        "partial_count": adaptation_counts["partial"],
-        "failed_count": adaptation_counts["failed"],
-        "pending_count": adaptation_counts["pending"],
-        "unclear_count": adaptation_counts["unclear"],
-    }
-    for key, expected in expected_adaptation_fields.items():
-        if adaptation.get(key) != expected:
-            errors.append(f"adaptation_diagnostic.{key} must equal {expected}")
-    confirmed_required = adaptation_counts["successful"] + adaptation_counts["partial"] + adaptation_counts["failed"]
-    hit_rate = adaptation_counts["successful"] / confirmed_required if confirmed_required else None
-    if hit_rate is None:
-        if adaptation.get("compensation_hit_rate") is not None:
-            errors.append("compensation_hit_rate must be null without confirmed requirements")
-    elif not close(adaptation.get("compensation_hit_rate"), hit_rate):
-        errors.append(f"compensation_hit_rate must equal {hit_rate:.4f}")
-    if adaptation_counts["unclear"] or adaptation_counts["pending"]:
-        expected_status = "unknown"
-    elif adaptation_counts["failed"] and not adaptation_counts["successful"]:
-        expected_status = "mismatch"
-    elif adaptation_counts["failed"] or adaptation_counts["partial"]:
-        expected_status = "conditional"
-    else:
-        expected_status = "aligned"
-    if adaptation.get("status") != expected_status:
-        errors.append(f"adaptation_diagnostic.status must equal {expected_status} from the adaptation counts")
-
-    next_actions = require_list(analysis, "next_actions", "analysis", errors)
-    if not 1 <= len(next_actions) <= 3:
-        errors.append("analysis.next_actions must contain one to three actions")
-    for index, action in enumerate(next_actions):
-        if not non_empty_string(action):
-            errors.append(f"analysis.next_actions[{index}] must be a non-empty string")
-    for key in ("why_not_higher", "why_not_lower"):
-        if not non_empty_string(analysis.get(key)):
-            errors.append(f"analysis.{key} must be a non-empty string")
-
-    if pending_candidates:
-        warnings.append(f"{pending_candidates} guided candidate(s) await human confirmation")
+    validate_confidence_and_adaptation(
+        analysis=analysis,
+        decisions=decisions,
+        evidence=evidence,
+        pending_candidates=pending_candidates,
+        formula_conflict=formula_conflict,
+        has_anchors=has_anchors,
+        boundary_clarity=boundary_clarity,
+        scores=scores,
+        t_center=t_center,
+        t_range=t_range,
+        teaching_assessments=teaching_assessments,
+        allow_draft=allow_draft,
+        errors=errors,
+        warnings=warnings,
+        metrics=metrics,
+    )
     return errors, warnings, metrics
 
 

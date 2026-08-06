@@ -19,16 +19,22 @@ import shutil
 import stat
 import subprocess
 import sys
-import tempfile
 from typing import Any
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
+from contracts import (  # noqa: E402
+    ANALYSIS_VERSION,
+    PREPARE_MANIFEST_SCHEMA_VERSION,
+    SCHEMA_VERSION,
+    analysis_id,
+    provenance_fingerprint,
+    sha256_file,
+)
 from validate_report import validate_report  # noqa: E402
 
 
-SCHEMA_VERSION = "1.1"
 PREPARE_TIMEOUT_SECONDS = 240
 
 
@@ -62,6 +68,14 @@ def regular_file(path: Path, label: str) -> Path:
     if not stat.S_ISREG(mode):
         raise RuntimeError(f"{label} must be a regular file: {path}")
     return path
+
+
+def source_record(path: Path) -> dict[str, Any]:
+    return {
+        "path": str(path),
+        "sha256": sha256_file(path),
+        "bytes": path.stat().st_size,
+    }
 
 
 def run_prepare(video: Path, output_dir: Path, interval: float, max_frames: int) -> None:
@@ -106,9 +120,13 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def manifest_duration(prepared_dir: Path) -> float:
+def manifest_duration(prepared_dir: Path, source: Path, source_hash: str) -> float:
     manifest_path = prepared_dir / "manifest.json"
     manifest = read_json(manifest_path)
+    if manifest.get("schema_version") != PREPARE_MANIFEST_SCHEMA_VERSION:
+        raise RuntimeError(f"unsupported media manifest schema: {manifest_path}")
+    if manifest.get("source_sha256") != source_hash or manifest.get("source_video") != str(source):
+        raise RuntimeError(f"media manifest source identity does not match {source}")
     duration = manifest.get("duration_seconds")
     if not isinstance(duration, (int, float)) or isinstance(duration, bool) or not math.isfinite(float(duration)) or float(duration) <= 0:
         raise RuntimeError(f"invalid duration in media manifest: {manifest_path}")
@@ -117,10 +135,13 @@ def manifest_duration(prepared_dir: Path) -> float:
 
 def evidence_summary(report: dict[str, Any], creator_video: str) -> dict[str, dict[str, Any]]:
     analysis = report["analysis"]
+    creator_video = str(Path(creator_video).expanduser().resolve())
     evidence = {
         item["id"]: item
         for item in analysis["evidence_records"]
-        if isinstance(item, dict) and item.get("creator_video") == creator_video
+        if isinstance(item, dict)
+        and isinstance(item.get("creator_video"), str)
+        and str(Path(item["creator_video"]).expanduser().resolve()) == creator_video
     }
     result: dict[str, dict[str, Any]] = {}
     for assessment in analysis["teaching_point_assessments"]:
@@ -172,15 +193,21 @@ def build_batch_summary(reports: list[tuple[str, Path, dict[str, Any]]], output_
         "schema_version": SCHEMA_VERSION,
         "reference_bundle_id": first_report["reference_bundle"]["id"],
         "reference_bundle_version": first_report["reference_bundle"]["version"],
+        "reference_bundle_content_hash": first_report["reference_bundle"]["content_hash"],
+        "method_fingerprint": first_report["analysis"]["provenance"]["method_fingerprint"],
         "creator_video_count": len(reports),
         "reports": [
             {
+                "analysis_id": report["analysis"]["analysis_id"],
                 "creator_video": creator_video,
+                "creator_video_sha256": report["analysis"]["provenance"]["source_hashes"]["creator_video"]["sha256"],
                 "report_path": str(report_path.relative_to(output_dir)),
                 "band": report["analysis"]["scores"]["band"],
                 "T_center": report["analysis"]["scores"]["T_center"],
                 "L": report["analysis"]["scores"]["L"],
                 "S": report["analysis"]["scores"]["S"],
+                "has_anchors": report["analysis"]["anchor_placement"]["has_anchors"],
+                "review_status": report["analysis"]["review_status"],
             }
             for creator_video, report_path, report in reports
         ],
@@ -208,7 +235,14 @@ def main() -> int:
         if storyboard_pdf.suffix.lower() != ".pdf":
             raise RuntimeError(f"Storyboard input must be a PDF: {storyboard_pdf}")
         creator_videos = [regular_file(path, "creator video") for path in args.creator_video]
+        if len(creator_videos) != len(set(creator_videos)):
+            raise RuntimeError("creator videos must be unique within a batch")
         drafts = [read_json(path) for path in args.draft_report]
+        shared_source_hashes = {
+            "breakdown_video": source_record(breakdown_video),
+            "storyboard_pdf": source_record(storyboard_pdf),
+        }
+        creator_source_hashes = {str(path): source_record(path) for path in creator_videos}
         output_dir.mkdir(parents=True, exist_ok=False)
         prepared_dir = output_dir / "prepared"
         reports_dir = output_dir / "reports"
@@ -217,17 +251,27 @@ def main() -> int:
 
         breakdown_prepared = prepared_dir / "breakdown"
         run_prepare(breakdown_video, breakdown_prepared, args.interval, args.max_frames)
+        manifest_duration(
+            breakdown_prepared,
+            breakdown_video,
+            shared_source_hashes["breakdown_video"]["sha256"],
+        )
         creator_durations: dict[str, float] = {}
         for index, creator_video in enumerate(creator_videos, start=1):
             creator_prepared = prepared_dir / f"creator_{index:03d}"
             run_prepare(creator_video, creator_prepared, args.interval, args.max_frames)
-            creator_durations[str(creator_video)] = manifest_duration(creator_prepared)
+            creator_durations[str(creator_video)] = manifest_duration(
+                creator_prepared,
+                creator_video,
+                creator_source_hashes[str(creator_video)]["sha256"],
+            )
 
         reports: list[tuple[str, Path, dict[str, Any]]] = []
-        reference_identity: tuple[Any, Any] | None = None
+        reference_identity: tuple[Any, Any, Any, Any] | None = None
         for index, (creator_video, draft) in enumerate(zip(creator_videos, drafts), start=1):
             report = copy.deepcopy(draft)
-            report["schema_version"] = SCHEMA_VERSION
+            if report.get("schema_version") != SCHEMA_VERSION:
+                raise RuntimeError(f"draft for {creator_video} must use schema_version={SCHEMA_VERSION}")
             reference = report.setdefault("reference_bundle", {})
             reference["source_inputs"] = {
                 "breakdown_video": str(breakdown_video),
@@ -237,16 +281,39 @@ def main() -> int:
             analysis["creator_videos"] = [str(creator_video)]
             durations = analysis.setdefault("media_durations", {})
             durations[str(creator_video)] = creator_durations[str(creator_video)]
-            for evidence in analysis.get("evidence_records", []):
-                if isinstance(evidence, dict) and "creator_video" in evidence:
-                    evidence["creator_video"] = str(creator_video)
-            current_identity = (reference.get("id"), reference.get("version"))
+            provenance = analysis.setdefault("provenance", {})
+            provenance["analysis_version"] = ANALYSIS_VERSION
+            provenance["reference_bundle_hash"] = reference.get("content_hash")
+            provenance["source_hashes"] = {
+                **shared_source_hashes,
+                "creator_video": creator_source_hashes[str(creator_video)],
+            }
+            provenance["media_preparation"] = {
+                "manifest_schema_version": PREPARE_MANIFEST_SCHEMA_VERSION,
+                "interval_seconds": args.interval,
+                "max_frames": args.max_frames,
+            }
+            provenance["method_fingerprint"] = provenance_fingerprint(provenance)
+            analysis["analysis_id"] = analysis_id(
+                str(reference.get("content_hash")),
+                creator_source_hashes[str(creator_video)]["sha256"],
+                provenance["method_fingerprint"],
+            )
+            current_identity = (
+                reference.get("id"),
+                reference.get("version"),
+                reference.get("content_hash"),
+                provenance.get("method_fingerprint"),
+            )
             if reference_identity is None:
                 reference_identity = current_identity
             elif current_identity != reference_identity:
-                raise RuntimeError("all creator drafts in a batch must use the same reference bundle id and version")
+                raise RuntimeError("all creator drafts in a batch must use the same reference and analysis-method identity")
             report_path = reports_dir / f"creator_{index:03d}.json"
-            errors, warnings, _ = validate_report(report, allow_draft=args.allow_draft)
+            errors, warnings, _ = validate_report(
+                report,
+                allow_draft=args.allow_draft,
+            )
             for warning in warnings:
                 print(f"warning: creator_{index:03d}: {warning}")
             if errors:
