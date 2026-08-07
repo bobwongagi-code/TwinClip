@@ -1,0 +1,631 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r05-v16",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "sifu.yusuf",
+    "round": 5,
+    "replicate_index": 5
+  },
+  "primary_lane": "REF-A",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 66.666667,
+      "S": 100.0,
+      "T_center": 76.666667,
+      "effective_coverage_rate": 1.0,
+      "coverage_rate": 1.0,
+      "depths": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 66.666667,
+      "S": 100.0,
+      "T_center": 76.666667,
+      "effective_coverage_rate": 1.0,
+      "coverage_rate": 1.0,
+      "depths": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 66.666667,
+    "S": 100.0,
+    "T_center": 76.666667,
+    "band": "多点结构化迁移"
+  },
+  "confidence": {
+    "E": 1.0,
+    "M": 0.5,
+    "R": 0.0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "A-TP01",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "直接提出眼下是否更紧致的问题，并预告Before/After测试。",
+      "source_locator": "EV-01, 0.000-8.000s",
+      "done_well": "问题部位明确，且短时可观察结果被预告。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB01"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "清楚展示取用、眼下涂抹、轻柔按摩和吸收。",
+      "source_locator": "EV-02, 3.000-22.000s",
+      "done_well": "产品动作、使用区域和吸收过程均可辨认。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB02"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "通过单侧实测及清晰的前后/左右眼下对比呈现结果。",
+      "source_locator": "EV-03, 8.000-38.000s",
+      "done_well": "应用侧与对照侧/前后状态都可见。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB04"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP04",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "使用海外300万以上销量和进入马来西亚的具体市场背书。",
+      "source_locator": "EV-04, 20.000-50.000s",
+      "done_well": "具体销量与市场进入信息降低陌生产品的不确定性。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB03"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP05",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "同时提到真实用户研究并展示对应结果对比。",
+      "source_locator": "EV-05, 22.000-55.000s",
+      "done_well": "研究/结果证据与眼下效果主张相对应。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB04"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "把产品用途扩展到额头细纹等眼下以外区域。",
+      "source_locator": "EV-06, 18.000-48.000s",
+      "done_well": "第二使用区域被明确展示或指出。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB05"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP07",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "明确解释5D collagen peptide及其作用。",
+      "source_locator": "EV-07, 25.000-58.000s",
+      "done_well": "机制名称和作用方向均被清楚给出。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB06"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "A-TP08",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "锁定黑眼圈/细纹人群，强调性价比并指向底部链接。",
+      "source_locator": "EV-08, 63.267-73.267s",
+      "done_well": "购买人群、价值理由和可执行行动均具备。",
+      "missing_or_misused": null,
+      "storyboard_node_ids": [
+        "SB07"
+      ],
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "问题钩子和即时结果预告完整，能引发继续观看。",
+      "source_locator": "EV-01, 0.000-8.000s"
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "产品使用动作完整且易于复现。",
+      "source_locator": "EV-02, 3.000-22.000s"
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "具体销量和市场进入信息提供明确社会证明。",
+      "source_locator": "EV-04, 20.000-50.000s"
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "研究信息和可观察前后/左右结果共同支撑效果。",
+      "source_locator": "EV-03, 8.000-38.000s; EV-05, 22.000-55.000s"
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "额头细纹等第二使用区域扩大购买理由。",
+      "source_locator": "EV-06, 18.000-48.000s"
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "5D collagen peptide机制及其作用被明确解释。",
+      "source_locator": "EV-07, 25.000-58.000s"
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "价值理由和底部链接行动均清晰可执行。",
+      "source_locator": "EV-08, 63.267-73.267s"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "from_node_ids": [
+        "SB01"
+      ],
+      "to_node_ids": [
+        "SB02"
+      ],
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "问题/测试钩子自然进入产品与使用方案。",
+      "source_locator": "EV-01, 0.000-8.000s; EV-02, 3.000-22.000s"
+    },
+    {
+      "relationship_id": "REL02",
+      "from_node_ids": [
+        "SB03"
+      ],
+      "to_node_ids": [
+        "SB04"
+      ],
+      "score": 3,
+      "evidence_ids": [
+        "EV-04",
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "具体销量背书后由研究与结果对比承接效果主张。",
+      "source_locator": "EV-04, 20.000-50.000s; EV-05, 22.000-55.000s"
+    },
+    {
+      "relationship_id": "REL03",
+      "from_node_ids": [
+        "SB04"
+      ],
+      "to_node_ids": [
+        "SB05"
+      ],
+      "score": 3,
+      "evidence_ids": [
+        "EV-05",
+        "EV-06"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "结果证据之后扩展额头细纹用途，购买理由衔接自然。",
+      "source_locator": "EV-05, 22.000-55.000s; EV-06, 18.000-48.000s"
+    },
+    {
+      "relationship_id": "REL04",
+      "from_node_ids": [
+        "SB06"
+      ],
+      "to_node_ids": [
+        "SB07"
+      ],
+      "score": 3,
+      "evidence_ids": [
+        "EV-07",
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "机制解释提供购买理由，并顺畅落到CTA。",
+      "source_locator": "EV-07, 25.000-58.000s; EV-08, 63.267-73.267s"
+    },
+    {
+      "relationship_id": "REL05",
+      "from_node_ids": [
+        "SB01"
+      ],
+      "to_node_ids": [
+        "SB07"
+      ],
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "从注意力、测试预告到价值理由和行动指引形成完整路径。",
+      "source_locator": "EV-01, 0.000-8.000s; EV-08, 63.267-73.267s"
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 73.267,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-73.267秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "开头直接提出“眼下是否能更紧致”，并用Before/After预告测试。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 3.0,
+      "end_seconds": 22.0,
+      "visual": "挤取、眼下涂抹、轻柔按摩至吸收，动作完整。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "有清晰的前后/左右眼下对比和一分钟结果说明。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 20.0,
+      "end_seconds": 50.0,
+      "visual": "明确提到海外300万+销量及刚进入马来西亚。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-50.000秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 22.0,
+      "end_seconds": 55.0,
+      "visual": "明确提到真实用户研究，并展示结果对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-55.000秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 18.0,
+      "end_seconds": 48.0,
+      "visual": "扩展到额头细纹。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 25.0,
+      "end_seconds": 58.0,
+      "visual": "明确解释5D collagen peptide及其作用。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-58.000秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+      "start_seconds": 63.267,
+      "end_seconds": 73.267,
+      "visual": "锁定黑眼圈/细纹人群，强调性价比并指向底部链接。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang percaya tak bawah mata ni nampak bergedut ni boleh nampak lebih tegang lepas pakai eye cream. Jom kita test sama-sama. So atuk ambil ni sikit je krim ni lepas tu. Sapu dekat bawah mata, ratakan perlahan-lahan macam ni, urut lembut-lembut guna hujung jari sampai dia serap. Yang ini daripada PapaFeel, dekat luar negara memang dah ramai pakai, lebih 3 juta unit dah terjual. Sekarang baru masuk Malaysia, bukan cakap kosong tau. Dia siap ada kajian pada pengguna sebenar. Cuba kau orang tengok beza ni, bawah mata yang ini nampak lebih licin dan lebih cerah kan? So bukan bawah mata je, deka",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "63.267-73.267秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

@@ -1,0 +1,541 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r05-v14",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "sahabanu_79",
+    "round": 5,
+    "replicate_index": 5
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 45.83,
+      "S": 64.05,
+      "T_center": 51.3,
+      "effective_coverage_rate": 0.375,
+      "coverage_rate": 1,
+      "depths": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 66.67,
+      "S": 64.05,
+      "T_center": 65.88,
+      "effective_coverage_rate": 0.8571428571428571,
+      "coverage_rate": 1,
+      "depths": [
+        3,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 66.67,
+    "S": 64.05,
+    "T_center": 65.88,
+    "band": "多点结构化迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 3,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "开头直接以40岁以上人群、黑眼圈眼袋和细纹切入，并把问题放进个人生活语境，目标用户容易认出自己的处境。",
+      "done_well": "把年龄、人群和具体眼周痛点组合成个人化开场，强化了生活代入。",
+      "missing_or_misused": "没有评论气泡，但用明确的人群和个人问题完成了同一注意力功能。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "黑眼圈、眼袋、细纹和颈部问题被具体指出，问题状态可识别，但没有前后或单侧视觉对照。",
+      "done_well": "明确列出目标部位和问题状态，让观众知道产品针对什么。",
+      "missing_or_misused": "问题主要靠口播呈现，缺少更强的局部状态展示。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "画面清楚展示泵取、轻薄质地、快速吸收和眼下按摩，使用过程可复现。",
+      "done_well": "将产品结构、质地和涂抹动作放进实际使用中。",
+      "missing_or_misused": "展示是标准演示，未形成更强的自然生活化差异。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "明确提出一分钟后的变化，并结合个人体验和反应，具备具体时长与体验细节。",
+      "done_well": "用一分钟这一明确时间点承接个人使用感受。",
+      "missing_or_misused": "没有更长周期的持续使用记录，可信度主要依赖即时口播。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "一分钟变化和正向个人反应与产品效果相连，形成个人结果式分享，但没有画面对比或独立结果证据。",
+      "done_well": "加入即时变化声称与自然反应，增强分享感。",
+      "missing_or_misused": "结果仍主要是口播和主观反应，缺少可复核的前后状态。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "F-L-B06",
+      "absence_verified": false,
+      "reason": "提到额头、脖子等额外问题区域，但没有清楚展示或说明这些区域的实际使用。",
+      "done_well": "至少把眼下以外的区域带入了问题范围。",
+      "missing_or_misused": "额外区域停留在列举和有限展示，尚未形成完整的日常或多区域用途。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "结尾有明确促销理由和黄色购物袋行动，能够把个人分享转成购买动作。",
+      "done_well": "购买理由和执行动作都清楚可辨。",
+      "missing_or_misused": "社会证明部分不够具体，主要依赖促销和购物袋。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "人群、眼周问题和一分钟结果预告共同构成清楚的开场钩子。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "泵取、质地、吸收和眼下按摩动作均被清楚呈现。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "reason": "提到海外知名和进入本地，但没有具体销量或规模背书。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "reason": "有一分钟效果声称和“已证实”表达，但没有可观察对比或临床数据支撑。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "额头、脖子等区域被提及，但扩展用途的实际展示有限。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "5D peptide名称清楚出现，提供了部分产品理由，但没有完整解释作用机制。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "reason": "促销和黄色购物袋行动均明确，购买转化节点完整。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "具体问题和结果预告自然进入产品使用方案。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-04",
+        "EV-03"
+      ],
+      "reason": "弱市场背书之后接效果声称，但两端都缺少具体可核对证据。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 2,
+      "evidence_ids": [
+        "EV-03",
+        "EV-06"
+      ],
+      "reason": "一分钟效果声称后延伸到额头、脖子等区域，承接可理解但扩展展示有限。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 2,
+      "evidence_ids": [
+        "EV-07",
+        "EV-08"
+      ],
+      "reason": "5D peptide名称为购买理由提供部分支撑，随后进入促销和购物袋行动，但机制解释不完整。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-08"
+      ],
+      "reason": "从目标人群痛点到促销和购物袋形成可理解路径，但中间的背书和效果证据偏弱。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 0,
+      "end_seconds": 52.967,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-52.967秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "以40岁以上、眼袋黑眼圈和细纹人群切入。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "展示泵取、轻薄质地、快速吸收和眼下按摩。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "有一分钟变化声称，但没有画面对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 20,
+      "end_seconds": 50,
+      "visual": "提到海外知名/刚进入本地，但没有清晰销量数字。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-50.000秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 22,
+      "end_seconds": 52.967,
+      "visual": "有“已证实”的口播，但未给临床/前后证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-52.967秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 18,
+      "end_seconds": 48,
+      "visual": "提到额头/脖子等问题区域，但展示有限。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 25,
+      "end_seconds": 52.967,
+      "visual": "明确提到5D peptide。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-52.967秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+      "start_seconds": 42.967,
+      "end_seconds": 52.967,
+      "visual": "明确促销和黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang umur 40-an ke atas kan, macam saya ni dah ada dah ringka ringka dark circle eye bag yang penat bekerja, ringkat sini kedutan sini, kedutan sini ataupun dekat leher ni. You all just pump aja ni, papa five d peptide ni untuk eye cream ni. You akan rasa dia punya, jangan risau sebab texture-nya yang screen yang light sahaja, cepat absorb, akan membuatkan sekit mata je. Bila you masa je masa dalam satu minit, nanti you tengok perubahannya akan mengurangkan kedutan kat sini. Lepas tu dia rasa, ya Allah bestnya, baunya tiada bau, dia memang bagus sangat-sangat sebab dia diperbuat daripada pepti",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "42.967-52.967秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

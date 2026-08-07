@@ -24,7 +24,7 @@ class SelectQASampleTests(unittest.TestCase):
 
         def batch(indexes: range) -> dict:
             return {
-                "schema_version": "1.4",
+                "schema_version": "1.5",
                 "reference_bundle_content_hash": "bundle-hash",
                 "method_fingerprint": "method-hash",
                 "creator_video_count": len(indexes),

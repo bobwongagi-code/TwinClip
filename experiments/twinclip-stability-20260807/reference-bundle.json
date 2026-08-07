@@ -1,0 +1,1384 @@
+{
+  "schema_version": "twinclip-multi-reference-provisional-0.2",
+  "reference_bundle_id": "PAPAFEEL-20260806-multi-ref",
+  "reference_bundle_version": "0.1",
+  "source_inputs": {
+    "breakdown_video": "/Users/wangbo5/Downloads/twinclip shortvideo/PAPA FEEL whatsapp.mp4",
+    "storyboard_pdf": "/Users/wangbo5/Downloads/twinclip shortvideo/ PAPAFEEL storyboard.pdf"
+  },
+  "source_content_hashes": {
+    "breakdown_video": {
+      "sha256": "2aaaf0e8a0bff71520641d2c9034ca74af2dd0ed294ff706d88a490e4f4deafe",
+      "bytes": 63765137
+    },
+    "storyboard_pdf": {
+      "sha256": "f34718e12040b8ba0b2570a415a2c1b57f02c496fbc863864e474651670ba351",
+      "bytes": 98997
+    }
+  },
+  "lane_selection_rule": "先比较两个参考的有效机制覆盖率（depth>=2）；覆盖率更高者作为主参考；覆盖率相同则比较T_center。S始终按PDF功能骨架计算。",
+  "lanes": {
+    "REF-A": {
+      "label": "标杆1：男性测试型完整回放",
+      "full_clip_range_seconds": [
+        464.0,
+        525.0
+      ],
+      "storyboard_source": "PAPAFEEL storyboard.pdf",
+      "point_ids": [
+        "A-TP01",
+        "A-TP02",
+        "A-TP03",
+        "A-TP04",
+        "A-TP05",
+        "A-TP06",
+        "A-TP07",
+        "A-TP08"
+      ],
+      "content_hash": "f87d06cdab45137bf9d15c2a0d111e2668f7305ed63e3c96ad798bafad0f6356",
+      "storyboard_nodes": [
+        {
+          "id": "SB01",
+          "label": "Hook",
+          "source_range": [
+            0,
+            3
+          ],
+          "function": "先提出眼下问题并预告可观察结果，引发继续观看。",
+          "required_elements": [
+            "问题证据",
+            "结果预告"
+          ]
+        },
+        {
+          "id": "SB02",
+          "label": "Product demonstration",
+          "source_range": [
+            3,
+            9
+          ],
+          "function": "展示产品和真实使用动作，让观众知道怎么用。",
+          "required_elements": [
+            "产品可见",
+            "涂抹/按摩动作"
+          ]
+        },
+        {
+          "id": "SB03",
+          "label": "Social proof",
+          "source_range": [
+            9,
+            15
+          ],
+          "function": "用具体销量或市场背书降低陌生产品的不确定性。",
+          "required_elements": [
+            "具体社会证明"
+          ]
+        },
+        {
+          "id": "SB04",
+          "label": "Effect proof",
+          "source_range": [
+            15,
+            23
+          ],
+          "function": "用人体研究、数据或可观察前后结果支撑效果。",
+          "required_elements": [
+            "结果证据"
+          ]
+        },
+        {
+          "id": "SB05",
+          "label": "Expanded use",
+          "source_range": [
+            23,
+            32
+          ],
+          "function": "把产品用途扩展到眼下以外的细纹区域，增加购买理由。",
+          "required_elements": [
+            "第二使用区域"
+          ]
+        },
+        {
+          "id": "SB06",
+          "label": "Ingredient mechanism",
+          "source_range": [
+            32,
+            41
+          ],
+          "function": "解释5D胶原/肽等机制，让效果主张有理由可依。",
+          "required_elements": [
+            "5D胶原/肽机制"
+          ]
+        },
+        {
+          "id": "SB07",
+          "label": "CTA",
+          "source_range": [
+            41,
+            50
+          ],
+          "function": "明确适用人群、价格/价值理由和购买动作。",
+          "required_elements": [
+            "购买动作",
+            "购买理由"
+          ]
+        }
+      ],
+      "teaching_points": [
+        {
+          "id": "A-TP01",
+          "stage": "Hook",
+          "name": "测试式问题钩子",
+          "content_function": "用问题和即时测试制造悬念",
+          "core_meaning": "眼下问题能否在短时间内看出变化，先看结果再听介绍",
+          "persuasion_element": "curiosity/test",
+          "evidence_method": "直接指向问题部位并预告单侧/短时测试",
+          "logical_role": "attention",
+          "allowed_substitutions": [
+            "评论问题或生活痛点，只要能预告后续可观察结果"
+          ],
+          "minimum_evidence": [
+            "开头明确问题部位",
+            "结果或测试被预告"
+          ],
+          "false_positive_guards": [
+            "单纯产品近景或泛泛“很好用”不算测试式钩子"
+          ],
+          "storyboard_node_ids": [
+            "SB01"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP02",
+          "stage": "Demonstration",
+          "name": "动作化使用与质地展示",
+          "content_function": "让观众看懂产品如何使用并降低使用门槛",
+          "core_meaning": "挤出、涂抹、按摩、吸收过程要被看见",
+          "persuasion_element": "how-to/texture",
+          "evidence_method": "产品近景配合真实涂抹和质地/吸收动作",
+          "logical_role": "solution",
+          "allowed_substitutions": [
+            "其他清楚展示用量和吸收的动作"
+          ],
+          "minimum_evidence": [
+            "产品动作可辨认",
+            "使用区域可辨认"
+          ],
+          "false_positive_guards": [
+            "只拿产品摆拍不算完整演示"
+          ],
+          "storyboard_node_ids": [
+            "SB02"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP03",
+          "stage": "Proof",
+          "name": "单侧实测与前后对比",
+          "content_function": "把效果从口头主张变成可观察结果",
+          "core_meaning": "只在一侧使用，再让观众比较两侧变化",
+          "persuasion_element": "self-proof/contrast",
+          "evidence_method": "单侧应用加左右或前后对比",
+          "logical_role": "proof",
+          "allowed_substitutions": [
+            "清晰的前后状态或第三方可观察结果对比"
+          ],
+          "minimum_evidence": [
+            "应用侧和未应用侧/前后两状态都可见"
+          ],
+          "false_positive_guards": [
+            "只说“一分钟有效”但没有两侧/前后证据不算功能命中"
+          ],
+          "storyboard_node_ids": [
+            "SB04"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP04",
+          "stage": "Proof",
+          "name": "具体销量与市场背书",
+          "content_function": "降低陌生产品的不确定性",
+          "core_meaning": "用300万销量/海外市场/进入马来西亚等具体背书证明不是新奇小众产品",
+          "persuasion_element": "social proof",
+          "evidence_method": "具体销量、市场进入或可见用户规模信息",
+          "logical_role": "credibility",
+          "allowed_substitutions": [
+            "同等具体且可核对的市场/用户规模背书"
+          ],
+          "minimum_evidence": [
+            "出现具体或明确规模背书"
+          ],
+          "false_positive_guards": [
+            "“很多人买/很出名”没有具体内容最多算表层"
+          ],
+          "storyboard_node_ids": [
+            "SB03"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP05",
+          "stage": "Proof",
+          "name": "研究/数据或真实结果证据",
+          "content_function": "让效果主张有独立证据支撑",
+          "core_meaning": "临床/人体研究、数据图或可观察的真实结果要承接效果声称",
+          "persuasion_element": "evidence",
+          "evidence_method": "人体研究、数据图、结果标记或可复核的实测",
+          "logical_role": "proof",
+          "allowed_substitutions": [
+            "明确时间跨度的个人实测，前提是结果可观察"
+          ],
+          "minimum_evidence": [
+            "证据类型和所支撑的效果能对应"
+          ],
+          "false_positive_guards": [
+            "泛泛“有效/有研究”而无证据呈现不算完整命中"
+          ],
+          "storyboard_node_ids": [
+            "SB04"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP06",
+          "stage": "Need",
+          "name": "眼下以外的多区域用途",
+          "content_function": "扩大适用场景和购买理由",
+          "core_meaning": "额头、法令纹、眼角等也能用，不把产品锁死在单一部位",
+          "persuasion_element": "multi-use",
+          "evidence_method": "实际在第二区域涂抹或明确指向第二问题区域",
+          "logical_role": "benefit",
+          "allowed_substitutions": [
+            "其他与产品功能一致的第二使用区域"
+          ],
+          "minimum_evidence": [
+            "第二区域被明确说出或展示"
+          ],
+          "false_positive_guards": [
+            "只列举部位而不指向用途最多算表层"
+          ],
+          "storyboard_node_ids": [
+            "SB05"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP07",
+          "stage": "Product",
+          "name": "5D胶原/肽机制解释",
+          "content_function": "给效果主张提供可理解的产品理由",
+          "core_meaning": "五种胶原肽/5D peptide帮助皮肤更有弹性、紧致或健康",
+          "persuasion_element": "ingredient mechanism",
+          "evidence_method": "成分图卡或口播解释机制",
+          "logical_role": "reason_to_buy",
+          "allowed_substitutions": [
+            "同产品包装上可核对的机制名称及作用解释"
+          ],
+          "minimum_evidence": [
+            "成分机制名称被说出或清楚展示",
+            "作用方向与卖点相连"
+          ],
+          "false_positive_guards": [
+            "只出现产品包装但看不出机制不算"
+          ],
+          "storyboard_node_ids": [
+            "SB06"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "A-TP08",
+          "stage": "CTA",
+          "name": "价值理由与黄色购物袋行动",
+          "content_function": "把兴趣转为下单动作",
+          "core_meaning": "明确适用人群、性价比/促销理由，并指向购物袋",
+          "persuasion_element": "price/CTA",
+          "evidence_method": "价格/价值理由加黄色购物袋或底部链接指引",
+          "logical_role": "purchase",
+          "allowed_substitutions": [
+            "其他明确可执行的购买动作"
+          ],
+          "minimum_evidence": [
+            "动作指引可执行",
+            "至少一个购买理由"
+          ],
+          "false_positive_guards": [
+            "只说“可以试试”而无购买动作不算完整命中"
+          ],
+          "storyboard_node_ids": [
+            "SB07"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45，第一标杆完整回放及拆解显式讲解；Storyboard PDF对应节点",
+          "source_ranges": [
+            [
+              464.0,
+              525.0
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        }
+      ],
+      "relationships": [
+        {
+          "id": "REL01",
+          "type": "problem_to_solution",
+          "from_node_ids": [
+            "SB01"
+          ],
+          "to_node_ids": [
+            "SB02"
+          ],
+          "teaching_point_ids": [
+            "A-TP01"
+          ],
+          "description": "问题/测试钩子之后要自然进入产品与使用方案。"
+        },
+        {
+          "id": "REL02",
+          "type": "claim_to_proof",
+          "from_node_ids": [
+            "SB03"
+          ],
+          "to_node_ids": [
+            "SB04"
+          ],
+          "teaching_point_ids": [
+            "A-TP04",
+            "A-TP05"
+          ],
+          "description": "社会背书和效果主张要继续由可核对的结果证据承接。"
+        },
+        {
+          "id": "REL03",
+          "type": "proof_to_benefit",
+          "from_node_ids": [
+            "SB04"
+          ],
+          "to_node_ids": [
+            "SB05"
+          ],
+          "teaching_point_ids": [
+            "A-TP05",
+            "A-TP06"
+          ],
+          "description": "结果证据之后再扩大使用场景，购买理由才不会跳跃。"
+        },
+        {
+          "id": "REL04",
+          "type": "reason_to_buy",
+          "from_node_ids": [
+            "SB06"
+          ],
+          "to_node_ids": [
+            "SB07"
+          ],
+          "teaching_point_ids": [
+            "A-TP07",
+            "A-TP08"
+          ],
+          "description": "机制/价值理由最终要落到清晰的购买动作。"
+        },
+        {
+          "id": "REL05",
+          "type": "attention_to_purchase",
+          "from_node_ids": [
+            "SB01"
+          ],
+          "to_node_ids": [
+            "SB07"
+          ],
+          "teaching_point_ids": [
+            "A-TP01",
+            "A-TP08"
+          ],
+          "description": "从注意力到下单要形成完整、可理解的带货路径。"
+        }
+      ]
+    },
+    "REF-B": {
+      "label": "标杆2：女性评论/个人体验型完整回放",
+      "full_clip_range_seconds": [
+        541.0,
+        647.698
+      ],
+      "storyboard_source": "由拆解视频显式讲解的功能结构映射",
+      "point_ids": [
+        "B-TP01",
+        "B-TP02",
+        "B-TP03",
+        "B-TP04",
+        "B-TP05",
+        "B-TP06",
+        "B-TP07"
+      ],
+      "content_hash": "d3a20fc27bec8e4451b25763147bacf3c160d7344eba230e995289f3705edd5f",
+      "storyboard_nodes": [
+        {
+          "id": "SB01",
+          "label": "Hook",
+          "source_range": [
+            0,
+            3
+          ],
+          "function": "先提出眼下问题并预告可观察结果，引发继续观看。",
+          "required_elements": [
+            "问题证据",
+            "结果预告"
+          ]
+        },
+        {
+          "id": "SB02",
+          "label": "Product demonstration",
+          "source_range": [
+            3,
+            9
+          ],
+          "function": "展示产品和真实使用动作，让观众知道怎么用。",
+          "required_elements": [
+            "产品可见",
+            "涂抹/按摩动作"
+          ]
+        },
+        {
+          "id": "SB03",
+          "label": "Social proof",
+          "source_range": [
+            9,
+            15
+          ],
+          "function": "用具体销量或市场背书降低陌生产品的不确定性。",
+          "required_elements": [
+            "具体社会证明"
+          ]
+        },
+        {
+          "id": "SB04",
+          "label": "Effect proof",
+          "source_range": [
+            15,
+            23
+          ],
+          "function": "用人体研究、数据或可观察前后结果支撑效果。",
+          "required_elements": [
+            "结果证据"
+          ]
+        },
+        {
+          "id": "SB05",
+          "label": "Expanded use",
+          "source_range": [
+            23,
+            32
+          ],
+          "function": "把产品用途扩展到眼下以外的细纹区域，增加购买理由。",
+          "required_elements": [
+            "第二使用区域"
+          ]
+        },
+        {
+          "id": "SB06",
+          "label": "Ingredient mechanism",
+          "source_range": [
+            32,
+            41
+          ],
+          "function": "解释5D胶原/肽等机制，让效果主张有理由可依。",
+          "required_elements": [
+            "5D胶原/肽机制"
+          ]
+        },
+        {
+          "id": "SB07",
+          "label": "CTA",
+          "source_range": [
+            41,
+            50
+          ],
+          "function": "明确适用人群、价格/价值理由和购买动作。",
+          "required_elements": [
+            "购买动作",
+            "购买理由"
+          ]
+        }
+      ],
+      "teaching_points": [
+        {
+          "id": "B-TP01",
+          "stage": "Hook",
+          "name": "评论/生活痛点开场",
+          "content_function": "让目标用户先认出自己的处境",
+          "core_meaning": "用评论问题或熬夜、年龄等生活情境建立个人关联",
+          "persuasion_element": "relatable pain",
+          "evidence_method": "评论气泡/生活情境/直接提问",
+          "logical_role": "attention",
+          "allowed_substitutions": [
+            "其他能让目标用户自我代入的具体问题"
+          ],
+          "minimum_evidence": [
+            "具体处境被提出",
+            "目标部位或人群可辨认"
+          ],
+          "false_positive_guards": [
+            "泛泛说“这个很好”不算"
+          ],
+          "storyboard_node_ids": [
+            "SB01"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP02",
+          "stage": "Need",
+          "name": "问题状态的前后或具体呈现",
+          "content_function": "让用户看到自己可能面对的状态",
+          "core_meaning": "把眼袋、黑眼圈、松弛或细纹的状态具体呈现出来",
+          "persuasion_element": "problem visualization",
+          "evidence_method": "前后图、局部特写或生活状态描述",
+          "logical_role": "need",
+          "allowed_substitutions": [
+            "清楚的局部问题特写"
+          ],
+          "minimum_evidence": [
+            "问题部位/状态具体可见或可识别"
+          ],
+          "false_positive_guards": [
+            "只列问题名不算充分呈现"
+          ],
+          "storyboard_node_ids": [
+            "SB01",
+            "SB04"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP03",
+          "stage": "Demonstration",
+          "name": "包装结构与自然使用",
+          "content_function": "把产品融入真实使用过程",
+          "core_meaning": "展示旋转/挤出/涂抹，而不是只把产品当广告图",
+          "persuasion_element": "routine demo",
+          "evidence_method": "产品结构、用量和实际应用动作",
+          "logical_role": "solution",
+          "allowed_substitutions": [
+            "其他自然、可复现的使用演示"
+          ],
+          "minimum_evidence": [
+            "结构或用量可见",
+            "涂抹动作可见"
+          ],
+          "false_positive_guards": [
+            "静物产品片不算"
+          ],
+          "storyboard_node_ids": [
+            "SB02"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP04",
+          "stage": "Proof",
+          "name": "具体使用时长/个人体验",
+          "content_function": "用持续使用经历建立可信度",
+          "core_meaning": "说清楚用了多久、怎么用以及个人感受",
+          "persuasion_element": "specific testimony",
+          "evidence_method": "具体天数/周期和个人体验",
+          "logical_role": "credibility",
+          "allowed_substitutions": [
+            "其他带时间或过程细节的真实体验"
+          ],
+          "minimum_evidence": [
+            "有具体时长或过程细节",
+            "体验与卖点对应"
+          ],
+          "false_positive_guards": [
+            "只说“我觉得有效”不算具体体验"
+          ],
+          "storyboard_node_ids": [
+            "SB04"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP05",
+          "stage": "Proof",
+          "name": "个人结果与情绪反应",
+          "content_function": "用个人结果让效果更像真实分享",
+          "core_meaning": "展示状态变化并用自然反应强化可信度",
+          "persuasion_element": "personal result",
+          "evidence_method": "前后状态、即时反馈或真实反应",
+          "logical_role": "proof",
+          "allowed_substitutions": [
+            "清楚的个人结果展示"
+          ],
+          "minimum_evidence": [
+            "结果/感受和产品作用对应"
+          ],
+          "false_positive_guards": [
+            "只重复效果词没有结果不算"
+          ],
+          "storyboard_node_ids": [
+            "SB04"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP06",
+          "stage": "Need",
+          "name": "日常场景与额外用途",
+          "content_function": "说明产品可以持续进入日常生活",
+          "core_meaning": "早晚使用、眼下以外区域或生活化场景增加购买理由",
+          "persuasion_element": "routine breadth",
+          "evidence_method": "日夜使用/多区域或具体生活场景",
+          "logical_role": "benefit",
+          "allowed_substitutions": [
+            "其他可执行的日常使用说明"
+          ],
+          "minimum_evidence": [
+            "日常场景或第二用途至少一项明确"
+          ],
+          "false_positive_guards": [
+            "单纯喊“每天用”没有场景不算完整"
+          ],
+          "storyboard_node_ids": [
+            "SB05"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        },
+        {
+          "id": "B-TP07",
+          "stage": "CTA",
+          "name": "社会证明/价格与自然CTA",
+          "content_function": "在个人分享后完成购买转化",
+          "core_meaning": "用销量、价格或库存理由承接自然的购物车行动",
+          "persuasion_element": "social proof/CTA",
+          "evidence_method": "具体背书或促销理由加可执行购买动作",
+          "logical_role": "purchase",
+          "allowed_substitutions": [
+            "其他具体购买理由和动作"
+          ],
+          "minimum_evidence": [
+            "至少一个购买理由",
+            "明确行动指引"
+          ],
+          "false_positive_guards": [
+            "只说“推荐”而无动作不算完整"
+          ],
+          "storyboard_node_ids": [
+            "SB03",
+            "SB07"
+          ],
+          "source_locator": "PAPA FEEL whatsapp.mp4 09:00-10:48，第二标杆完整回放及拆解显式讲解",
+          "source_ranges": [
+            [
+              541.0,
+              647.698
+            ]
+          ],
+          "source_type": "breakdown_explicit"
+        }
+      ],
+      "relationships": [
+        {
+          "id": "REL01",
+          "type": "problem_to_solution",
+          "from_node_ids": [
+            "SB01"
+          ],
+          "to_node_ids": [
+            "SB02"
+          ],
+          "teaching_point_ids": [
+            "B-TP01"
+          ],
+          "description": "问题/测试钩子之后要自然进入产品与使用方案。"
+        },
+        {
+          "id": "REL02",
+          "type": "claim_to_proof",
+          "from_node_ids": [
+            "SB03"
+          ],
+          "to_node_ids": [
+            "SB04"
+          ],
+          "teaching_point_ids": [
+            "B-TP07",
+            "B-TP05"
+          ],
+          "description": "社会背书和效果主张要继续由可核对的结果证据承接。"
+        },
+        {
+          "id": "REL03",
+          "type": "proof_to_benefit",
+          "from_node_ids": [
+            "SB04"
+          ],
+          "to_node_ids": [
+            "SB05"
+          ],
+          "teaching_point_ids": [
+            "B-TP05",
+            "B-TP06"
+          ],
+          "description": "结果证据之后再扩大使用场景，购买理由才不会跳跃。"
+        },
+        {
+          "id": "REL04",
+          "type": "reason_to_buy",
+          "from_node_ids": [
+            "SB06"
+          ],
+          "to_node_ids": [
+            "SB07"
+          ],
+          "teaching_point_ids": [
+            "B-TP07"
+          ],
+          "description": "机制/价值理由最终要落到清晰的购买动作。"
+        },
+        {
+          "id": "REL05",
+          "type": "attention_to_purchase",
+          "from_node_ids": [
+            "SB01"
+          ],
+          "to_node_ids": [
+            "SB07"
+          ],
+          "teaching_point_ids": [
+            "B-TP01",
+            "B-TP07"
+          ],
+          "description": "从注意力到下单要形成完整、可理解的带货路径。"
+        }
+      ]
+    }
+  },
+  "storyboard_nodes": [
+    {
+      "id": "SB01",
+      "label": "Hook",
+      "source_range": [
+        0,
+        3
+      ],
+      "function": "先提出眼下问题并预告可观察结果，引发继续观看。",
+      "required_elements": [
+        "问题证据",
+        "结果预告"
+      ]
+    },
+    {
+      "id": "SB02",
+      "label": "Product demonstration",
+      "source_range": [
+        3,
+        9
+      ],
+      "function": "展示产品和真实使用动作，让观众知道怎么用。",
+      "required_elements": [
+        "产品可见",
+        "涂抹/按摩动作"
+      ]
+    },
+    {
+      "id": "SB03",
+      "label": "Social proof",
+      "source_range": [
+        9,
+        15
+      ],
+      "function": "用具体销量或市场背书降低陌生产品的不确定性。",
+      "required_elements": [
+        "具体社会证明"
+      ]
+    },
+    {
+      "id": "SB04",
+      "label": "Effect proof",
+      "source_range": [
+        15,
+        23
+      ],
+      "function": "用人体研究、数据或可观察前后结果支撑效果。",
+      "required_elements": [
+        "结果证据"
+      ]
+    },
+    {
+      "id": "SB05",
+      "label": "Expanded use",
+      "source_range": [
+        23,
+        32
+      ],
+      "function": "把产品用途扩展到眼下以外的细纹区域，增加购买理由。",
+      "required_elements": [
+        "第二使用区域"
+      ]
+    },
+    {
+      "id": "SB06",
+      "label": "Ingredient mechanism",
+      "source_range": [
+        32,
+        41
+      ],
+      "function": "解释5D胶原/肽等机制，让效果主张有理由可依。",
+      "required_elements": [
+        "5D胶原/肽机制"
+      ]
+    },
+    {
+      "id": "SB07",
+      "label": "CTA",
+      "source_range": [
+        41,
+        50
+      ],
+      "function": "明确适用人群、价格/价值理由和购买动作。",
+      "required_elements": [
+        "购买动作",
+        "购买理由"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "REL01",
+      "type": "problem_to_solution",
+      "from_node_ids": [
+        "SB01"
+      ],
+      "to_node_ids": [
+        "SB02"
+      ],
+      "teaching_point_ids": [
+        "A-TP01"
+      ],
+      "description": "问题/测试钩子之后要自然进入产品与使用方案。"
+    },
+    {
+      "id": "REL02",
+      "type": "claim_to_proof",
+      "from_node_ids": [
+        "SB03"
+      ],
+      "to_node_ids": [
+        "SB04"
+      ],
+      "teaching_point_ids": [
+        "A-TP04",
+        "A-TP05"
+      ],
+      "description": "社会背书和效果主张要继续由可核对的结果证据承接。"
+    },
+    {
+      "id": "REL03",
+      "type": "proof_to_benefit",
+      "from_node_ids": [
+        "SB04"
+      ],
+      "to_node_ids": [
+        "SB05"
+      ],
+      "teaching_point_ids": [
+        "A-TP05",
+        "A-TP06"
+      ],
+      "description": "结果证据之后再扩大使用场景，购买理由才不会跳跃。"
+    },
+    {
+      "id": "REL04",
+      "type": "reason_to_buy",
+      "from_node_ids": [
+        "SB06"
+      ],
+      "to_node_ids": [
+        "SB07"
+      ],
+      "teaching_point_ids": [
+        "A-TP07",
+        "A-TP08"
+      ],
+      "description": "机制/价值理由最终要落到清晰的购买动作。"
+    },
+    {
+      "id": "REL05",
+      "type": "attention_to_purchase",
+      "from_node_ids": [
+        "SB01"
+      ],
+      "to_node_ids": [
+        "SB07"
+      ],
+      "teaching_point_ids": [
+        "A-TP01",
+        "A-TP08"
+      ],
+      "description": "从注意力到下单要形成完整、可理解的带货路径。"
+    }
+  ],
+  "teaching_points": {
+    "REF-A": [
+      {
+        "id": "A-TP01",
+        "stage": "Hook",
+        "name": "测试式问题钩子",
+        "content_function": "用问题和即时测试制造悬念",
+        "core_meaning": "眼下问题能否在短时间内看出变化，先看结果再听介绍",
+        "persuasion_element": "curiosity/test",
+        "evidence_method": "直接指向问题部位并预告单侧/短时测试",
+        "logical_role": "attention",
+        "allowed_substitutions": [
+          "评论问题或生活痛点，只要能预告后续可观察结果"
+        ],
+        "minimum_evidence": [
+          "开头明确问题部位",
+          "结果或测试被预告"
+        ],
+        "false_positive_guards": [
+          "单纯产品近景或泛泛“很好用”不算测试式钩子"
+        ],
+        "storyboard_node_ids": [
+          "SB01"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP02",
+        "stage": "Demonstration",
+        "name": "动作化使用与质地展示",
+        "content_function": "让观众看懂产品如何使用并降低使用门槛",
+        "core_meaning": "挤出、涂抹、按摩、吸收过程要被看见",
+        "persuasion_element": "how-to/texture",
+        "evidence_method": "产品近景配合真实涂抹和质地/吸收动作",
+        "logical_role": "solution",
+        "allowed_substitutions": [
+          "其他清楚展示用量和吸收的动作"
+        ],
+        "minimum_evidence": [
+          "产品动作可辨认",
+          "使用区域可辨认"
+        ],
+        "false_positive_guards": [
+          "只拿产品摆拍不算完整演示"
+        ],
+        "storyboard_node_ids": [
+          "SB02"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP03",
+        "stage": "Proof",
+        "name": "单侧实测与前后对比",
+        "content_function": "把效果从口头主张变成可观察结果",
+        "core_meaning": "只在一侧使用，再让观众比较两侧变化",
+        "persuasion_element": "self-proof/contrast",
+        "evidence_method": "单侧应用加左右或前后对比",
+        "logical_role": "proof",
+        "allowed_substitutions": [
+          "清晰的前后状态或第三方可观察结果对比"
+        ],
+        "minimum_evidence": [
+          "应用侧和未应用侧/前后两状态都可见"
+        ],
+        "false_positive_guards": [
+          "只说“一分钟有效”但没有两侧/前后证据不算功能命中"
+        ],
+        "storyboard_node_ids": [
+          "SB04"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP04",
+        "stage": "Proof",
+        "name": "具体销量与市场背书",
+        "content_function": "降低陌生产品的不确定性",
+        "core_meaning": "用300万销量/海外市场/进入马来西亚等具体背书证明不是新奇小众产品",
+        "persuasion_element": "social proof",
+        "evidence_method": "具体销量、市场进入或可见用户规模信息",
+        "logical_role": "credibility",
+        "allowed_substitutions": [
+          "同等具体且可核对的市场/用户规模背书"
+        ],
+        "minimum_evidence": [
+          "出现具体或明确规模背书"
+        ],
+        "false_positive_guards": [
+          "“很多人买/很出名”没有具体内容最多算表层"
+        ],
+        "storyboard_node_ids": [
+          "SB03"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP05",
+        "stage": "Proof",
+        "name": "研究/数据或真实结果证据",
+        "content_function": "让效果主张有独立证据支撑",
+        "core_meaning": "临床/人体研究、数据图或可观察的真实结果要承接效果声称",
+        "persuasion_element": "evidence",
+        "evidence_method": "人体研究、数据图、结果标记或可复核的实测",
+        "logical_role": "proof",
+        "allowed_substitutions": [
+          "明确时间跨度的个人实测，前提是结果可观察"
+        ],
+        "minimum_evidence": [
+          "证据类型和所支撑的效果能对应"
+        ],
+        "false_positive_guards": [
+          "泛泛“有效/有研究”而无证据呈现不算完整命中"
+        ],
+        "storyboard_node_ids": [
+          "SB04"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP06",
+        "stage": "Need",
+        "name": "眼下以外的多区域用途",
+        "content_function": "扩大适用场景和购买理由",
+        "core_meaning": "额头、法令纹、眼角等也能用，不把产品锁死在单一部位",
+        "persuasion_element": "multi-use",
+        "evidence_method": "实际在第二区域涂抹或明确指向第二问题区域",
+        "logical_role": "benefit",
+        "allowed_substitutions": [
+          "其他与产品功能一致的第二使用区域"
+        ],
+        "minimum_evidence": [
+          "第二区域被明确说出或展示"
+        ],
+        "false_positive_guards": [
+          "只列举部位而不指向用途最多算表层"
+        ],
+        "storyboard_node_ids": [
+          "SB05"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP07",
+        "stage": "Product",
+        "name": "5D胶原/肽机制解释",
+        "content_function": "给效果主张提供可理解的产品理由",
+        "core_meaning": "五种胶原肽/5D peptide帮助皮肤更有弹性、紧致或健康",
+        "persuasion_element": "ingredient mechanism",
+        "evidence_method": "成分图卡或口播解释机制",
+        "logical_role": "reason_to_buy",
+        "allowed_substitutions": [
+          "同产品包装上可核对的机制名称及作用解释"
+        ],
+        "minimum_evidence": [
+          "成分机制名称被说出或清楚展示",
+          "作用方向与卖点相连"
+        ],
+        "false_positive_guards": [
+          "只出现产品包装但看不出机制不算"
+        ],
+        "storyboard_node_ids": [
+          "SB06"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "A-TP08",
+        "stage": "CTA",
+        "name": "价值理由与黄色购物袋行动",
+        "content_function": "把兴趣转为下单动作",
+        "core_meaning": "明确适用人群、性价比/促销理由，并指向购物袋",
+        "persuasion_element": "price/CTA",
+        "evidence_method": "价格/价值理由加黄色购物袋或底部链接指引",
+        "logical_role": "purchase",
+        "allowed_substitutions": [
+          "其他明确可执行的购买动作"
+        ],
+        "minimum_evidence": [
+          "动作指引可执行",
+          "至少一个购买理由"
+        ],
+        "false_positive_guards": [
+          "只说“可以试试”而无购买动作不算完整命中"
+        ],
+        "storyboard_node_ids": [
+          "SB07"
+        ],
+        "source_type": "breakdown_explicit"
+      }
+    ],
+    "REF-B": [
+      {
+        "id": "B-TP01",
+        "stage": "Hook",
+        "name": "评论/生活痛点开场",
+        "content_function": "让目标用户先认出自己的处境",
+        "core_meaning": "用评论问题或熬夜、年龄等生活情境建立个人关联",
+        "persuasion_element": "relatable pain",
+        "evidence_method": "评论气泡/生活情境/直接提问",
+        "logical_role": "attention",
+        "allowed_substitutions": [
+          "其他能让目标用户自我代入的具体问题"
+        ],
+        "minimum_evidence": [
+          "具体处境被提出",
+          "目标部位或人群可辨认"
+        ],
+        "false_positive_guards": [
+          "泛泛说“这个很好”不算"
+        ],
+        "storyboard_node_ids": [
+          "SB01"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP02",
+        "stage": "Need",
+        "name": "问题状态的前后或具体呈现",
+        "content_function": "让用户看到自己可能面对的状态",
+        "core_meaning": "把眼袋、黑眼圈、松弛或细纹的状态具体呈现出来",
+        "persuasion_element": "problem visualization",
+        "evidence_method": "前后图、局部特写或生活状态描述",
+        "logical_role": "need",
+        "allowed_substitutions": [
+          "清楚的局部问题特写"
+        ],
+        "minimum_evidence": [
+          "问题部位/状态具体可见或可识别"
+        ],
+        "false_positive_guards": [
+          "只列问题名不算充分呈现"
+        ],
+        "storyboard_node_ids": [
+          "SB01",
+          "SB04"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP03",
+        "stage": "Demonstration",
+        "name": "包装结构与自然使用",
+        "content_function": "把产品融入真实使用过程",
+        "core_meaning": "展示旋转/挤出/涂抹，而不是只把产品当广告图",
+        "persuasion_element": "routine demo",
+        "evidence_method": "产品结构、用量和实际应用动作",
+        "logical_role": "solution",
+        "allowed_substitutions": [
+          "其他自然、可复现的使用演示"
+        ],
+        "minimum_evidence": [
+          "结构或用量可见",
+          "涂抹动作可见"
+        ],
+        "false_positive_guards": [
+          "静物产品片不算"
+        ],
+        "storyboard_node_ids": [
+          "SB02"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP04",
+        "stage": "Proof",
+        "name": "具体使用时长/个人体验",
+        "content_function": "用持续使用经历建立可信度",
+        "core_meaning": "说清楚用了多久、怎么用以及个人感受",
+        "persuasion_element": "specific testimony",
+        "evidence_method": "具体天数/周期和个人体验",
+        "logical_role": "credibility",
+        "allowed_substitutions": [
+          "其他带时间或过程细节的真实体验"
+        ],
+        "minimum_evidence": [
+          "有具体时长或过程细节",
+          "体验与卖点对应"
+        ],
+        "false_positive_guards": [
+          "只说“我觉得有效”不算具体体验"
+        ],
+        "storyboard_node_ids": [
+          "SB04"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP05",
+        "stage": "Proof",
+        "name": "个人结果与情绪反应",
+        "content_function": "用个人结果让效果更像真实分享",
+        "core_meaning": "展示状态变化并用自然反应强化可信度",
+        "persuasion_element": "personal result",
+        "evidence_method": "前后状态、即时反馈或真实反应",
+        "logical_role": "proof",
+        "allowed_substitutions": [
+          "清楚的个人结果展示"
+        ],
+        "minimum_evidence": [
+          "结果/感受和产品作用对应"
+        ],
+        "false_positive_guards": [
+          "只重复效果词没有结果不算"
+        ],
+        "storyboard_node_ids": [
+          "SB04"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP06",
+        "stage": "Need",
+        "name": "日常场景与额外用途",
+        "content_function": "说明产品可以持续进入日常生活",
+        "core_meaning": "早晚使用、眼下以外区域或生活化场景增加购买理由",
+        "persuasion_element": "routine breadth",
+        "evidence_method": "日夜使用/多区域或具体生活场景",
+        "logical_role": "benefit",
+        "allowed_substitutions": [
+          "其他可执行的日常使用说明"
+        ],
+        "minimum_evidence": [
+          "日常场景或第二用途至少一项明确"
+        ],
+        "false_positive_guards": [
+          "单纯喊“每天用”没有场景不算完整"
+        ],
+        "storyboard_node_ids": [
+          "SB05"
+        ],
+        "source_type": "breakdown_explicit"
+      },
+      {
+        "id": "B-TP07",
+        "stage": "CTA",
+        "name": "社会证明/价格与自然CTA",
+        "content_function": "在个人分享后完成购买转化",
+        "core_meaning": "用销量、价格或库存理由承接自然的购物车行动",
+        "persuasion_element": "social proof/CTA",
+        "evidence_method": "具体背书或促销理由加可执行购买动作",
+        "logical_role": "purchase",
+        "allowed_substitutions": [
+          "其他具体购买理由和动作"
+        ],
+        "minimum_evidence": [
+          "至少一个购买理由",
+          "明确行动指引"
+        ],
+        "false_positive_guards": [
+          "只说“推荐”而无动作不算完整"
+        ],
+        "storyboard_node_ids": [
+          "SB03",
+          "SB07"
+        ],
+        "source_type": "breakdown_explicit"
+      }
+    ]
+  },
+  "reference_observation_notes": {
+    "REF-A": "参考拆解视频约07:44开始播放完整Video 1，约08:45切换到Video 2前的说明页；对应PDF 50秒脚本框架。",
+    "REF-B": "参考拆解视频约09:00开始播放完整Video 2，持续到视频末尾；结构由拆解口播显式说明，不把Storyboard独有细节强加给该参考。"
+  },
+  "status": "locked_for_provisional_review",
+  "content_hash": "36136d1fa4f42089307a2e7d677a15963a66663f481fe3c58ec415ee1a4831da"
+}

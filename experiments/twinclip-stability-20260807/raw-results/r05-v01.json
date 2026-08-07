@@ -1,0 +1,353 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r05-v01",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "aliceong417",
+    "round": 5,
+    "replicate_index": 5
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 83.33,
+      "S": 91.48,
+      "T_center": 85.78,
+      "effective_coverage_rate": 0.875,
+      "coverage_rate": 1,
+      "depths": [3, 3, 3, 3, 2, 3, 1, 2]
+    },
+    "REF-B": {
+      "L": 85.71,
+      "S": 91.48,
+      "T_center": 87.44,
+      "effective_coverage_rate": 1,
+      "coverage_rate": 1,
+      "depths": [2, 3, 3, 2, 3, 3, 2]
+    }
+  },
+  "scores": {
+    "L": 85.71,
+    "S": 91.48,
+    "T_center": 87.44,
+    "band": "二次创新"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 2,
+      "evidence_ids": ["EV-01"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "relatability_format",
+      "reason": "开头明确提出眼霜挑战并指出黑眼圈、眼皮下垂等具体处境，目标部位可辨认，但不是评论或生活场景式开场。"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 3,
+      "evidence_ids": ["EV-01", "EV-03"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "reason": "黑眼圈、眼袋和眼皮下垂的问题状态被明确提出并通过单侧对比具体呈现。"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 3,
+      "evidence_ids": ["EV-02"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "reason": "产品质地、轻柔按摩和眼下及其他区域的实际使用动作清楚可辨。"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 2,
+      "evidence_ids": ["EV-01", "EV-03"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "duration_specificity",
+      "reason": "有单侧挑战、按摩和即时个人结果等过程细节，但没有明确的持续使用时长。"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 3,
+      "evidence_ids": ["EV-03"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "reason": "创作者展示黑眼圈变淡、眼皮提拉的个人结果，并用自然的惊讶和肯定反应强化体验。"
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 3,
+      "evidence_ids": ["EV-06"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "reason": "明确把产品拓展到抬头纹和法令纹，并展示多个区域的实际涂抹。"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": ["EV-08"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "social_proof_depth",
+      "reason": "新品和低价提供购买理由，左下方链接给出明确行动，但没有额外具体社会证明。"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-01"],
+      "reason": "开头提出黑眼圈和眼皮问题，并预告只涂一侧进行可观察对比。"
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-02"],
+      "reason": "轻盈质地、按摩和多区域涂抹动作让使用方法清楚可复现。"
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-04"],
+      "reason": "画面给出全球销量300万以上的具体社会证明。"
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-03"],
+      "reason": "单侧涂抹后的黑眼圈和眼皮变化被直接对比展示。"
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-06"],
+      "reason": "抬头纹和法令纹被明确作为第二用途并实际使用。"
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": ["EV-07"],
+      "reason": "有肽和成分相关表达及作用方向，但5D机制名称和解释不够清晰。"
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": ["EV-08"],
+      "reason": "新品和低价构成购买理由，结尾明确引导点击左下方链接。"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": ["EV-01", "EV-02"],
+      "reason": "问题和单侧测试钩子自然进入产品按摩与使用方案。"
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 3,
+      "evidence_ids": ["EV-04", "EV-03"],
+      "reason": "具体销量背书和随后可观察的单侧结果共同承接效果主张。"
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 3,
+      "evidence_ids": ["EV-03", "EV-06"],
+      "reason": "结果对比之后扩展到抬头纹和法令纹，购买利益承接自然。"
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 2,
+      "evidence_ids": ["EV-07", "EV-08"],
+      "reason": "肽和提拉方向提供部分购买理由，最终由低价和链接行动承接，但机制解释不完整。"
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 3,
+      "evidence_ids": ["EV-01", "EV-08"],
+      "reason": "从问题挑战到结果、多用途和价格理由，最后形成明确购买行动。"
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 0,
+      "end_seconds": 85.633,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-85.633秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": ["SB01", "SB02", "SB03", "SB04", "SB05", "SB06", "SB07"]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "开头直接点出眼霜与黑眼圈/眼周问题，并用全球销量字幕建立注意力。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB01"]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "中段出现涂抹眼下、额头纹、法令纹等多区域动作。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB02"]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "口播明确只涂一边并对比黑眼圈、眼皮提拉效果；画面有前后/结果展示。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB04"]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 20,
+      "end_seconds": 50,
+      "visual": "画面字幕出现全球销量300万+。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-50.000秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB03"]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 22,
+      "end_seconds": 55,
+      "visual": "有产品/成分图卡，但未确认清晰的人体临床数据。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-55.000秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB04"]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 18,
+      "end_seconds": 48,
+      "visual": "眼下之外明确拓展到抬头纹、法令纹。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB05"]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 25,
+      "end_seconds": 58,
+      "visual": "出现成分/肽相关表达，但5D机制字幕不够清晰。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-58.000秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB06"]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+      "start_seconds": 75.633,
+      "end_seconds": 85.633,
+      "visual": "结尾强调新品/价格并引导点击左下方链接。",
+      "onscreen_text": "unknown",
+      "transcript": "今天我就来挑战给你们看，只涂一边眼睛做对比，就是用这个爸爸feel的眼霜。这一只哦，爸爸feel的fighting眼霜，质地非常的轻盈，一点都不会油腻哦。你只需要轻轻按摩，哇，你看真的有差别，这个黑眼圈哦，浅淡化了很多。你看整个感觉啊，我的眼睛要往上提了，有没有？我的这个眼皮，你看熬夜下垂，这个往上提了，看到吗？他这边标明这。FID,肽肽NDAGING,所以呢就是涂了会让我们的这个眼皮啊会给撑起来，这边也撑起来。如果呢你觉得你有那个抬头纹的，你可以这边涂涂，然后给它吸收。然后呢你讲话抬头的时候啊，你的抬头纹呢都会淡化的。还有你的法令纹这边也可以涂的。效果这么好，不怪得它的销量这么好啦。只要你坚持使用哦，它可以帮助改善眼袋，淡化我们的细纹，让我们的眼周呢看起来更有精神。那除了眼睛之外，抬头纹啊、法令纹啊都可以涂的一罐多用途。你看我现在涂了眼睛，涂了抬头纹，涂了法令纹，你看整个感觉啊，你的皮肤就好像被撑起来，这样知道吧？所以哦真的有效果，哎，不错不错。而且现在啊它是刚刚入驻一到不久的新品哦，真的价格啊真的超超超超便宜的，你不要看它这样子的价格啊，它的成分。做的很紧的哦，那如果你想要试试看，点击左下方的链接，把它带回家哒哒哒哒。",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "75.633-85.633秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB07"]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

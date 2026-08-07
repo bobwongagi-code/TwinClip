@@ -1,0 +1,577 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r04-v13",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "noorshafiraa",
+    "round": 4,
+    "replicate_index": 4
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 41.666667,
+      "S": 59.904762,
+      "T_center": 47.138095,
+      "effective_coverage_rate": 0.625,
+      "coverage_rate": 0.625,
+      "innovation_rate": 0.0,
+      "surface_share": 0.0,
+      "surface_error_rate": 0.0,
+      "depths": [
+        2,
+        2,
+        0,
+        0,
+        0,
+        2,
+        2,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 52.380952,
+      "S": 59.904762,
+      "T_center": 54.638095,
+      "effective_coverage_rate": 0.714286,
+      "coverage_rate": 0.857143,
+      "innovation_rate": 0.0,
+      "surface_share": 0.142857,
+      "surface_error_rate": 0.166667,
+      "depths": [
+        2,
+        2,
+        2,
+        1,
+        0,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 52.380952,
+    "S": 59.904762,
+    "T_center": 54.638095,
+    "band": "单点机制迁移",
+    "interval": [
+      49,
+      61
+    ]
+  },
+  "confidence": {
+    "E": 1.0,
+    "M": 0.5,
+    "R": 0.0,
+    "level": "medium",
+    "reason": "The frozen evidence provides complete, clear observations for all scored decisions; no anchor comparison is available, so confidence is capped at medium."
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "stage": "Hook",
+      "name": "评论/生活痛点开场",
+      "depth": 2,
+      "status": "effective",
+      "evidence_ids": [
+        "EV-01",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          0.0,
+          8.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "what_done": "The opening names fine lines, panda eyes, eye bags, smile lines, forehead wrinkles, and sagging cheeks as recognizable target-user problems.",
+      "what_missing": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP01",
+      "reason": "The opening creates direct personal relevance through concrete problem states and target areas."
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "stage": "Need",
+      "name": "问题状态的前后或具体呈现",
+      "depth": 2,
+      "status": "effective",
+      "evidence_ids": [
+        "EV-01",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          0.0,
+          8.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "what_done": "The problem areas and states are specifically described, including fine lines, panda eyes, eye bags, wrinkles, and sagging.",
+      "what_missing": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP02",
+      "reason": "The state is concrete and independently recognizable from the speech."
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "stage": "Demonstration",
+      "name": "包装结构与自然使用",
+      "depth": 2,
+      "status": "effective",
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "creator_timestamps": [
+        [
+          3.0,
+          22.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "what_done": "The video repeatedly shows the product being applied, massaged, and absorbed around the eye area.",
+      "what_missing": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP03",
+      "reason": "Both recognizable product-use action and application area are present."
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "stage": "Proof",
+      "name": "具体使用时长/个人体验",
+      "depth": 1,
+      "status": "surface",
+      "evidence_ids": [
+        "EV-03",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          8.0,
+          38.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "L",
+      "what_done": "The video gives a one-minute expected-result window and a concrete application process.",
+      "what_missing": "It does not establish how long the speaker personally used the product or give a personal experience history.",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP04",
+      "reason": "A time cue and use process are related signals, but personal-duration experience is incomplete."
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "stage": "Proof",
+      "name": "个人结果与情绪反应",
+      "depth": 0,
+      "status": "missing",
+      "evidence_ids": [
+        "EV-03",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          8.0,
+          38.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "L",
+      "absence_verified": true,
+      "what_done": null,
+      "what_missing": "The video makes oral effect claims but does not show a personal result, natural reaction, or before/after evidence.",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP05",
+      "reason": "The complete evidence records no before/after comparison, so repeated effect language is insufficient."
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "stage": "Need",
+      "name": "日常场景与额外用途",
+      "depth": 2,
+      "status": "effective",
+      "evidence_ids": [
+        "EV-06",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          18.0,
+          48.0
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "what_done": "The video explicitly expands use to smile lines, forehead, and cheeks beyond the under-eye area.",
+      "what_missing": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP06",
+      "reason": "Multiple additional use areas are clearly stated and tied to purchase reasons."
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "stage": "CTA",
+      "name": "社会证明/价格与自然CTA",
+      "depth": 2,
+      "status": "effective",
+      "evidence_ids": [
+        "EV-08",
+        "EV-FULL"
+      ],
+      "creator_timestamps": [
+        [
+          49.1,
+          59.1
+        ]
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "what_done": "The ending identifies a target audience and directly guides viewers to the yellow shopping bag.",
+      "what_missing": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed",
+      "source_locator": "PAPA FEEL whatsapp.mp4 07:44-08:45; reference-bundle REF-B B-TP07",
+      "reason": "A value/audience reason and an executable purchase action are both present."
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "The opening clearly presents multiple eye-area problems and previews a one-minute observable reduction."
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "Repeated application, massage, and absorption make the product-use process clear."
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-04",
+        "EV-FULL"
+      ],
+      "manual_review": false,
+      "absence_verified": true,
+      "reason": "The full video contains no concrete sales, market, or user-scale backing."
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "manual_review": false,
+      "absence_verified": true,
+      "reason": "Effect claims are present, but no result evidence, data, or before/after comparison is shown."
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "The video explicitly expands use to smile lines, forehead, and cheeks."
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "5D Peptide and collagen are named as product reasons, though the mechanism explanation is brief."
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "The ending gives a target-audience/value reason and a clear yellow shopping-bag action."
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "manual_review": false,
+      "reason": "The explicit problem/test hook moves directly into product application."
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 0,
+      "evidence_ids": [
+        "EV-04",
+        "EV-05",
+        "EV-FULL"
+      ],
+      "manual_review": false,
+      "reason": "Neither concrete social proof nor independently verifiable effect proof is present."
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 0,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05",
+        "EV-06"
+      ],
+      "manual_review": false,
+      "reason": "Expanded use follows oral effect claims without a result-evidence bridge."
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 2,
+      "evidence_ids": [
+        "EV-07",
+        "EV-08"
+      ],
+      "manual_review": false,
+      "reason": "The peptide/collagen reason is connected to the later audience and shopping action."
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-08"
+      ],
+      "manual_review": false,
+      "reason": "The video forms an understandable attention-to-purchase route despite missing proof links."
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 59.1,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-59.100秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "直接以一分钟减少眼下细纹、眼袋和熊猫眼作为问题钩子。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 3.0,
+      "end_seconds": 22.0,
+      "visual": "反复展示涂抹、按摩和吸收。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "没有前后对比，主要是口头效果判断。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 20.0,
+      "end_seconds": 50.0,
+      "visual": "未观察到具体销量背书。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-50.000秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 22.0,
+      "end_seconds": 55.0,
+      "visual": "把5D肽/胶原作为成分理由，但没有临床或前后证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-55.000秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 18.0,
+      "end_seconds": 48.0,
+      "visual": "扩展到笑纹、额头和脸颊紧致。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 25.0,
+      "end_seconds": 58.0,
+      "visual": "明确提到5D Peptide和collagen。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-58.000秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+      "start_seconds": 49.1,
+      "end_seconds": 59.1,
+      "visual": "面向30/40岁、懒得化妆人群并引导快速下单。",
+      "onscreen_text": "unknown",
+      "transcript": "Yang ini betul eh. Awak sapu dekat bawah mata macam ni kan. Dalam masa satu minit nanti, awak boleh nampak garis halus, ketutan-ketutan bawah mata ni makin berkurang. Siapa yang nak hilangkan garis halus bawah mata? Mata sembang, mata panda ni kan. Ni tebal eye bag bawah mata ni kan. Awak pergi pakai yang ini. Siapa yang ada garisan smile line, ada mata ketam ni. Dahi ni berkedut-berkerut kan. Pipi dah makin jatuh, makin kendur. Pakai yang ini, dia boleh firm kan balik awak punya pipi. Boleh naikkan balik awak punya pipi tau. Eye cream daripada Papa Feel ni serious best. Dia ada 5D Peptide. Le",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "49.100-59.100秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0,
+  "review_status": "completed"
+}

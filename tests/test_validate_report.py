@@ -17,9 +17,11 @@ from contracts import (  # noqa: E402
     ANALYSIS_VERSION,
     PREPARE_MANIFEST_SCHEMA_VERSION,
     analysis_id,
+    canonical_json,
     provenance_fingerprint,
     reference_bundle_hash,
     registry_hash,
+    sha256_bytes,
     sha256_file,
 )
 from validate_report import SCHEMA_VERSION, validate_report  # noqa: E402
@@ -302,6 +304,7 @@ class ReportFixture(unittest.TestCase):
             "model_id": "fixture-model",
             "prompt_version": "fixture-prompt-1",
             "extraction_version": "fixture-extractor-1",
+            "compiler_version": "twinclip-compiler-0.2",
             "reference_bundle_hash": report["reference_bundle"]["content_hash"],
             "media_preparation": {
                 "manifest_schema_version": PREPARE_MANIFEST_SCHEMA_VERSION,
@@ -326,6 +329,18 @@ class ReportFixture(unittest.TestCase):
                 },
             },
         }
+        provenance["scoring_config_hash"] = sha256_bytes(canonical_json(report["scoring_config"]).encode("utf-8"))
+        provenance["anchor_placement_hash"] = sha256_bytes(
+            canonical_json(report["analysis"]["anchor_placement"]).encode("utf-8")
+        )
+        provenance["calibration_registry_sha256"] = None
+        report["analysis"]["execution"] = {
+            "run_id": "fixture-run",
+            "execution_context_id": "fixture-context",
+            "temperature": 0.0,
+            "seed": 1,
+            "task_ids": ["fixture-task"],
+        }
         provenance["method_fingerprint"] = provenance_fingerprint(provenance)
         report["analysis"]["analysis_id"] = analysis_id(
             report["reference_bundle"]["content_hash"],
@@ -345,6 +360,12 @@ class ReportFixture(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(warnings, [])
         self.assertTrue(math.isclose(metrics["T"], 62.6666667, abs_tol=0.02))
+
+    def test_final_report_requires_execution_identity(self) -> None:
+        report = self.report()
+        del report["analysis"]["execution"]
+        errors, _, _ = validate_report(report)
+        self.assertTrue(any("analysis.execution" in error for error in errors))
 
     def test_score_band_uses_deterministic_half_up_rounding(self) -> None:
         self.assertEqual(score_band(19.5), "表层模仿")
@@ -437,6 +458,18 @@ class ReportFixture(unittest.TestCase):
             "boundary_clarity": 1,
             "formula_conflict": False,
         }
+        provenance = report["analysis"]["provenance"]
+        provenance["scoring_config_hash"] = sha256_bytes(canonical_json(report["scoring_config"]).encode("utf-8"))
+        provenance["anchor_placement_hash"] = sha256_bytes(
+            canonical_json(report["analysis"]["anchor_placement"]).encode("utf-8")
+        )
+        provenance["calibration_registry_sha256"] = sha256_file(registry_path)
+        provenance["method_fingerprint"] = provenance_fingerprint(provenance)
+        report["analysis"]["analysis_id"] = analysis_id(
+            report["reference_bundle"]["content_hash"],
+            provenance["source_hashes"]["creator_video"]["sha256"],
+            provenance["method_fingerprint"],
+        )
         errors, warnings, _ = validate_report(report)
         self.assertEqual(errors, [])
         self.assertEqual(warnings, [])
@@ -866,6 +899,13 @@ class ReportFixture(unittest.TestCase):
             "elements": 0.3846153846,
             "support": 0.1538461538,
         }
+        provenance["scoring_config_hash"] = sha256_bytes(canonical_json(report["scoring_config"]).encode("utf-8"))
+        provenance["method_fingerprint"] = provenance_fingerprint(provenance)
+        report["analysis"]["analysis_id"] = analysis_id(
+            report["reference_bundle"]["content_hash"],
+            provenance["source_hashes"]["creator_video"]["sha256"],
+            provenance["method_fingerprint"],
+        )
         report["analysis"]["logic_assessment"].update(
             {
                 "score": 0,

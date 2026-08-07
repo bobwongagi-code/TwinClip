@@ -1,0 +1,362 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r03-v02",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "ayushah3",
+    "round": 3,
+    "replicate_index": 3
+  },
+  "run_id": "r03-v02",
+  "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+  "round": 3,
+  "replicate_index": 3,
+  "video_id": "ayushah3",
+  "video_ordinal": 2,
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "selection_rule": "effective_coverage, then T_center, then declared lane order REF-A before REF-B",
+    "REF-A": {
+      "L": 12.5,
+      "S": 18.904762,
+      "T_center": 14.421429,
+      "coverage": 0.375,
+      "effective_coverage": 0,
+      "band": "未采纳"
+    },
+    "REF-B": {
+      "L": 28.571429,
+      "S": 18.904762,
+      "T_center": 25.671429,
+      "coverage": 0.714286,
+      "effective_coverage": 0.142857,
+      "band": "表层模仿"
+    }
+  },
+  "scores": {
+    "L": 28.571429,
+    "S": 18.904762,
+    "T_center": 25.671429,
+    "band": "表层模仿",
+    "formula": "T_center = 0.7 * L + 0.3 * S"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium",
+    "rationale": "Frozen full-video evidence is clear and complete; no ambiguous anchors require manual review."
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 0,
+      "evidence_ids": ["EV-FULL"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": true,
+      "reason": "The opening introduces a product discovery but does not state a concrete life pain or target-user problem.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP01"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 0,
+      "evidence_ids": ["EV-FULL"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": true,
+      "reason": "No specific problem state is shown or described.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP02"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 1,
+      "evidence_ids": ["EV-03"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "Product and texture cues are present, but a confirmed application action and use area are not observed.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP03"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 1,
+      "evidence_ids": ["EV-04"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "A personal sensation is stated, but there is no specific duration or process detail establishing sustained personal experience.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP04"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 2,
+      "evidence_ids": ["EV-05"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "The speaker gives a recognizable personal result or feeling, saying the skin feels moisturized and fresh.",
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 1,
+      "evidence_ids": ["EV-06"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "Daily-routine language is present, but no concrete daily scene or additional use is shown.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP06"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 1,
+      "evidence_ids": ["EV-07"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "reason": "The generic recommendation to try the product is present, but there is no concrete purchase reason or executable action.",
+      "primary_failure_dimension": "L",
+      "failure_id": "F-B-TP07"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": ["EV-01"],
+      "reason": "A generic product opening is present, but there is no problem hook or result preview.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": ["EV-03"],
+      "reason": "Product and texture are shown, but a complete application action is not confirmed.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-FULL"],
+      "reason": "No social-proof or specific market/sales proof is observed in the full video.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": ["EV-05"],
+      "reason": "A personal skin sensation is claimed, but no visible comparison or other effect proof is supplied.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": ["EV-06"],
+      "reason": "Daily-routine language provides a surface use cue, but no second use area or concrete expanded-use scene is shown.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-FULL"],
+      "reason": "No mechanism explanation such as collagen or peptide is observed.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": ["EV-07"],
+      "reason": "A generic recommendation is present, but the video lacks a concrete value reason and executable purchase action.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "failure_id": null
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 1,
+      "evidence_ids": ["EV-01", "EV-03"],
+      "reason": "The generic introduction leads to product and texture cues, but does not connect a stated problem to a solution.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 0,
+      "evidence_ids": ["EV-FULL"],
+      "reason": "There is no social proof or effect proof chain to support a claim.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": ["EV-05", "EV-06"],
+      "reason": "Personal sensation and daily-routine cues are present, but they do not form a supported proof-to-expanded-benefit chain.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": ["EV-FULL"],
+      "reason": "No mechanism or concrete reason-to-buy explanation is observed.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 1,
+      "evidence_ids": ["EV-01", "EV-07"],
+      "reason": "The generic introduction leads to a generic recommendation, without a developed problem-to-purchase path.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    }
+  ],
+  "evidence_records": [
+    {
+      "evidence_id": "EV-FULL",
+      "t_start": 0,
+      "t_end": 10,
+      "evidence_type": "full_video",
+      "visual_observation": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "complete sales structure",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB01", "SB02", "SB03", "SB04", "SB05", "SB06", "SB07"]
+    },
+    {
+      "evidence_id": "EV-01",
+      "t_start": 0,
+      "t_end": 8,
+      "evidence_type": "segment",
+      "visual_observation": "开头主要是静物产品镜头，没有明确问题或测试钩子。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "让目标用户先认出自己的处境",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB01"]
+    },
+    {
+      "evidence_id": "EV-02",
+      "t_start": 8,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "未观察到前后或单侧对比。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB01", "SB04"]
+    },
+    {
+      "evidence_id": "EV-03",
+      "t_start": 3,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "以静物和质地镜头为主，未确认达人完整涂抹。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "把产品融入真实使用过程",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB02"]
+    },
+    {
+      "evidence_id": "EV-04",
+      "t_start": 9.75,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "未观察到可核对的效果证据。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "用持续使用经历建立可信度",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB04"]
+    },
+    {
+      "evidence_id": "EV-05",
+      "t_start": 8,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "未观察到前后或单侧对比。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB04"]
+    },
+    {
+      "evidence_id": "EV-06",
+      "t_start": 9.75,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "未观察到多区域使用。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB05"]
+    },
+    {
+      "evidence_id": "EV-07",
+      "t_start": 0,
+      "t_end": 10,
+      "evidence_type": "segment",
+      "visual_observation": "未观察到明确购物车或价格行动。",
+      "transcript": "Kau orang, saya baru jumpa produk ni. Memang best untuk rutin harian. Teksturnya ringan dan cepat meresap. Kulit terasa lembap dan segar. Memang wajib cuba yang ni.",
+      "observed_function": "在个人分享后完成购买转化",
+      "scope": "complete",
+      "blind": true,
+      "linked_storyboard_nodes": ["SB03", "SB07"]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

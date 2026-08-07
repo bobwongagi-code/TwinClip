@@ -1,6 +1,6 @@
 ---
 name: twinclip
-description: Analyze creator shoppable short videos against a breakdown or teaching video and a Storyboard PDF. Use when Codex needs to measure overall learning similarity, breakdown-point similarity, storyboard similarity, borrowing evidence, creator adaptation risks, anchor-relative rankings, or batch adoption results with auditable timestamps instead of surface-level visual matching. 当用户提到复盘达人视频、对比达人视频和拆解视频或 Storyboard、评估复刻或学习落地、视频拆解要点相似度、Storyboard 相似度、借鉴点分析或 TwinClip 时使用；不要用于生成全新带货脚本，也不要用于两条无参考关系视频的通用相似度比较。
+description: Analyze creator shoppable short videos against a breakdown or teaching video and a Storyboard PDF. Use when Codex needs to measure overall learning similarity, breakdown-point similarity, storyboard similarity, borrowing evidence, creator adaptation risks, anchor-relative rankings, or batch adoption results with auditable timestamps instead of surface-level visual matching. 当用户提到复盘达人视频、对比达人视频和拆解视频或 Storyboard、评估复刻或学习落地、视频拆解要点相似度、Storyboard 相似度、借鉴点分析、马来语/Manglish 内容处理或 TwinClip 时使用；不要用于生成全新带货脚本，也不要用于两条无参考关系视频的通用相似度比较。
 ---
 
 # TwinClip
@@ -30,8 +30,11 @@ Accept optional anchor videos and prior TwinClip reports for calibration. Do not
 - Extract creator-video observations once and reuse them for L, S, borrowing analysis, and adaptation diagnosis. The validator rejects L/S contradictions, unrelated guided evidence, and reused failure evidence.
 - Keep A as a non-numeric adaptation diagnosis. Never include A in the total learning score.
 - Keep every nonzero judgment traceable to creator-video evidence.
+- Treat the model/code boundary as architectural: the model emits observable facts and small semantic task judgments; code owns IDs, links, aggregation, lane selection, formulas, bands, confidence, and publication.
+- Never ask one model call to emit a final report. Use separate observation, evidence-linking, teaching-point, Storyboard-node, lane-specific relationship, adaptation, and optional candidate tasks. Read [semantic-task-contract.md](references/semantic-task-contract.md) for the task envelope and state maps.
 - Prefer a band, score interval, and confidence components over a falsely precise standalone score.
 - Never infer missing visual proof from speech or missing speech from visuals. Record unavailable ASR/OCR channels as `unknown`.
+- When any breakdown, Storyboard, or creator video contains Malaysian Malay or Malay-English code-switching, read [malay-language.md](references/malay-language.md) before extraction. Keep language/evidence quality separate from content-match uncertainty; never relax scoring thresholds because ASR or semantic language quality is weak.
 
 ## Workflow
 
@@ -40,7 +43,7 @@ Accept optional anchor videos and prior TwinClip reports for calibration. Do not
 Verify all inputs and identify unreadable, missing, or mismatched files before scoring.
 
 - Run `scripts/prepare_video.py` for the breakdown video and every creator video when direct timeline inspection is unavailable. Use the generated frame manifest and audio track. The helper rejects playlists, limits duration, frames, output size, and subprocess time, and records actual frame timestamps from the media stream.
-- Use an available ASR capability for speech and OCR or visual inspection for on-screen text. When unavailable, mark the channel `unknown`; do not guess.
+- Detect the language profile of each source independently. For Malay/Manglish inputs, follow [malay-language.md](references/malay-language.md), use the locally available VidLingo capability first when it is available, and do not install Whisper just for TwinClip. Keep ASR and OCR as separate evidence channels; when either is unavailable, mark that channel `unknown`.
 - Visually inspect every relevant Storyboard page. Preserve its nodes, labels, visual actions, spoken meaning, and cross-page rows.
 - Separate teaching commentary from full-source replay in the breakdown video. Deduplicate repeated source footage.
 
@@ -82,28 +85,26 @@ Perform the first observation pass without exposing the reference teaching-point
 
 - start and end time;
 - people, product, action, result, and setting;
-- on-screen text;
-- transcript;
+- on-screen text in its original language;
+- transcript in its original language;
 - independently recognizable content function.
 
-Use this blind pass as the only automatic scoring evidence. Then run a reference-guided candidate check for subtle possible matches missed by the blind pass. Put those matches in `manual_pending`; do not score them unless a human confirms them.
+Use this blind pass as the only automatic scoring evidence. Publish it as an `observation` task. Then run a separate reference-guided candidate check for subtle possible matches missed by the blind pass. Put those matches in `manual_pending`; do not score them unless a human confirms them.
 
 ### 4. Link evidence once
 
-Link the shared observations to Storyboard nodes and teaching points. Do not run separate L and S extraction passes.
+Run one `evidence_linking` task to link shared observations to Storyboard nodes. Do not run separate L and S extraction passes. Selecting an evidence ID for a semantic judgment remains a model decision; checking that the ID exists, is eligible, and is compatible with the linked node is code-owned.
 
-Assign each failure at most one `primary_failure_dimension`: `L`, `S`, or `A`. Record adaptation applicability separately with `adaptation_required` and `adaptation_result`; successful compensation is not a failure and must not depend on an `A` failure label.
+Assign each failure at most one `primary_failure_dimension`: `L`, `S`, or `A`. Teaching-point, Storyboard-node, relationship, and adaptation judgments must be separate task types. Record adaptation applicability separately with `adaptation_required` and `adaptation_result`; successful compensation is not a failure and must not depend on an `A` failure label.
 
 ### 5. Score and diagnose
 
 Apply [scoring-model.md](references/scoring-model.md).
 
-- Calculate L only from linked teaching points.
-- Calculate S from every Storyboard node and the overall sales-logic assessment.
-- Calculate T as `70% L + 30% S`, subject to versioned anchor calibration.
-- Aggregate missing, surface, effective, and innovative teaching points.
-- Produce a non-numeric adaptation status plus compensation counts and a short backend explanation.
-- Calculate confidence from E, M, and R using the weakest component.
+- Ask the model only for the atomic semantic states defined in [semantic-task-contract.md](references/semantic-task-contract.md).
+- Run `scripts/compile_report.py` or the batch compiler in `scripts/run_analysis.py`. Code derives L, S, T, lane selection, coverage, borrowing counts, bands, intervals, adaptation counts/status, and confidence from those states.
+- Produce a non-numeric adaptation status plus compensation counts and a short backend explanation from the compiled structure.
+- Never accept model-supplied `depth`, numeric node/relationship scores, `L`, `S`, `T`, `band`, `confidence`, or `primary_lane` fields as scoring input.
 
 ### 6. Calibrate against anchors
 
@@ -120,6 +121,8 @@ Follow [report-schema.md](references/report-schema.md). Put these four items at 
 3. S: Storyboard similarity and sales-logic diagnosis.
 4. Borrowing summary: missing, surface, effective, and innovative counts, plus `surface_share` and `surface_error_rate` with their distinct denominators.
 
+For Malay/Manglish evidence, preserve the original text in `transcript` and `onscreen_text`. If a human-facing evidence description is rendered, show the original snippet together with a Chinese translation; translation is for the final report reader, never a replacement for the blind extraction or reference match.
+
 Keep full borrowing commentary and adaptation detail in the backend section unless requested. Always include why the video is not one band higher, why it is not one band lower, and up to three highest-impact next actions.
 
 Validate JSON reports before delivery:
@@ -132,18 +135,19 @@ Fix every validation error. Disclose warnings, missing media channels, provision
 
 Evidence records must declare whether they are a functional `segment` or a complete `full_video` absence scope, and must link the Storyboard nodes they actually observe. A `full_video` record must span the declared creator-video duration, can verify a clear absence only, and cannot support a positive L, S, or relationship score. Positive overall logic assessments need segment evidence; positive relationship assessments must contain eligible segment evidence for both endpoint nodes. This prevents a generic whole-video note from inflating Storyboard or logic scores.
 
-For a batch, bind drafts to the actual source files and produce reports plus group adoption statistics with:
+For a batch, bind semantic runs to the actual source files and produce reports plus group adoption statistics with:
 
 ```bash
 python3 scripts/run_analysis.py \
   --breakdown-video /absolute/path/breakdown.mp4 \
   --storyboard-pdf /absolute/path/storyboard.pdf \
+  --reference-bundle /absolute/path/reference-bundle.json \
   --creator-video /absolute/path/creator-01.mp4 \
-  --draft-report /absolute/path/creator-01-draft.json \
+  --semantic-dir /absolute/path/creator-01-semantic-run \
   --output-dir /absolute/path/twinclip-run
 ```
 
-Repeat `--creator-video` and `--draft-report` in matching order for multiple creators. The draft contains the structured observations and assessments produced after inspecting the prepared media, plus the observation method, model, prompt, and extraction versions. `run_analysis.py` binds source paths, computes source hashes, derives durations, validates final reports, and writes `batch.json`. Each report contains exactly one creator video. Use `--allow-draft` only while human confirmation is pending. A final run must pass without it; unresolved candidates and formula conflicts are rejected even when `review_status` is incorrectly set to completed.
+Create one immutable semantic run per creator with `scripts/semantic_run.py`, publish each small task through its `publish` command, then repeat `--creator-video` and `--semantic-dir` in matching order. `run_analysis.py` binds source paths, computes source hashes and durations, compiles the task files, validates final reports, and atomically writes `batch.json`. Each report contains exactly one creator video. Use `--allow-draft` only while human confirmation is pending. A final run must pass without it; unresolved candidates and formula conflicts are rejected even when `review_status` is incorrectly set to completed.
 
 After 20 completed non-anchor analyses, combine the relevant batch manifests and create a random five-report QA sample:
 

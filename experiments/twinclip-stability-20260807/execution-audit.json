@@ -1,0 +1,41 @@
+{
+  "schema_version": "twinclip-stability-execution-audit-0.1",
+  "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+  "formal_raw_run_count": 80,
+  "coverage_check": "passed: 16 videos x 5 run identities",
+  "statistical_independence": "unverified_mixed_context",
+  "context_mode": {
+    "fresh_worker_available_for_every_run": false,
+    "fresh_agent_thread_limit_encountered": true,
+    "later_runs": "prompt-reset continuations on reused worker threads",
+    "interpretation": "A prompt reset is not proof that prior thread context was absent. Exact or consecutive repeated trajectories are therefore execution/context signals, not independent-model-stability evidence."
+  },
+  "observed_execution_events": [
+    {
+      "run_ids": ["r01-v07", "r01-v08"],
+      "event": "duplicate write race observed; one formal result per planned run_id retained",
+      "audit_artifacts": "raw-results-uncorrected/"
+    },
+    {
+      "run_ids": ["r01-v03", "r01-v05", "r01-v06"],
+      "event": "non-independent continuation outputs were isolated from the formal result directory",
+      "audit_artifacts": "raw-results-nonindependent/"
+    },
+    {
+      "run_ids": ["r01-v08", "r01-v16"],
+      "event": "replicate_index metadata initially copied from video ordinal and corrected before strict validation",
+      "audit_artifacts": "raw-results-uncorrected/"
+    },
+    {
+      "run_ids": ["r05-v11"],
+      "event": "wrong-video identity was detected before final aggregation and overwritten with the mia_rich result; the invalid interim file is not part of the formal 80-run set"
+    }
+  ],
+  "required_redesign_before_claiming_independent_variance": [
+    "Use a genuinely fresh process or worker context for each replicate.",
+    "Pass run_id, video_id, round, and replicate_index through an immutable wrapper and reject mismatches before writing.",
+    "Write to a unique temporary path, then atomically publish only after strict validation.",
+    "Record model, prompt, temperature, seed if available, and context identifier per run.",
+    "Repeat the same distribution analysis after the isolated rerun; compare spread and trajectory-repeat rate, not means."
+  ]
+}

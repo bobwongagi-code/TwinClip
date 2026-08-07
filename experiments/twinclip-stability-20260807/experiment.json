@@ -1,0 +1,1264 @@
+{
+  "schema_version": "twinclip-stability-experiment-0.1",
+  "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+  "status": "completed_with_audit_caveat",
+  "replicates": 5,
+  "video_count": 16,
+  "expected_run_count": 80,
+  "reference_bundle": {
+    "path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/reference-bundle.json",
+    "content_hash": "36136d1fa4f42089307a2e7d677a15963a66663f481fe3c58ec415ee1a4831da",
+    "source_content_hashes": {
+      "breakdown_video": {
+        "sha256": "2aaaf0e8a0bff71520641d2c9034ca74af2dd0ed294ff706d88a490e4f4deafe",
+        "bytes": 63765137
+      },
+      "storyboard_pdf": {
+        "sha256": "f34718e12040b8ba0b2570a415a2c1b57f02c496fbc863864e474651670ba351",
+        "bytes": 98997
+      }
+    }
+  },
+  "fixed_observation": {
+    "mode": "frozen_legacy_multimodal_observation",
+    "asr_ocr_reextraction": false,
+    "source_run": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run",
+    "vidlingo_outputs_reused": true,
+    "note": "Phase 1 isolates semantic judgment variance. ASR/OCR variance is a separate follow-up experiment."
+  },
+  "method": {
+    "analysis_version": "1.4",
+    "method_fingerprint": "2b820f489622ba87051ba82fead88238c6f7861ccd7cabbfccd2d906a1c1f384",
+    "score_formula": "T=0.70*L+0.30*S",
+    "final_score_aggregation": "descriptive_only; no replicate averaging used as a decision"
+  },
+  "execution_audit": {
+    "path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/execution-audit.json",
+    "statistical_independence": "unverified_mixed_context"
+  },
+  "result_artifacts": {
+    "stability_report_json": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/stability-report.json",
+    "stability_report_markdown": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/stability-report.md",
+    "post_run_improvements": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/POST-RUN-IMPROVEMENTS.md"
+  },
+  "videos": [
+    {
+      "video_id": "aliceong417",
+      "ordinal": 1,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/aliceong417.mp4",
+        "sha256": "482480b54deb2653a40ae8242ee581606a03d2250d89c0148305d4086ffc2837",
+        "bytes": 12911844
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/aliceong417.json",
+        "sha256": "fa91414e9e059784ccfac7e8dc405b6c3e4f20375c0ff8ae2e153aad33810084",
+        "bytes": 52002
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30"
+    },
+    {
+      "video_id": "ayushah3",
+      "ordinal": 2,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/ayushah3.mp4",
+        "sha256": "4c416efa6ddd2a3ae8e9ae7035067e3e610db6340c1726e1002b1f211cd058ed",
+        "bytes": 781924
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/ayushah3.json",
+        "sha256": "ca0735db71600eda6d5a3111432c0d0721f9f98e0ca3308bdab488adeeb594a3",
+        "bytes": 35774
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7"
+    },
+    {
+      "video_id": "daddycengey69",
+      "ordinal": 3,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/daddycengey69.mp4",
+        "sha256": "900c1d520ba7ace2403770429f8e350c0c87df0da8e3336a2adb8b3763185dd5",
+        "bytes": 6861381
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/daddycengey69.json",
+        "sha256": "9bad7cdb51e7cb7cf051420d282f3d31463524535008de21d6ffadc3a95be171",
+        "bytes": 43568
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a"
+    },
+    {
+      "video_id": "en_tomi",
+      "ordinal": 4,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+        "sha256": "160d7f90b12edc41fd629d001675c5d29ed7b404c306190c16d1504502b75d61",
+        "bytes": 6762065
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/en_tomi.json",
+        "sha256": "5b39f56a8d0d0e7b1546501a8d5ababaef81cb642381d9204fa4c1c2aac9e3f9",
+        "bytes": 39877
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1"
+    },
+    {
+      "video_id": "firdaus.janon",
+      "ordinal": 5,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/firdaus.janon.mp4",
+        "sha256": "4bd8d9be108508fa70def65c5e084c351baf0d66039d5574270c683890904464",
+        "bytes": 1997502
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/firdaus.janon.json",
+        "sha256": "a26a471558f3735193da7bbc71a682620e98ec698fe1ba861f6ca1dc84b43cba",
+        "bytes": 36571
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee"
+    },
+    {
+      "video_id": "ftiha.sd",
+      "ordinal": 6,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+        "sha256": "f01180d90cd684eb4412e154aef8cbd6448db462ff14298566aa83b430e513db",
+        "bytes": 10037995
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/ftiha.sd.json",
+        "sha256": "cd4e487c054364787cbf02bd6fa64746a9fa7338092214a21c2359940fc334b9",
+        "bytes": 43204
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9"
+    },
+    {
+      "video_id": "glowingfish313",
+      "ordinal": 7,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+        "sha256": "86a92931470f8b1c260cb29a4a3f3d84c5e337c01ced99ea325f04807283cfc7",
+        "bytes": 9024635
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/glowingfish313.json",
+        "sha256": "4ba09af7fca070d691f8c97446043fb4f7752d3948900346d80ff1977e245771",
+        "bytes": 40894
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952"
+    },
+    {
+      "video_id": "helloxoan2",
+      "ordinal": 8,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+        "sha256": "e210232fd8fb17f8af2536e26d268d3ceede3b894804d6c08213b6208871b251",
+        "bytes": 5113563
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/helloxoan2.json",
+        "sha256": "97102f6c80963af1ee985d8a2acc8928208089a5262132155d5e4509acd325dd",
+        "bytes": 41493
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574"
+    },
+    {
+      "video_id": "inaamalik",
+      "ordinal": 9,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/inaamalik.mp4",
+        "sha256": "8ca0123f6027bf96be5eea932318c402be5295fa7cf03de3a57dfa8f13ac80fd",
+        "bytes": 8340692
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/inaamalik.json",
+        "sha256": "3adb27c73019a3f5f12a7ff0892e8bf3135583f152876222a075ba5bc2c25300",
+        "bytes": 39943
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f"
+    },
+    {
+      "video_id": "mai199_7",
+      "ordinal": 10,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+        "sha256": "af17d8d2b1386f6c1936268e41ab673d9e21d2d1a4a2c3ce4d522048fe6ebcf5",
+        "bytes": 4286727
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/mai199_7.json",
+        "sha256": "942df15337ff24ed33bc089ebdf914bdb175c6ffb874d26f90fc84b231de21f7",
+        "bytes": 43342
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9"
+    },
+    {
+      "video_id": "mia_rich",
+      "ordinal": 11,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/mia_rich.mp4",
+        "sha256": "2289445f791493a3e7f9a7ae93c244054da7b21fdcb380995c0845c184b95f82",
+        "bytes": 6078704
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/mia_rich.json",
+        "sha256": "07e62e2e2c025e409db9206b9256467ef44d709a834811b5a9d6bafd3604a841",
+        "bytes": 43472
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7"
+    },
+    {
+      "video_id": "nizzahhhhh",
+      "ordinal": 12,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+        "sha256": "4d6fa65b268490137209ef0dd742ec4eaeb71ef150cfea935308e4fe5fca5c85",
+        "bytes": 9072945
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/nizzahhhhh.json",
+        "sha256": "2ff0915ccc877f985abe96087f5d493ce90082f9094ff59d57e34bcaa689c953",
+        "bytes": 39998
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc"
+    },
+    {
+      "video_id": "noorshafiraa",
+      "ordinal": 13,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/noorshafiraa.mp4",
+        "sha256": "4f6abbceec36e19a03996d58923ab7e9b0e33b199986ba944f2e08eb5c2c24f0",
+        "bytes": 8642863
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/noorshafiraa.json",
+        "sha256": "e8978330d4b657f92a91c4dab695af189d4bf9f30f40c38fa266c6cadd7c0b9c",
+        "bytes": 43349
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1"
+    },
+    {
+      "video_id": "sahabanu_79",
+      "ordinal": 14,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79.mp4",
+        "sha256": "86f7b120fddd9a4034d12e6e3446073d85412389442b2af84ec64943744a84d8",
+        "bytes": 8501933
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/sahabanu_79.json",
+        "sha256": "21501d3a680ac79682e038d773416ed98df16a7670f34527d53d11e06e4a8282",
+        "bytes": 43649
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081"
+    },
+    {
+      "video_id": "sahabanu_79_1",
+      "ordinal": 15,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/sahabanu_79（1）.mp4",
+        "sha256": "fafacad8c8518252a8c4721a104d7317f252342604aa209a36b3fdc8893c4659",
+        "bytes": 9332307
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/sahabanu_79_1_.json",
+        "sha256": "4c30bf2bf3bfd7589dcb69850aacd488b4c65722113adfc38ddf0a2d1fc6eacd",
+        "bytes": 43388
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9"
+    },
+    {
+      "video_id": "sifu.yusuf",
+      "ordinal": 16,
+      "source": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/sifu.yusuf.mp4",
+        "sha256": "55d4281743d6e047db3bf0f8b93923ef6a99d6f0abbbb95704957ff713636974",
+        "bytes": 7954476
+      },
+      "legacy_report": {
+        "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/reports/sifu.yusuf.json",
+        "sha256": "1477e94490704c595461301a63fe1b49459d464862c319262683956c1ea3acc4",
+        "bytes": 43598
+      },
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4"
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "r01-v01",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "aliceong417",
+      "video_ordinal": 1,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v02",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "ayushah3",
+      "video_ordinal": 2,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v03",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "daddycengey69",
+      "video_ordinal": 3,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v04",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "en_tomi",
+      "video_ordinal": 4,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v05",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "firdaus.janon",
+      "video_ordinal": 5,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v06",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "ftiha.sd",
+      "video_ordinal": 6,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v07",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "glowingfish313",
+      "video_ordinal": 7,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v08",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "helloxoan2",
+      "video_ordinal": 8,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v09",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "inaamalik",
+      "video_ordinal": 9,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v10",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "mai199_7",
+      "video_ordinal": 10,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v11",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "mia_rich",
+      "video_ordinal": 11,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v12",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "nizzahhhhh",
+      "video_ordinal": 12,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v13",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "noorshafiraa",
+      "video_ordinal": 13,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v14",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "sahabanu_79",
+      "video_ordinal": 14,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v15",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "sahabanu_79_1",
+      "video_ordinal": 15,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r01-v16",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 1,
+      "replicate_index": 1,
+      "video_id": "sifu.yusuf",
+      "video_ordinal": 16,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v01",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "aliceong417",
+      "video_ordinal": 1,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v02",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "ayushah3",
+      "video_ordinal": 2,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v03",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "daddycengey69",
+      "video_ordinal": 3,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v04",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "en_tomi",
+      "video_ordinal": 4,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v05",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "firdaus.janon",
+      "video_ordinal": 5,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v06",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "ftiha.sd",
+      "video_ordinal": 6,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v07",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "glowingfish313",
+      "video_ordinal": 7,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v08",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "helloxoan2",
+      "video_ordinal": 8,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v09",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "inaamalik",
+      "video_ordinal": 9,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v10",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "mai199_7",
+      "video_ordinal": 10,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v11",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "mia_rich",
+      "video_ordinal": 11,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v12",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "nizzahhhhh",
+      "video_ordinal": 12,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v13",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "noorshafiraa",
+      "video_ordinal": 13,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v14",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "sahabanu_79",
+      "video_ordinal": 14,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v15",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "sahabanu_79_1",
+      "video_ordinal": 15,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r02-v16",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 2,
+      "replicate_index": 2,
+      "video_id": "sifu.yusuf",
+      "video_ordinal": 16,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v01",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "aliceong417",
+      "video_ordinal": 1,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v02",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "ayushah3",
+      "video_ordinal": 2,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v03",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "daddycengey69",
+      "video_ordinal": 3,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v04",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "en_tomi",
+      "video_ordinal": 4,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v05",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "firdaus.janon",
+      "video_ordinal": 5,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v06",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "ftiha.sd",
+      "video_ordinal": 6,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v07",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "glowingfish313",
+      "video_ordinal": 7,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v08",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "helloxoan2",
+      "video_ordinal": 8,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v09",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "inaamalik",
+      "video_ordinal": 9,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v10",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "mai199_7",
+      "video_ordinal": 10,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v11",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "mia_rich",
+      "video_ordinal": 11,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v12",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "nizzahhhhh",
+      "video_ordinal": 12,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v13",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "noorshafiraa",
+      "video_ordinal": 13,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v14",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "sahabanu_79",
+      "video_ordinal": 14,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v15",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "sahabanu_79_1",
+      "video_ordinal": 15,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r03-v16",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 3,
+      "replicate_index": 3,
+      "video_id": "sifu.yusuf",
+      "video_ordinal": 16,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v01",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "aliceong417",
+      "video_ordinal": 1,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v02",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "ayushah3",
+      "video_ordinal": 2,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v03",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "daddycengey69",
+      "video_ordinal": 3,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v04",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "en_tomi",
+      "video_ordinal": 4,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v05",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "firdaus.janon",
+      "video_ordinal": 5,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v06",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "ftiha.sd",
+      "video_ordinal": 6,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v07",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "glowingfish313",
+      "video_ordinal": 7,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v08",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "helloxoan2",
+      "video_ordinal": 8,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v09",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "inaamalik",
+      "video_ordinal": 9,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v10",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "mai199_7",
+      "video_ordinal": 10,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v11",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "mia_rich",
+      "video_ordinal": 11,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v12",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "nizzahhhhh",
+      "video_ordinal": 12,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v13",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "noorshafiraa",
+      "video_ordinal": 13,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v14",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "sahabanu_79",
+      "video_ordinal": 14,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v15",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "sahabanu_79_1",
+      "video_ordinal": 15,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r04-v16",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 4,
+      "replicate_index": 4,
+      "video_id": "sifu.yusuf",
+      "video_ordinal": 16,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v01",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "aliceong417",
+      "video_ordinal": 1,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/01-aliceong417.json",
+      "fixed_evidence_hash": "122c35bdce9baec43ef01cca4e76ed7d6f817887c8faec678cf17d17bb722b30",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v02",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "ayushah3",
+      "video_ordinal": 2,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/02-ayushah3.json",
+      "fixed_evidence_hash": "22c5cf138eece966696184367a3ddd7449892a24a552f4a08bcbc01cbfa4ddb7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v03",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "daddycengey69",
+      "video_ordinal": 3,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/03-daddycengey69.json",
+      "fixed_evidence_hash": "a188829ca077dbbf6d0d1eb775c67c6afbd2997077793bebaa63628b20283c8a",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v04",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "en_tomi",
+      "video_ordinal": 4,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/04-en_tomi.json",
+      "fixed_evidence_hash": "05957f808e30767f3861a24a3ae5cae59dcfadbb4ccce174378e9b9ac62506d1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v05",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "firdaus.janon",
+      "video_ordinal": 5,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/05-firdaus.janon.json",
+      "fixed_evidence_hash": "bcbbe2969c58fe5b3a841ae6108f84c48b48e4889def1fb6d19f1482cf114eee",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v06",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "ftiha.sd",
+      "video_ordinal": 6,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/06-ftiha.sd.json",
+      "fixed_evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v07",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "glowingfish313",
+      "video_ordinal": 7,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/07-glowingfish313.json",
+      "fixed_evidence_hash": "4c586f110c9e16a659969c1c7c83313b4a0076466da772fb0bf49e3bb0650952",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v08",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "helloxoan2",
+      "video_ordinal": 8,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/08-helloxoan2.json",
+      "fixed_evidence_hash": "b2996f3ad3144190c028aec7a4e666ddc4a86b775dc20c3bbc30f205a7533574",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v09",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "inaamalik",
+      "video_ordinal": 9,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/09-inaamalik.json",
+      "fixed_evidence_hash": "ff8f815bb6b55c3d2c4975c908fd1c6a882aa57240a1ed3ef82bc1e08c06b78f",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v10",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "mai199_7",
+      "video_ordinal": 10,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/10-mai199_7.json",
+      "fixed_evidence_hash": "0734dad427a259ec1ff6b3e3ae5905f37cec6f589bac68e18ed8c07569de86a9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v11",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "mia_rich",
+      "video_ordinal": 11,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/11-mia_rich.json",
+      "fixed_evidence_hash": "8b6c3ebe90695835b60a26555068cd4dcfa32eb8aee2e5635be9d9a510f026e7",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v12",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "nizzahhhhh",
+      "video_ordinal": 12,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/12-nizzahhhhh.json",
+      "fixed_evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v13",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "noorshafiraa",
+      "video_ordinal": 13,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/13-noorshafiraa.json",
+      "fixed_evidence_hash": "9991db350a2c5eebbcb19a9d975a7e1f16d7df3ab555ce66cbb4c7268db01ff1",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v14",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "sahabanu_79",
+      "video_ordinal": 14,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/14-sahabanu_79.json",
+      "fixed_evidence_hash": "fc14d319b50edb988a1089911f8f6169c36b4fc3d089a67c723705d0f46c9081",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v15",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "sahabanu_79_1",
+      "video_ordinal": 15,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/15-sahabanu_79_1.json",
+      "fixed_evidence_hash": "6a42313153bb8580165e4f785abbf22ce61b0c1e3f075a1880464f0b8ff428b9",
+      "result_path": null,
+      "status": "pending"
+    },
+    {
+      "run_id": "r05-v16",
+      "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+      "round": 5,
+      "replicate_index": 5,
+      "video_id": "sifu.yusuf",
+      "video_ordinal": 16,
+      "fixed_evidence_path": "/Users/wangbo5/Documents/VibeCoding/skills/TwinClip/experiments/twinclip-stability-20260807/fixed-evidence/16-sifu.yusuf.json",
+      "fixed_evidence_hash": "32cced8ebc40b5826c9205cca197414f22b5d806fba7f7a1dc4070f980d5aec4",
+      "result_path": null,
+      "status": "pending"
+    }
+  ]
+}

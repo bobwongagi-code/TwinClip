@@ -12,6 +12,25 @@ Select about five representative creator videos for the initial five bands. Ask 
 
 Do not ask reviewers to assign exact scores.
 
+## Language-qualified review
+
+When any reference or creator material contains Malaysian Malay or Malay-English
+code-switching, anchor labels and continuous-QA labels must be confirmed by a
+reviewer who can read Malay subtitles and understand the spoken language. A
+Chinese- or English-only reviewer cannot close the calibration loop for these
+materials.
+
+Keep two causes of uncertainty separate:
+
+- poor ASR/OCR or weak Malay/Manglish comprehension requires re-transcription,
+  OCR correction, or a language-qualified reviewer;
+- an independently reviewed clip that still has an ambiguous match belongs in
+  the normal `manual_pending` flow.
+
+Do not widen score thresholds or treat uncalibrated bands as reliable to
+compensate for language-quality problems. If a qualified reviewer is unavailable,
+keep the anchor/QA state unresolved and disclose that limitation.
+
 ## Weight veto test
 
 Run the default scoring formula on the initial anchors. Treat five anchors as a veto test, not a training set. A candidate placement is valid only when its T center is between the selected lower and upper anchor centers, its band is between their bands, and its displayed interval overlaps its human-resolved band.

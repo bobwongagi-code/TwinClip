@@ -1,0 +1,548 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r05-v10",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "mai199_7",
+    "round": 5,
+    "replicate_index": 5
+  },
+  "primary_lane": "REF-A",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 45.833333,
+      "S": 61.285714,
+      "T_center": 50.469048,
+      "effective_coverage_rate": 0.5,
+      "coverage_rate": 0.875,
+      "depths": [
+        1,
+        2,
+        0,
+        2,
+        1,
+        2,
+        1,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 38.095238,
+      "S": 61.285714,
+      "T_center": 45.052381,
+      "effective_coverage_rate": 0.428571,
+      "coverage_rate": 0.714286,
+      "depths": [
+        2,
+        1,
+        1,
+        0,
+        0,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 45.833333,
+    "S": 61.285714,
+    "T_center": 50.469048,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1.0,
+    "M": 0.5,
+    "R": 0.0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "A-TP01",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "开头用不要等到皱纹出现的劝告引出眼袋和细纹，但没有测试或结果预告。",
+      "done_well": "问题部位和预防性痛点明确。",
+      "missing_or_misused": "缺少即时测试悬念和可观察结果预告。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-01"
+    },
+    {
+      "teaching_point_id": "A-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "画面展示眼下涂抹和揉开动作，使用区域与基本用法可辨认。",
+      "done_well": "产品动作和使用部位均清楚。",
+      "missing_or_misused": "演示较短，质地和吸收过程不充分。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-02"
+    },
+    {
+      "teaching_point_id": "A-TP03",
+      "depth": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "完整冻结证据未观察到单侧或前后对比。",
+      "done_well": "无。",
+      "missing_or_misused": "没有应用侧与对照侧或前后两状态。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": true,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-FULL"
+    },
+    {
+      "teaching_point_id": "A-TP04",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "明确提到数百万销量及刚进入马来西亚，提供具体市场背书。",
+      "done_well": "规模和市场进入信息都清楚。",
+      "missing_or_misused": "没有更精确的销量数字。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-04"
+    },
+    {
+      "teaching_point_id": "A-TP05",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "视频声称皮肤更紧和细纹减少，但冻结证据明确没有独立结果展示。",
+      "done_well": "效果方向被提出。",
+      "missing_or_misused": "没有研究、数据或可复核的真实结果。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-05"
+    },
+    {
+      "teaching_point_id": "A-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "明确列出额头、眼角和笑纹等眼下以外区域，扩展了用途。",
+      "done_well": "多个第二使用区域被直接说出。",
+      "missing_or_misused": "没有逐一区域展示涂抹动作。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-06"
+    },
+    {
+      "teaching_point_id": "A-TP07",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "出现5D Peptide Eye Cream名称，但没有解释其作用方向如何支撑卖点。",
+      "done_well": "机制名称线索出现。",
+      "missing_or_misused": "缺少成分作用解释或机制与效果的连接。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-07"
+    },
+    {
+      "teaching_point_id": "A-TP08",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "结尾强调当日促销并引导黄色购物袋，购买理由和行动都明确。",
+      "done_well": "促销价值理由与可执行购买动作相连。",
+      "missing_or_misused": "没有额外的适用人群限定。",
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "source_locator": "fixed-evidence/10-mai199_7.json#EV-08"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "预防性痛点和目标部位清楚，但没有结果预告，Hook功能不完整。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-SB01"
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "眼下涂抹和揉开动作可见，但演示时间较短。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-SB02"
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "reason": "数百万销量和进入马来西亚提供具体社会证明。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-05"
+      ],
+      "reason": "有紧致和减少细纹的效果主张，但没有独立结果证据。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-SB04"
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "额头、眼角和笑纹等第二区域被明确列出。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "出现5D Peptide Eye Cream名称，但没有作用机制说明。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-SB06"
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "reason": "促销价格理由与黄色购物袋行动均明确。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "预防性问题之后自然进入产品和眼下使用方案。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-04",
+        "EV-05"
+      ],
+      "reason": "销量背书存在，但后续效果主张缺少独立结果承接。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-REL02"
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": [
+        "EV-05",
+        "EV-06"
+      ],
+      "reason": "效果证据薄弱，扩展区域虽明确但转承不完整。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-REL03"
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 1,
+      "evidence_ids": [
+        "EV-07",
+        "EV-08"
+      ],
+      "reason": "机制名称部分出现并连接到CTA，但没有机制作用解释。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-REL04"
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-08"
+      ],
+      "reason": "从预防性痛点到促销购物袋路径可理解，但中间证据不完整。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "FAIL-REL05"
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 38.5,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-38.500秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "以“不要等到有皱纹才用”切入眼袋和细纹预防。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 3.0,
+      "end_seconds": 22.0,
+      "visual": "有眼下涂抹动作，但演示较短。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "未观察到前后对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 20.0,
+      "end_seconds": 38.5,
+      "visual": "提到数百万销量和刚进入马来西亚。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-38.500秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 22.0,
+      "end_seconds": 38.5,
+      "visual": "未观察到独立结果证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-38.500秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 18.0,
+      "end_seconds": 38.5,
+      "visual": "提到额头、眼角、法令纹等多区域。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-38.500秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 25.0,
+      "end_seconds": 38.5,
+      "visual": "明确提到5D Peptide Eye Cream。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-38.500秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/mai199_7.mp4",
+      "start_seconds": 28.5,
+      "end_seconds": 38.5,
+      "visual": "强调当日促销并引导黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Takkan nak tunggu dah berkedut baru nak pakai weh? Yang ni kan, kau orang kena pakai Papa Feel punya eye repair cream ni tau, yang mana dah start ada eye bag, garis-garis halus dekat bawah mata ni, garis-garis dekat dahi, dekat tepi mata, dekat smile line ni kan. Pakai yang ni tau, memang best tau. Yang ni dah berjuta-juta yang sold out, and baru masuk Malaysia ni. Yang ni krim ni kan, dia untuk yang mana nak kulit dia tu lagi tegang dah tak ada garis-garis halus ni, letak area bawah mata macam ni kan, kau orang gosok-gosok nampak. Hari ni seller tengah bagi harga promo ni kan, memang sangat b",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "28.500-38.500秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

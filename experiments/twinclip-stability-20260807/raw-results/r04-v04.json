@@ -1,0 +1,527 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r04-v04",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "en_tomi",
+    "round": 4,
+    "replicate_index": 4
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 33.333333,
+      "S": 41.904762,
+      "T_center": 35.904762,
+      "effective_coverage_rate": 0.375,
+      "coverage_rate": 0.625,
+      "depths": [
+        1,
+        2,
+        0,
+        0,
+        1,
+        2,
+        0,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 57.142857,
+      "S": 41.904762,
+      "T_center": 52.571429,
+      "effective_coverage_rate": 0.714286,
+      "coverage_rate": 1,
+      "depths": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 57.142857,
+    "S": 41.904762,
+    "T_center": 52.571429,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "The opening identifies under-eye and nose-side wrinkles as a specific target problem.",
+      "done_well": "Makes the audience situation and target area concrete.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "Wrinkles and fine lines are independently recognizable from the original Malay/Manglish problem description.",
+      "done_well": "Presents a concrete problem state rather than only a generic product claim.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "The package is opened, rotated, squeezed until cream appears, and applied to the stated area.",
+      "done_well": "Shows a complete, natural product-use sequence.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04"
+      ],
+      "reason": "A five-minute duration is stated, but it is only a promise and not a specific continuing-use experience.",
+      "done_well": null,
+      "missing_or_misused": "The duration lacks a concrete personal process or experience tied to the claim.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "FAIL-B-TP04-L",
+      "adaptation_required": "yes",
+      "adaptation_result": "failed"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-05"
+      ],
+      "reason": "The speaker claims a five-minute change, but no personal before-and-after result or reaction is shown.",
+      "done_well": null,
+      "missing_or_misused": "The effect statement remains an unsupported spoken result claim.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "FAIL-B-TP05-L",
+      "adaptation_required": "yes",
+      "adaptation_result": "failed"
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "The original speech explicitly includes the side of the nose as an additional application area beyond under-eye concerns.",
+      "done_well": "Provides a second use region within the product application.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "The close supplies an affordable-price reason and a visible yellow shopping-bag action.",
+      "done_well": "Pairs a purchase reason with a clear CTA.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "The problem is specific and recognizable, but the hook lacks a concrete result suspense or test preview.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "Opening, rotating, squeezing, and applying the product are all clearly shown.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check found no concrete social-proof or market-scale evidence.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05"
+      ],
+      "reason": "A five-minute effect is verbally claimed, but no independently checkable result evidence is shown.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "The side-of-nose use extends application beyond the under-eye area, though broader expansion is limited.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check found no named 5D collagen or peptide mechanism linked to an effect direction.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "The close combines an affordable-price cue with a clear yellow shopping-bag action.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-03"
+      ],
+      "reason": "The stated problem leads directly into a complete, understandable product-use route.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check found no social-proof-to-effect-proof chain.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-05",
+        "EV-06"
+      ],
+      "reason": "A second use area is present, but the preceding effect claim has no checkable result proof.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check found no mechanism or reason-to-buy proof to connect into the CTA.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 1,
+      "evidence_ids": [
+        "EV-01",
+        "EV-03",
+        "EV-07"
+      ],
+      "reason": "The route from attention through use to purchase is understandable, but proof and mechanism gaps remain.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 0,
+      "end_seconds": 40.1,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-40.100秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "以眼下、鼻翼细纹问题开始，问题明确但缺少结果悬念。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "让目标用户先认出自己的处境",
+      "coverage_scope": "0.000-8.000秒的评论/生活痛点开场相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "只口播五分钟后变化，没有可见对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "coverage_scope": "8.000-38.000秒的问题状态的前后或具体呈现相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "展示打开、旋转、挤出和涂抹流程。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "把产品融入真实使用过程",
+      "coverage_scope": "3.000-22.000秒的包装结构与自然使用相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 22,
+      "end_seconds": 40.1,
+      "visual": "五分钟即时效果是口头声明，没有可核对证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "用持续使用经历建立可信度",
+      "coverage_scope": "22.000-40.100秒的具体使用时长/个人体验相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "只口播五分钟后变化，没有可见对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "coverage_scope": "8.000-38.000秒的个人结果与情绪反应相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 18,
+      "end_seconds": 40.1,
+      "visual": "未观察到额头/法令纹等扩展使用。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "coverage_scope": "18.000-40.100秒的日常场景与额外用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/en_tomi.mp4",
+      "start_seconds": 30.1,
+      "end_seconds": 40.1,
+      "visual": "以价格亲民和黄色购物袋收尾。",
+      "onscreen_text": "unknown",
+      "transcript": "Kau orang kalau ada masalah pada kulit dekat bawah bawah mata ataupun tepi-tepi hidung ni berkedut ataupun ada garis-garis halus, kau orang boleh dapatkan krim daripada PaphaFeel ni. Memang sangat luar biasa. Okey, cara nak guna senang saja. Kau orang buka daripada kotak, kau orang cuma tudung ni kau orang pusing je, pusing macam ni. Kemudian kau orang picit atas ni, kau orang picit, ha, picit sehingga krim putih dia keluar. Lepas tu kau orang gosok je tepi-tepi ni, bawah bawah ni, tepi-tepi macam ni kan. Hang kau orang gosok je. Selepas lima minit tu, kau orang akan tengok pada perubahan kuli",
+      "observed_function": "在个人分享后完成购买转化",
+      "coverage_scope": "30.100-40.100秒的社会证明/价格与自然CTA相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03",
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

@@ -1,0 +1,310 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r03-v05",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "firdaus.janon",
+    "round": 3,
+    "replicate_index": 3
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "teaching_point_depths": [0, 0, 0, 0, 0, 0, 0, 2],
+      "L": 8.333333,
+      "coverage": 0.125,
+      "effective_coverage": 0.125,
+      "T": 9.319048
+    },
+    "REF-B": {
+      "teaching_point_depths": [0, 0, 0, 0, 0, 0, 2],
+      "L": 9.52381,
+      "coverage": 0.142857,
+      "effective_coverage": 0.142857,
+      "T": 10.152381
+    }
+  },
+  "scores": {
+    "L": 9.52381,
+    "S": 11.619048,
+    "T_center": 10.152381,
+    "band": "未采纳"
+  },
+  "confidence": {
+    "E": 1.0,
+    "M": 0.5,
+    "R": 0.0,
+    "level": "medium",
+    "reason": "Evidence is complete and directly observable, but no reference-anchor match is available; confidence is capped at medium."
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 0,
+      "evidence_ids": ["EV-FULL", "EV-01"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "hook_problem",
+      "reason": "The video opens with a product and price reduction, without a user problem or test hook."
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 0,
+      "evidence_ids": ["EV-03"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "demonstration",
+      "reason": "The product is displayed, but there is no use action or demonstration."
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 0,
+      "evidence_ids": ["EV-02", "EV-05"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "comparison_result",
+      "reason": "No comparison or result is shown."
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 0,
+      "evidence_ids": ["EV-04"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "proof",
+      "reason": "The video provides no effect evidence or specific sales or market backing."
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 0,
+      "evidence_ids": ["EV-02", "EV-05"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "proof",
+      "reason": "There is no before-and-after, comparison, or other proof of performance."
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 0,
+      "evidence_ids": ["EV-06"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "adaptation",
+      "reason": "No multi-area or situational use is demonstrated."
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": ["EV-07", "EV-FULL"],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "reason": "The video gives a clear discount/value reason and urges viewers to buy and use it before the price rises."
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-01", "EV-FULL"],
+      "reason": "No problem hook or result preview is present."
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": ["EV-01", "EV-03"],
+      "reason": "The product is clearly visible, but no use action or demonstration supports it."
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-07"],
+      "reason": "A discount claim is present, but it is not concrete social proof."
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-04"],
+      "reason": "No effect proof or result evidence is shown."
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-02", "EV-05"],
+      "reason": "No comparison or result sequence is present."
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": ["EV-06"],
+      "reason": "No multi-area or situational application is shown."
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": ["EV-07", "EV-FULL"],
+      "reason": "The discount, value reason, and purchase action are explicit."
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 0,
+      "evidence_ids": ["EV-01", "EV-02"],
+      "reason": "No hook-to-demonstration transition is established."
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 0,
+      "evidence_ids": ["EV-02", "EV-04"],
+      "reason": "No demonstration-to-proof transition is established."
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 0,
+      "evidence_ids": ["EV-04", "EV-05"],
+      "reason": "No proof-to-comparison transition is established."
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": ["EV-05", "EV-06"],
+      "reason": "No comparison-to-adaptation transition is established."
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 1,
+      "evidence_ids": ["EV-07"],
+      "reason": "The price urgency leads directly to a purchase action, forming a fragmentary attention-to-purchase path."
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "start_seconds": 0.0,
+      "end_seconds": 10.033,
+      "visual": "Full video checked for the declared reference functions; it shows product and price-focused selling without the absent reference functions.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "Product price promotion and purchase urgency",
+      "coverage_scope": "full_video",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "full",
+      "storyboard_node_ids": ["SB01", "SB02", "SB03", "SB04", "SB05", "SB06", "SB07"]
+    },
+    {
+      "id": "EV-01",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "Product close-up with discount-focused selling; no user problem is shown.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "Product and discount hook",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB01", "SB02"]
+    },
+    {
+      "id": "EV-02",
+      "start_seconds": 8.0,
+      "end_seconds": 10.033,
+      "visual": "No comparison or result is shown.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "Price urgency and purchase prompt",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB05", "REL05"]
+    },
+    {
+      "id": "EV-03",
+      "start_seconds": 3.0,
+      "end_seconds": 10.033,
+      "visual": "Product display only, with no use action.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "Product display",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB02"]
+    },
+    {
+      "id": "EV-04",
+      "start_seconds": 9.783,
+      "end_seconds": 10.033,
+      "visual": "No effect evidence is shown.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "No demonstrated effect",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB04", "REL02"]
+    },
+    {
+      "id": "EV-05",
+      "start_seconds": 8.0,
+      "end_seconds": 10.033,
+      "visual": "No comparison or result is shown.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "No comparison/result",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB05", "REL03"]
+    },
+    {
+      "id": "EV-06",
+      "start_seconds": 9.783,
+      "end_seconds": 10.033,
+      "visual": "No multi-area use is shown.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "No multi-area use",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB06", "REL04"]
+    },
+    {
+      "id": "EV-07",
+      "start_seconds": 0.033,
+      "end_seconds": 10.033,
+      "visual": "Explicit discount and instruction to buy/use now before the price rises again.",
+      "onscreen_text": "unknown",
+      "transcript": "Tiba-tiba seller turun dengan harga lagi untuk PAPAFEEL serum yang ini kau orang. Yang ini memang jadi kau orang boleh tengok kat video saya. Kau orang hari ini harga dia tengah murah. Siapa dapatkan terbaik guna sekarang sebelum harga dia naik balik.",
+      "observed_function": "Discount/value reason and call to action",
+      "coverage_scope": "segment",
+      "scope_complete": true,
+      "observation_mode": "fixed_evidence",
+      "evidence_scope": "segment",
+      "storyboard_node_ids": ["SB07", "REL05"]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

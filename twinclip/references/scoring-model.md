@@ -21,6 +21,14 @@ A Storyboard node may be covered while its attached teaching point receives only
 
 Use a guided candidate only after blind extraction. Require human confirmation before it becomes scoring-eligible.
 
+The model does not emit the final report or any derived score. It returns the
+small semantic states in [semantic-task-contract.md](semantic-task-contract.md):
+observation, evidence-linking, teaching-point, Storyboard-node, relationship,
+and adaptation tasks are separate. The compiler maps those states to the
+numeric report fields after validating IDs, evidence eligibility, and task
+identity. This keeps structure in the judgment while moving arithmetic and
+mechanical transformations out of the model.
+
 The report validator is the enforcement boundary. Every scoring-eligible evidence record must have a real creator-video path, a finite timestamp range, an independently recognizable observed function, a non-empty inspection scope, and explicit Storyboard-node links. Use a `segment` record for a functional observation and a `full_video` record only for complete-scope absence checking; `full_video` must span the declared creator-video duration. Blind records marked rejected or pending are ineligible. A zero score with `evidence_clarity=clear` still needs an eligible, complete-scope `full_video` observation before it can count as a verified absence.
 
 L and S must consume the same evidence records and the same functional observations. Positive node scores must use evidence linked to that node, positive relationship scores must use evidence for both endpoints, and a positive overall logic assessment must use segment evidence. If a teaching point claims depth 2 or 3 while every linked Storyboard node is scored absent, the report is invalid. A primary failure also gets one unique failure ID; the same evidence cannot carry different failure dimensions.
@@ -33,16 +41,21 @@ Common category behavior or surface similarity can never establish functional ad
 
 ## 2. Teaching-point score L
 
-Assign every teaching point exactly one depth:
+The compiler derives exactly one depth for every teaching point from the
+atomic states. A model task must not submit `depth` directly:
 
-| Depth | Meaning | Required evidence |
+| Derived depth | Meaning | Atomic state condition |
 |---|---|---|
-| 0 | Not adopted | No independently recognizable use of the mechanism |
-| 1 | Surface or incorrect imitation | A related cue exists, but required components or intended function are missing |
-| 2 | Functional adoption | The taught tactic is structurally complete and its intended function is recognizable |
-| 3 | Transformative adoption | Depth 2 holds, and the creator meaningfully changes the form while preserving or strengthening the mechanism |
+| 0 | Not adopted | `observed_state=not_observed` |
+| 1 | Surface or incorrect imitation | Observed, but `minimum_evidence_state` or `function_state` is not met |
+| 2 | Functional adoption | Observed, minimum evidence met, function landed, transformation is none |
+| 3 | Transformative adoption | Depth 2 conditions plus `transformation_state=meaningful` |
 
 Do not judge creator credibility inside L. Judge whether the tactic was attempted and implemented with the required structural components.
+
+An `unclear` state or ambiguous evidence is not silently converted to a
+positive depth. The compiler keeps it at a conservative zero with
+`manual_review=true` until a human resolves the task.
 
 Use only `breakdown_explicit` or `user_provided` teaching points in N. When a PRD or user request enumerates a teaching-unit list, preserve that list one-to-one. Never inflate N by converting each Storyboard action, claim, prop, or inferred mechanism into a separate point. Storyboard-only candidates are forbidden in L; store them under node requirements, relationships, or reference notes for S.
 
@@ -87,7 +100,8 @@ denominator.
 
 Ignore exact duration and fixed order in the numeric score. Keep them only as diagnostic observations. Permit reordered sections when the sales logic remains coherent.
 
-Score every Storyboard node from 0 to 3 on these node dimensions:
+The model returns one state per Storyboard dimension. The compiler maps those
+states to 0-3 and uses the resulting values in S:
 
 ### Content function
 
@@ -119,7 +133,7 @@ Score the whole video from 0 to 3 for sales-logic coherence:
 - 2: a complete and understandable sales argument;
 - 3: a clear, convincing chain in which claims, proof, reasons to buy, and CTA support one another.
 
-Normalize each dimension to 0-100. Use these initial, versioned priors:
+The compiler normalizes each dimension to 0-100. Use these initial, versioned priors:
 
 ```text
 S = 35% sales_logic
@@ -130,7 +144,10 @@ S = 35% sales_logic
 
 Validate these weights against anchors. Do not treat them as universal constants.
 
-The sales-logic component is assessed through the explicit reference-graph relationships. There is one relationship assessment per relationship, and the overall logic score is the unrounded mean of those assessments. This keeps the preference for a smooth selling argument continuous and separate from exact Storyboard order or duration.
+The model supplies one atomic `logic_state` per relationship. The compiler
+maps it to 0-3 and derives the overall logic score as the unrounded mean. This
+keeps the preference for a smooth selling argument continuous and separate
+from exact Storyboard order or duration.
 
 If a node has required persuasion elements, it must receive a non-null element score. If no node has required elements, set the elements weight to zero and renormalize the remaining S weights. A null element score cannot remove a required node from the denominator.
 
@@ -174,7 +191,7 @@ The interval is deterministic: round and clamp center +/- 3 for high, +/- 6 for 
 
 ## 5. Borrowing analysis
 
-For every teaching point record:
+For every compiled teaching point record:
 
 - stage and teaching-point name;
 - depth and status;

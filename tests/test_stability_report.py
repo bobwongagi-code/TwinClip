@@ -1,0 +1,145 @@
+#!/usr/bin/env python3
+"""Tests for repeated-run distribution analysis."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+
+SCRIPT_DIR = Path(__file__).resolve().parents[1] / "twinclip" / "scripts"
+SCRIPT = SCRIPT_DIR / "stability_report.py"
+sys.path.insert(0, str(SCRIPT_DIR))
+from stability_report import judgment_fingerprint, normalize_run, numeric_summary, selected_evidence_ids  # noqa: E402
+
+
+class StabilityReportTests(unittest.TestCase):
+    def test_numeric_summary_keeps_distribution_metrics(self) -> None:
+        summary = numeric_summary([0, 2, 4])
+        self.assertEqual(summary["range"], 4.0)
+        self.assertEqual(summary["median"], 2.0)
+        self.assertAlmostEqual(summary["mean_abs_deviation_from_mean"], 1.333333, places=5)
+        self.assertAlmostEqual(summary["mean_pairwise_abs_difference"], 2.666667, places=5)
+
+    def test_selected_evidence_excludes_full_fixed_inventory(self) -> None:
+        result = {
+            "evidence_records": [{"id": "EV-01"}, {"id": "EV-02"}],
+            "teaching_points": [{"id": "TP-01", "evidence_ids": ["EV-02"]}],
+        }
+        self.assertEqual(selected_evidence_ids(result), {"EV-02"})
+
+    def test_judgment_fingerprint_is_sensitive_to_judgment_fields(self) -> None:
+        base = {"scores": {"L": 20, "S": 20, "T_center": 20}, "primary_lane": "REF-A"}
+        changed = {"scores": {"L": 21, "S": 20, "T_center": 20}, "primary_lane": "REF-A"}
+        self.assertEqual(judgment_fingerprint(base), judgment_fingerprint(base))
+        self.assertNotEqual(judgment_fingerprint(base), judgment_fingerprint(changed))
+
+    def test_formal_run_requires_nested_identity_and_fixed_evidence_binding(self) -> None:
+        manifest = {"reference_bundle": {"content_hash": "ref-hash"}, "experiment_id": "exp-1"}
+        planned = {
+            "run_id": "r01-v01",
+            "experiment_id": "exp-1",
+            "video_id": "v01",
+            "replicate_index": 1,
+            "round": 1,
+            "execution_context_id": "ctx-1",
+            "fixed_evidence_hash": "e" * 64,
+        }
+        raw = {
+            "schema_version": "twinclip-stability-run-0.2",
+            "reference_bundle_hash": "ref-hash",
+            "scores": {"L": 20, "S": 20, "T_center": 20, "band": "表层模仿"},
+            "primary_lane": "DEFAULT",
+            "lane_comparison": {"DEFAULT": {"L": 20, "S": 20, "T_center": 20, "effective_coverage_rate": 1.0}},
+            "run": {"run_id": "r01-v01", "experiment_id": "exp-1", "video_id": "v01", "round": 1, "replicate_index": 1,
+                    "execution_context_id": "ctx-1", "fixed_evidence_hash": "e" * 64},
+        }
+        normalized = normalize_run(manifest, planned, raw, Path("r01-v01.json"))
+        self.assertEqual(normalized["fixed_evidence_hash"], "e" * 64)
+        del raw["run"]["execution_context_id"]
+        with self.assertRaisesRegex(ValueError, "missing nested run identity"):
+            normalize_run(manifest, planned, raw, Path("r01-v01.json"))
+
+    def test_cli_requires_all_planned_runs_in_strict_mode(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results = root / "results"
+            results.mkdir()
+            manifest = {
+                "experiment_id": "exp-1",
+                "video_count": 1,
+                "replicates": 2,
+                "runs": [
+                    {"run_id": "r01-v01", "video_id": "v01", "replicate_index": 1, "round": 1},
+                    {"run_id": "r02-v01", "video_id": "v01", "replicate_index": 2, "round": 2},
+                ],
+                "fixed_observation": {"mode": "fixed"},
+                "method": {"score_formula": "T=0.70*L+0.30*S"},
+                "videos": [],
+            }
+            (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+            (results / "r01-v01.json").write_text(json.dumps({
+                "run_id": "r01-v01",
+                "video_id": "v01",
+                "scores": {"L": 20, "S": 20, "T_center": 20, "band": "表层模仿"},
+                "teaching_points": [], "storyboard_nodes": [], "relationships": [],
+            }), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--manifest", str(root / "manifest.json"),
+                 "--results-dir", str(results), "--output-json", str(root / "report.json"),
+                 "--output-md", str(root / "report.md"), "--strict"],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("missing result", result.stderr)
+
+    def test_cli_emits_raw_distributions_without_averaging_decision(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results = root / "results"
+            results.mkdir()
+            manifest = {
+                "experiment_id": "exp-1",
+                "video_count": 1,
+                "replicates": 3,
+                "runs": [
+                    {"run_id": f"r0{index}-v01", "video_id": "v01", "replicate_index": index, "round": index}
+                    for index in range(1, 4)
+                ],
+                "fixed_observation": {"mode": "fixed"},
+                "method": {"score_formula": "T=0.70*L+0.30*S"},
+                "videos": [],
+            }
+            (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+            for index, t in enumerate((18, 22, 31), start=1):
+                (results / f"r0{index}-v01.json").write_text(json.dumps({
+                    "run_id": f"r0{index}-v01",
+                    "video_id": "v01",
+                    "scores": {"L": t, "S": t, "T_center": t, "band": "未采纳" if t < 20 else "表层模仿"},
+                    "teaching_points": [], "storyboard_nodes": [], "relationships": [],
+                }), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--manifest", str(root / "manifest.json"),
+                 "--results-dir", str(results), "--output-json", str(root / "report.json"),
+                 "--output-md", str(root / "report.md"), "--strict"],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads((root / "report.json").read_text(encoding="utf-8"))
+            self.assertEqual(report["coverage"]["runs"], 3)
+            self.assertEqual(report["global_distributions"]["T_center"]["range"], 13.0)
+            self.assertEqual(report["global_distributions"]["T_center"]["median"], 22.0)
+            self.assertIn("No final score is obtained by averaging", report["interpretation_rule"])
+            self.assertEqual(len(report["raw_runs"]), 3)
+
+
+if __name__ == "__main__":
+    unittest.main()

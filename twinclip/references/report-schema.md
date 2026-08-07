@@ -1,12 +1,12 @@
 # TwinClip Report Schema
 
-Emit UTF-8 JSON with `schema_version: "1.4"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
+Emit UTF-8 JSON with `schema_version: "1.5"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must be produced by the deterministic semantic compiler, bind every source path to its current SHA-256 content, and pass `scripts/validate_report.py` without `--allow-draft`.
 
 ## Top-level structure
 
 ```json
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "reference_bundle": {},
   "scoring_config": {},
   "analysis": {},
@@ -15,6 +15,13 @@ Emit UTF-8 JSON with `schema_version: "1.4"`. Use decimal ratios from 0 to 1 and
 ```
 
 `multi_reference` is optional. When one breakdown contains multiple complete benchmark replays, include one lane summary per benchmark. The selected lane must maximize `effective_coverage_rate`, then `T_center`; an exact tie uses the declared lane order and must set `selection_tie=true` with `tie_breaker=declared_lane_order`. The selected lane's `L`, `S`, and `T_center` must equal the report's primary scores. Keep alternate lanes separate and do not treat their unique teaching points as omissions from the selected lane.
+
+For a multi-reference bundle, `reference_bundle.teaching_points` may be a lane
+map keyed by the declared lane IDs. The compiler uses
+`multi_reference.primary_reference_lane` to validate the selected assessment
+list without rewriting the locked reference graph. If lane entries contain
+`relationships`, those lane-local relationship lists are authoritative for S;
+shared Storyboard node IDs do not make the sales-logic edges interchangeable.
 
 ## Reference bundle
 
@@ -108,11 +115,15 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 {
   "analysis_id": "deterministic-id-from-reference-creator-and-method",
   "provenance": {
-    "analysis_version": "1.3",
+    "analysis_version": "1.5",
     "observation_method": "agent_multimodal_review",
     "model_id": "model-name-or-human-review",
     "prompt_version": "twinclip-prompt-1",
     "extraction_version": "asr-ocr-workflow-1",
+    "compiler_version": "twinclip-compiler-0.2",
+    "scoring_config_hash": "...",
+    "anchor_placement_hash": "...",
+    "calibration_registry_sha256": null,
     "reference_bundle_hash": "...",
     "media_preparation": {
       "manifest_schema_version": "1.2",
@@ -129,7 +140,11 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 }
 ```
 
-`analysis_id` and `method_fingerprint` are deterministic. A changed source file, reference graph, prompt, model, extraction workflow, or media-preparation setting must produce a new identity and trigger anchor revalidation.
+`analysis.execution` records the immutable semantic `run_id`, fresh
+`execution_context_id`, temperature, seed, and the published task IDs. A final
+report without this execution identity is invalid.
+
+`analysis_id` and `method_fingerprint` are deterministic. A changed source file, reference graph, prompt, model, extraction workflow, or media-preparation setting must produce a new identity and trigger anchor revalidation. `compiler_version` is required for final reports. Numeric fields and categorical derived fields must be written by that compiler, not copied from a model task. The per-run `analysis.execution` object records `run_id`, `execution_context_id`, temperature, seed, and the published task IDs for repeatability audits.
 
 ## Evidence records
 
@@ -154,6 +169,8 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 ```
 
 Every evidence record requires a real creator-video file, a finite non-empty time range inside that video's declared duration, all four observation strings, an independently recognizable `observed_function`, a scope description, an `evidence_scope`, and a list of linked Storyboard node IDs. Use `evidence_scope=segment` for a functional clip. Use `evidence_scope=full_video` only for a complete inspected video-wide absence record; it must cover every Storyboard node, span the declared creator-video duration, and cannot support a positive L, S, or relationship score. At least one observation channel must contain something other than `unknown`. Empty evidence cannot support a score or E.
+
+For Malaysian Malay or Manglish, keep the original ASR/OCR text in `transcript` and `onscreen_text`. The JSON schema has no free-form `evidence_description` field; a rendered evidence-description column may add a Chinese translation alongside the original, but must not replace or become the source of the original-language evidence.
 
 Blind evidence is eligible only with `human_confirmation=not_required` or `confirmed`. Guided evidence is eligible only with `human_confirmation=confirmed` and must be bound to a confirmed candidate with the same teaching point. Rejected or pending evidence never scores.
 
@@ -207,7 +224,10 @@ Use one unique `failure_id` per primary failure. Reusing the same evidence for d
 
 ## Sales-logic relationships
 
-When the reference graph contains relationships, add exactly one assessment per relationship:
+When the selected reference lane contains relationships, add exactly one
+assessment per relationship in that lane. For a multi-reference bundle, the
+compiler keeps lane-local relationship assessments separate before selecting
+the primary lane:
 
 ```json
 {
@@ -310,7 +330,7 @@ The status is derived: unresolved applicability is `unknown`; failed with no suc
 
 ## Complete analysis fields
 
-The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
+The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `execution`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
 
 `coverage` must include these ratios:
 
@@ -339,5 +359,11 @@ Keep detailed borrowing prose and adaptation explanation under backend fields. K
 - per-creator depth;
 - first appearance timestamp from eligible evidence;
 - evidence count and whether persistence was observed through multiple evidence records.
+
+For a multi-reference batch, group creators by the report's selected
+`primary_reference_lane` before calculating teaching-point adoption. The
+`teaching_points_by_reference_lane` map is authoritative; never use the first
+report's point list as the denominator for creators that selected another
+reference lane. Each batch report entry repeats its selected lane.
 
 To perform continuous QA, combine exactly 20 or 50 non-anchor batch reports with `scripts/select_qa_sample.py`. It creates a system-random five-report sample with a population manifest. Run `scripts/qa_check.py` on that sample. The QA history is scoped to the exact reference-bundle and analysis-method fingerprints; mixed histories are rejected.

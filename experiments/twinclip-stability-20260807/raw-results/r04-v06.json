@@ -1,0 +1,542 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r04-v06",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "ftiha.sd",
+    "round": 4,
+    "replicate_index": 4
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 29.166667,
+      "S": 44.238095,
+      "T_center": 33.688095,
+      "effective_coverage_rate": 0.25,
+      "coverage_rate": 0.625,
+      "depths": [
+        1,
+        2,
+        0,
+        1,
+        0,
+        2,
+        0,
+        1
+      ]
+    },
+    "REF-B": {
+      "L": 61.904762,
+      "S": 44.238095,
+      "T_center": 56.604762,
+      "effective_coverage_rate": 0.857143,
+      "coverage_rate": 1,
+      "depths": [
+        2,
+        2,
+        2,
+        2,
+        1,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 61.904762,
+    "S": 44.238095,
+    "T_center": 56.604762,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "The opening names dark circles, eye bags, and fine lines under the eyes, making the audience problem concrete.",
+      "done_well": "Presents a specific target area and life pain point.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "The under-eye problem state is independently recognizable from the original Malay/Manglish description.",
+      "done_well": "Makes the condition specific rather than using only a generic effectiveness word.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "The package is opened, placed under the eye, and repeatedly applied, with the use action and texture experience made clear.",
+      "done_well": "Shows a natural and executable application sequence.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "The process is specific and the lightweight, non-sticky, non-oily experience is tied to the use selling point.",
+      "done_well": "Pairs concrete application detail with a product-use experience.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "reason": "The speaker claims the product works, but no personal visible result, before-and-after, or emotional reaction is shown.",
+      "done_well": null,
+      "missing_or_misused": "The result claim lacks personal outcome evidence.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "FAIL-B-TP05-L",
+      "adaptation_required": "yes",
+      "adaptation_result": "failed"
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "The evidence explicitly expands use to the forehead and nasolabial lines beyond the under-eye area.",
+      "done_well": "Provides a clear second-use region.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-04",
+        "EV-08"
+      ],
+      "reason": "The many-buyers social cue supplies a purchase reason and the yellow shopping-bag direction supplies a clear action.",
+      "done_well": "Connects social proof and CTA into a purchase route.",
+      "missing_or_misused": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "The problem list is concrete, but there is no visible result or test preview.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "Opening, placing, applying, and texture cues make the product demonstration complete.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "reason": "Many buyers are mentioned, but the social proof has no concrete number or verifiable scale.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-03",
+        "EV-05"
+      ],
+      "reason": "An effect claim is present, but the full evidence check finds no observable comparison, clinical data, or personal result.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "Forehead and nasolabial-line use explicitly extends the product beyond the under-eye area.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check finds no 5D collagen or peptide mechanism explanation.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "reason": "The video gives an audience cue and clear yellow shopping-bag direction, though no price is shown.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "The under-eye problem is followed by a clear product and application solution.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-04",
+        "EV-03"
+      ],
+      "reason": "A social-proof cue and effect claim exist, but the claimed effect is not followed by checkable result evidence.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": [
+        "EV-03",
+        "EV-06"
+      ],
+      "reason": "The second-use benefit is present, but it is not grounded in a preceding observable result proof.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "The complete video check finds no ingredient mechanism to connect into the CTA.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 1,
+      "evidence_ids": [
+        "EV-01",
+        "EV-08"
+      ],
+      "reason": "Attention reaches a purchase action, but the route contains major unsupported proof and mechanism gaps.",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 0,
+      "end_seconds": 48.567,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-48.567秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "直接列出黑眼圈、眼袋、细纹、提亮和紧致需求。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "展示打开、放到眼下并反复涂抹，强调轻薄不油。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "没有前后结果对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 20,
+      "end_seconds": 48.567,
+      "visual": "有“很多人买/很多销量”的泛化表达，缺少具体数字。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-48.567秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 22,
+      "end_seconds": 48.567,
+      "visual": "未观察到临床或个人前后证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-48.567秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 18,
+      "end_seconds": 48,
+      "visual": "明确拓展到额头和法令纹。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 25,
+      "end_seconds": 48.567,
+      "visual": "未观察到5D机制。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-48.567秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 38.567,
+      "end_seconds": 48.567,
+      "visual": "明确面向18岁以上人群并引导黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "38.567-48.567秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

@@ -1,0 +1,494 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r02-v12",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "nizzahhhhh",
+    "round": 2,
+    "replicate_index": 2
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 33.333333,
+      "S": 35.714286,
+      "T_center": 34.047619,
+      "effective_coverage_rate": 0.25,
+      "coverage_rate": 0.75,
+      "depths": [
+        1,
+        2,
+        0,
+        1,
+        1,
+        2,
+        0,
+        1
+      ]
+    },
+    "REF-B": {
+      "L": 52.380952,
+      "S": 35.714286,
+      "T_center": 47.380952,
+      "effective_coverage_rate": 0.571429,
+      "coverage_rate": 1,
+      "depths": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        2,
+        1
+      ]
+    }
+  },
+  "scores": {
+    "L": 52.380952,
+    "S": 35.714286,
+    "T_center": 47.380952,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "具体提出黑眼圈、眼袋、细纹、提亮和紧致等处境，目标部位清楚。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "描述黑眼圈、眼袋、疲惫和显老等具体状态，问题状态可通过原文识别。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "有眼下涂抹动作和真实使用表达，产品进入使用过程。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "reason": "出现一分钟这一时长承诺，但没有具体持续使用经历或个人体验。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-05",
+        "EV-FULL"
+      ],
+      "reason": "有泛化效果主张，但没有个人前后结果、即时反馈或情绪反应。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "明确说明产品可以持续进入日常生活，但未形成眼下以外的第二用途。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "有价格/购物袋行动，但缺少具体社会证明或充分购买理由。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "问题部位清楚，但没有明确的短时结果预告或测试悬念。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "有眼下涂抹动作和清凉感表达，但产品结构/质地展示有限。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-07"
+      ],
+      "reason": "明确出现“berjuta-juta terjual”与海外知名度的规模背书。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05",
+        "EV-FULL"
+      ],
+      "reason": "有一分钟见效口头主张，但没有临床、个人前后或可观察结果证据。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-06",
+        "EV-FULL"
+      ],
+      "reason": "完整视频主要聚焦眼下，未见眼下以外的第二使用区域。",
+      "primary_failure_dimension": "S",
+      "absence_verified": true,
+      "manual_review": false,
+      "evidence_clarity": "clear"
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "完整视频未见5D胶原/肽机制名称或作用解释。",
+      "primary_failure_dimension": "S",
+      "absence_verified": true,
+      "manual_review": false,
+      "evidence_clarity": "clear"
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "明确给出价格和购物袋行动，但购买理由与价值说明较弱。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-03"
+      ],
+      "reason": "具体眼下问题之后进入产品使用，路径可理解但测试钩子不完整。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02",
+        "EV-04",
+        "EV-05",
+        "EV-07"
+      ],
+      "reason": "销量背书和效果主张出现，但没有可核对的结果证据承接。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-05",
+        "EV-06"
+      ],
+      "reason": "额外用途未形成，且前置效果证明不足，连接存在跳跃。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": [
+        "EV-07",
+        "EV-FULL"
+      ],
+      "reason": "购买动作存在，但没有机制或充分价值理由节点可承接。",
+      "primary_failure_dimension": "S",
+      "absence_verified": true,
+      "manual_review": false,
+      "evidence_clarity": "clear"
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 1,
+      "evidence_ids": [
+        "EV-01",
+        "EV-07",
+        "EV-FULL"
+      ],
+      "reason": "从问题到购买有片段化路线，但效果证明、扩展用途和机制均缺失。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 0,
+      "end_seconds": 41.333,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-41.333秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "从黑眼圈、眼袋和眼下细纹的用户问题进入。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "让目标用户先认出自己的处境",
+      "coverage_scope": "0.000-8.000秒的评论/生活痛点开场相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "主要是效果声称，没有前后对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "coverage_scope": "8.000-38.000秒的问题状态的前后或具体呈现相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "有眼下涂抹与清凉感表达，但质地展示有限。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "把产品融入真实使用过程",
+      "coverage_scope": "3.000-22.000秒的包装结构与自然使用相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 22,
+      "end_seconds": 41.333,
+      "visual": "一分钟见效是口头承诺，未见可核对结果。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "用持续使用经历建立可信度",
+      "coverage_scope": "22.000-41.333秒的具体使用时长/个人体验相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "主要是效果声称，没有前后对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "coverage_scope": "8.000-38.000秒的个人结果与情绪反应相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 18,
+      "end_seconds": 41.333,
+      "visual": "主要聚焦眼下，扩展使用较弱。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "coverage_scope": "18.000-41.333秒的日常场景与额外用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 31.333,
+      "end_seconds": 41.333,
+      "visual": "明确给出眼霜/价格和购物袋行动。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "在个人分享后完成购买转化",
+      "coverage_scope": "31.333-41.333秒的社会证明/价格与自然CTA相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03",
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

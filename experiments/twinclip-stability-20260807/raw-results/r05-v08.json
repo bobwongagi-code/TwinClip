@@ -1,0 +1,523 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r05-v08",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "helloxoan2",
+    "round": 5,
+    "replicate_index": 5
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 20.83,
+      "S": 35.9,
+      "T_center": 25.35,
+      "effective_coverage_rate": 0.125,
+      "coverage_rate": 0.5,
+      "depths": [
+        1,
+        2,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    "REF-B": {
+      "L": 61.9,
+      "S": 35.9,
+      "T_center": 54.1,
+      "effective_coverage_rate": 0.7142857142857143,
+      "coverage_rate": 1,
+      "depths": [
+        3,
+        2,
+        2,
+        1,
+        2,
+        2,
+        1
+      ]
+    }
+  },
+  "scores": {
+    "L": 61.9,
+    "S": 35.9,
+    "T_center": 54.1,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 3,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "开头用熬夜、工作和照顾孩子等具体生活处境连接到眼周问题，个人化表达比评论气泡更强地建立代入。",
+      "done_well": "把目标用户可能经历的作息和照护压力转成直接的个人痛点开场。",
+      "missing_or_misused": "未使用评论气泡，但采用了可独立识别且更生活化的等价形式。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "眼周问题和个人状态被具体提出，观众能识别需要改善的部位，但没有单侧或前后对比。",
+      "done_well": "把黑眼圈或眼周状态放进个人经历中描述，问题部位明确。",
+      "missing_or_misused": "问题呈现主要依赖口播和个人感受，缺少更直观的状态对照。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "画面实际拿取产品并在眼周使用，产品动作和应用区域可辨认。",
+      "done_well": "呈现了真实使用动作，而不是只展示静物产品。",
+      "missing_or_misused": "包装结构和用量细节不够突出，演示的说服力主要来自动作本身。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "F-L-B04",
+      "absence_verified": false,
+      "reason": "有个人使用和顾客反馈的相关表达，但没有清楚交代具体使用了多久或形成可核对的持续体验。",
+      "done_well": "加入个人感受和顾客反馈，使内容带有分享语气。",
+      "missing_or_misused": "“每晚使用”等频率信息不足以构成具体持续时长或完整体验过程。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-05"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "个人使用感受与眼周卖点相连，形成了真实分享式的结果反馈，但没有清晰的状态对比。",
+      "done_well": "使用主观体验和自然分享语气承接产品效果主张。",
+      "missing_or_misused": "缺少可复核的前后状态或更明确的情绪反应。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": null,
+      "failure_id": null,
+      "absence_verified": false,
+      "reason": "内容提到夜间使用，说明产品可以进入持续的日常护理习惯。",
+      "done_well": "给出每晚使用的日常化入口。",
+      "missing_or_misused": "没有扩展到额头、法令纹等额外区域，也没有更丰富的生活场景。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "primary_failure_dimension": "L",
+      "failure_id": "F-L-B07",
+      "absence_verified": false,
+      "reason": "结尾有推荐意味和购买理由线索，但没有确认清晰、可执行的购物袋或链接行动。",
+      "done_well": "在个人分享后补充推荐语气和价格友好的购买理由。",
+      "missing_or_misused": "行动指引不明确，社会证明也没有形成具体可核对的背书。",
+      "adaptation_required": "no",
+      "adaptation_result": "not_needed"
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 2,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "生活痛点和眼周问题清楚，但没有结果预告，钩子功能因此只部分完整。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB01"
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "产品被拿取并在眼周实际使用，产品与涂抹动作均可辨认。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "结尾有推荐线索，但没有具体销量或市场背书。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB03"
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05"
+      ],
+      "reason": "有个人体验和反馈作为效果相关片段，但不是可核对的前后结果或研究数据。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB04"
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "完整视频范围内未观察到额头、法令纹等眼下以外的扩展用途。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": true,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB05"
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 0,
+      "element_score": 0,
+      "support_score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "完整视频范围内未观察到5D胶原或肽机制解释。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": true,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB06"
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "有推荐和购买理由线索，但缺少明确可执行的购买动作。",
+      "evidence_clarity": "clear",
+      "manual_review": false,
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-SB07"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 3,
+      "evidence_ids": [
+        "EV-01",
+        "EV-03"
+      ],
+      "reason": "具体生活问题能够自然进入产品实际使用，问题到方案的连接清楚。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-07",
+        "EV-04"
+      ],
+      "reason": "有推荐和个人体验片段，但缺少具体社会背书来承接效果主张。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-REL02"
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "未观察到从个人结果进一步扩展到额外使用场景的承接。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-REL03"
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 0,
+      "evidence_ids": [
+        "EV-FULL"
+      ],
+      "reason": "未观察到机制理由，因此没有机制到购买动作的关系。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": true,
+      "primary_failure_dimension": "S",
+      "failure_id": "F-S-REL04"
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-07"
+      ],
+      "reason": "生活痛点最终进入推荐和价格理由，注意力到购买的路径可理解，但行动指引不完整。",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false,
+      "primary_failure_dimension": null,
+      "failure_id": null
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 0,
+      "end_seconds": 45.4,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-45.400秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "以熬夜、照顾孩子和黑眼圈的生活情境切入，个人痛点强。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "让目标用户先认出自己的处境",
+      "coverage_scope": "0.000-8.000秒的评论/生活痛点开场相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "主要是个人使用感受，没有单侧对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "coverage_scope": "8.000-38.000秒的问题状态的前后或具体呈现相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "有拿产品并在眼周使用的画面，但口播识别为越南语/夹杂信息。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "把产品融入真实使用过程",
+      "coverage_scope": "3.000-22.000秒的包装结构与自然使用相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 22,
+      "end_seconds": 45.4,
+      "visual": "使用体验和顾客反馈是主要证据，非可核对结果。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "用持续使用经历建立可信度",
+      "coverage_scope": "22.000-45.400秒的具体使用时长/个人体验相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "主要是个人使用感受，没有单侧对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "coverage_scope": "8.000-38.000秒的个人结果与情绪反应相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 18,
+      "end_seconds": 45.4,
+      "visual": "未观察到额头/法令纹扩展。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "coverage_scope": "18.000-45.400秒的日常场景与额外用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/helloxoan2.mp4",
+      "start_seconds": 35.4,
+      "end_seconds": 45.4,
+      "visual": "结尾有推荐意味，但未确认黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Bà nà thấm mắt, bay ini, ba nà thắc khuya, coi diên thoai nè, hoặc là thắc đêm vì do công việc, do con, chăm con nhỏ, thì mọi người hay mua cái này về hỗ trợ đi. Lúc tối, mọi người, em thức sáng đêm luôn, bởi vì quá giật, múa em không ngủ lại được, mà em suy nghĩ nhiều chuyện á. Say là em thoa cái này mỗi đêm, mà con mắt em nó mờ thắm, mọi người ạ. Và cũng có khách nói là mờ thắm, mọi người này, em mua mặt nạ mắt này, em mua cái hàng mắc tiền cũng có rồi, đó, mọi người, nhưng mà nó cũng không mờ thắm. Cái loại này thì giá cả bình dân thôi, nhưng mà nó, em xài là em cảm nhận nó ổn áp, nó có thể",
+      "observed_function": "在个人分享后完成购买转化",
+      "coverage_scope": "35.400-45.400秒的社会证明/价格与自然CTA相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03",
+        "SB07"
+      ]
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

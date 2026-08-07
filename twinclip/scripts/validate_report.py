@@ -20,6 +20,7 @@ from typing import Any
 from contracts import (  # noqa: E402
     ANALYSIS_VERSION,
     BANDS,
+    COMPILER_VERSION,
     MIN_L_WEIGHT,
     PREPARE_MANIFEST_SCHEMA_VERSION,
     SCHEMA_VERSION,
@@ -30,8 +31,11 @@ from contracts import (  # noqa: E402
     VALID_EVIDENCE_SCOPES,
     VALID_FAILURES,
     analysis_id,
+    canonical_json,
     provenance_fingerprint,
     reference_bundle_hash,
+    sha256_bytes,
+    sha256_file,
 )
 from validation_support import (  # noqa: E402
     MAX_REPORT_BYTES,
@@ -219,8 +223,35 @@ def validate_report(
         errors.append("a scored report requires reference_bundle.score_ready=true")
 
     nodes = require_list(reference, "storyboard_nodes", "reference_bundle", errors)
-    points = require_list(reference, "teaching_points", "reference_bundle", errors)
-    relationships = require_list(reference, "relationships", "reference_bundle", errors)
+    raw_points = reference.get("teaching_points")
+    if isinstance(raw_points, dict):
+        multi_reference = data.get("multi_reference")
+        selected_lane = multi_reference.get("primary_reference_lane") if isinstance(multi_reference, dict) else None
+        if not non_empty_string(selected_lane) or not isinstance(raw_points.get(selected_lane), list):
+            errors.append(
+                "reference_bundle.teaching_points lane map requires a valid "
+                "multi_reference.primary_reference_lane"
+            )
+            points = []
+        else:
+            points = raw_points[selected_lane]
+    else:
+        points = require_list(reference, "teaching_points", "reference_bundle", errors)
+    relationship_reference = reference
+    multi_reference_for_graph = data.get("multi_reference")
+    selected_graph_lane = (
+        multi_reference_for_graph.get("primary_reference_lane")
+        if isinstance(multi_reference_for_graph, dict)
+        else None
+    )
+    if (
+        non_empty_string(selected_graph_lane)
+        and isinstance(reference.get("lanes"), dict)
+        and isinstance(reference["lanes"].get(selected_graph_lane), dict)
+        and isinstance(reference["lanes"][selected_graph_lane].get("relationships"), list)
+    ):
+        relationship_reference = reference["lanes"][selected_graph_lane]
+    relationships = require_list(relationship_reference, "relationships", "reference_bundle", errors)
     if not nodes:
         errors.append("reference_bundle.storyboard_nodes must not be empty")
     if not points:
@@ -337,13 +368,44 @@ def validate_report(
     provenance = require_mapping(analysis, "provenance", "analysis", errors)
     if provenance.get("analysis_version") != ANALYSIS_VERSION:
         errors.append(f"analysis.provenance.analysis_version must be '{ANALYSIS_VERSION}'")
-    for key in ("observation_method", "model_id", "prompt_version", "extraction_version"):
+    for key in (
+        "observation_method",
+        "model_id",
+        "prompt_version",
+        "extraction_version",
+        "compiler_version",
+        "scoring_config_hash",
+        "anchor_placement_hash",
+    ):
         if not non_empty_string(provenance.get(key)):
             errors.append(f"analysis.provenance.{key} must be a non-empty string")
+    if provenance.get("compiler_version") != COMPILER_VERSION:
+        errors.append(f"analysis.provenance.compiler_version must be '{COMPILER_VERSION}'")
     if not isinstance(provenance.get("reference_bundle_hash"), str):
         errors.append("analysis.provenance.reference_bundle_hash must be a string")
     elif provenance.get("reference_bundle_hash") != reference.get("content_hash"):
         errors.append("analysis.provenance.reference_bundle_hash must equal reference_bundle.content_hash")
+    if non_empty_string(provenance.get("scoring_config_hash")) and provenance.get("scoring_config_hash") != sha256_bytes(
+        canonical_json(config).encode("utf-8")
+    ):
+        errors.append("analysis.provenance.scoring_config_hash does not match scoring_config")
+    anchor_for_hash = analysis.get("anchor_placement")
+    if isinstance(anchor_for_hash, dict) and non_empty_string(provenance.get("anchor_placement_hash")):
+        if provenance.get("anchor_placement_hash") != sha256_bytes(canonical_json(anchor_for_hash).encode("utf-8")):
+            errors.append("analysis.provenance.anchor_placement_hash does not match analysis.anchor_placement")
+    registry_path_for_hash = config.get("calibration_registry")
+    registry_hash = provenance.get("calibration_registry_sha256")
+    if registry_path_for_hash is None:
+        if registry_hash is not None:
+            errors.append("analysis.provenance.calibration_registry_sha256 must be null without a registry")
+    elif isinstance(registry_hash, str):
+        try:
+            if registry_hash != sha256_file(registry_path_for_hash):
+                errors.append("analysis.provenance.calibration_registry_sha256 does not match the registry")
+        except OSError:
+            errors.append("analysis.provenance.calibration_registry_sha256 cannot read the registry")
+    else:
+        errors.append("analysis.provenance.calibration_registry_sha256 must be a digest when a registry is configured")
     media_preparation = require_mapping(provenance, "media_preparation", "analysis.provenance", errors)
     if media_preparation.get("manifest_schema_version") != PREPARE_MANIFEST_SCHEMA_VERSION:
         errors.append(
@@ -384,6 +446,22 @@ def validate_report(
     expected_analysis_id = analysis_id(str(reference.get("content_hash")), str(creator_hash_value), expected_method_fingerprint)
     if analysis.get("analysis_id") != expected_analysis_id:
         errors.append("analysis.analysis_id does not match the reference, creator, and method identities")
+
+    execution = require_mapping(analysis, "execution", "analysis", errors)
+    for key in ("run_id", "execution_context_id"):
+        if not non_empty_string(execution.get(key)):
+            errors.append(f"analysis.execution.{key} must be a non-empty string")
+    task_ids = execution.get("task_ids")
+    if not isinstance(task_ids, list) or not task_ids or any(not non_empty_string(item) for item in task_ids):
+        errors.append("analysis.execution.task_ids must be a non-empty array of task IDs")
+    elif len(task_ids) != len(set(task_ids)):
+        errors.append("analysis.execution.task_ids must not contain duplicates")
+    if execution.get("temperature") is not None and not is_number(execution.get("temperature")):
+        errors.append("analysis.execution.temperature must be finite or null")
+    if execution.get("seed") is not None and (
+        not isinstance(execution.get("seed"), int) or isinstance(execution.get("seed"), bool)
+    ):
+        errors.append("analysis.execution.seed must be an integer or null")
 
     media_durations = require_mapping(analysis, "media_durations", "analysis", errors)
     for video in creator_videos:

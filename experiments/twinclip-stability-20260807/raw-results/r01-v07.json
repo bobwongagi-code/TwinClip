@@ -1,0 +1,508 @@
+{
+  "schema_version": "twinclip-stability-run-0.1",
+  "run": {
+    "run_id": "r01-v07",
+    "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
+    "video_id": "glowingfish313",
+    "round": 1,
+    "replicate_index": 1
+  },
+  "primary_lane": "REF-B",
+  "lane_comparison": {
+    "REF-A": {
+      "L": 45.833333,
+      "S": 57.952381,
+      "T_center": 49.469048,
+      "effective_coverage_rate": 0.5,
+      "coverage_rate": 0.875,
+      "depths": [
+        1,
+        1,
+        0,
+        2,
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    "REF-B": {
+      "L": 52.380952,
+      "S": 57.952381,
+      "T_center": 54.052381,
+      "effective_coverage_rate": 0.571429,
+      "coverage_rate": 1,
+      "depths": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        2,
+        2
+      ]
+    }
+  },
+  "scores": {
+    "L": 52.380952,
+    "S": 57.952381,
+    "T_center": 54.052381,
+    "band": "单点机制迁移"
+  },
+  "confidence": {
+    "E": 1,
+    "M": 0.5,
+    "R": 0,
+    "level": "medium"
+  },
+  "teaching_points": [
+    {
+      "teaching_point_id": "B-TP01",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-01"
+      ],
+      "reason": "开头提出眼周细纹和笑纹等具体处境，目标部位清楚可辨认。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP02",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-02"
+      ],
+      "reason": "以原文具体说出眼周、笑纹和额头松弛/细纹状态，问题状态可识别。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP03",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "有产品展示和使用口播，但结构/用量与实际涂抹动作没有完整呈现。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP04",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-04"
+      ],
+      "reason": "提到每天、早晚和坚持使用，但没有具体时长与清楚的个人体验细节。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP05",
+      "depth": 1,
+      "evidence_ids": [
+        "EV-05"
+      ],
+      "reason": "提到变化这一效果词，但没有个人前后结果、即时反馈或情绪反应。",
+      "primary_failure_dimension": "L",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP06",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "明确给出早晚使用以及笑纹、额头等额外用途。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    },
+    {
+      "teaching_point_id": "B-TP07",
+      "depth": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "以超过300万件销量和促销理由承接黄色购物袋行动。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "failure_id": null,
+      "absence_verified": false
+    }
+  ],
+  "storyboard_nodes": [
+    {
+      "storyboard_node_id": "SB01",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-02"
+      ],
+      "reason": "问题部位可识别，但没有清楚的结果预告或测试悬念。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB02",
+      "function_score": 1,
+      "element_score": 1,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-03"
+      ],
+      "reason": "产品可见且有使用口播，但实际涂抹/按摩动作很少。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB03",
+      "function_score": 3,
+      "element_score": 3,
+      "support_score": 3,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "明确给出超过300万件海外销量这一具体社会证明。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB04",
+      "function_score": 1,
+      "element_score": 0,
+      "support_score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05",
+        "EV-FULL"
+      ],
+      "reason": "有变化主张和复购说法，但没有研究、数据或可观察前后结果。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB05",
+      "function_score": 3,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-06"
+      ],
+      "reason": "明确扩展到笑纹、额头等眼下以外区域。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB06",
+      "function_score": 2,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-08"
+      ],
+      "reason": "清楚出现“5D Anti Wrinkle Peptide”机制字幕，作用方向可辨认。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "storyboard_node_id": "SB07",
+      "function_score": 3,
+      "element_score": 2,
+      "support_score": 2,
+      "evidence_ids": [
+        "EV-07"
+      ],
+      "reason": "有促销理由并明确引导黄色购物袋。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "REL01",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-03"
+      ],
+      "reason": "具体问题之后进入产品与使用方案，路径可理解但测试钩子不完整。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL02",
+      "score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05",
+        "EV-07"
+      ],
+      "reason": "有销量背书和效果主张，但后续没有可核对的结果证据承接。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL03",
+      "score": 1,
+      "evidence_ids": [
+        "EV-02",
+        "EV-04",
+        "EV-05",
+        "EV-06"
+      ],
+      "reason": "额外用途明确，但前置效果证明不足，连接存在明显跳跃。",
+      "primary_failure_dimension": "S",
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL04",
+      "score": 2,
+      "evidence_ids": [
+        "EV-08",
+        "EV-07"
+      ],
+      "reason": "机制卖点与购买动作都出现，价值理由到CTA可理解。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    },
+    {
+      "relationship_id": "REL05",
+      "score": 2,
+      "evidence_ids": [
+        "EV-01",
+        "EV-07"
+      ],
+      "reason": "从问题/信任开场到购物袋形成可理解路径，但效果证明环节偏弱。",
+      "primary_failure_dimension": null,
+      "manual_review": false,
+      "evidence_clarity": "clear",
+      "absence_verified": false
+    }
+  ],
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 0,
+      "end_seconds": 48.4,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-48.400秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "visual": "以“不是骗局/不是忽悠、很多人复购”建立信任型开头。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "让目标用户先认出自己的处境",
+      "coverage_scope": "0.000-8.000秒的评论/生活痛点开场相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "没有单侧或前后画面。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "coverage_scope": "8.000-38.000秒的问题状态的前后或具体呈现相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 3,
+      "end_seconds": 22,
+      "visual": "口播描述轻薄快吸收，但画面主要是人物和产品展示，实际涂抹较少。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "把产品融入真实使用过程",
+      "coverage_scope": "3.000-22.000秒的包装结构与自然使用相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 22,
+      "end_seconds": 48.4,
+      "visual": "以肉眼变化和复购作泛化证据，未见独立对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "用持续使用经历建立可信度",
+      "coverage_scope": "22.000-48.400秒的具体使用时长/个人体验相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 8,
+      "end_seconds": 38,
+      "visual": "没有单侧或前后画面。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "coverage_scope": "8.000-38.000秒的个人结果与情绪反应相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 18,
+      "end_seconds": 48,
+      "visual": "明确说眼下、法令纹和额头都可以用。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "coverage_scope": "18.000-48.000秒的日常场景与额外用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 38.4,
+      "end_seconds": 48.4,
+      "visual": "有促销理由并引导黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Bukan scam, bukan tipu, tapi memang ramai yang repeat beli sebab nampak perubahan. Kalau korang rajin sapu tiap-tiap hari, jangan tertunggu ya, nanti garis-garis halus sekeliling mata dengan kawasan kaki senyum semua ini makin kurang nampak. Sebab kita antara orang yang paling awal nak share PAPAFEEL eye cream ini. Dia bukan untuk bawah mata je, dekat smile line, dahi mana-mana yang sudah mula kendur, ada garis-garis pun boleh sapu je. Tekstur dia ringan, cepat serap, senang je pakai pagi dan malam. Yang penting kena konsisten. Tak hairan lah dah lebih 3 juta unit terjual di luar negara. Sekar",
+      "observed_function": "在个人分享后完成购买转化",
+      "coverage_scope": "38.400-48.400秒的社会证明/价格与自然CTA相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/glowingfish313.mp4",
+      "start_seconds": 0,
+      "end_seconds": 9,
+      "visual": "开头画面持续出现产品与5D抗皱肽相关字幕。",
+      "onscreen_text": "5D Anti Wrinkle Peptide",
+      "transcript": "unknown",
+      "observed_function": "用成分机制字幕解释产品卖点。",
+      "coverage_scope": "开头产品与成分卡片片段",
+      "scope_complete": true,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ],
+      "observation_mode": "blind",
+      "human_confirmation": "not_required"
+    }
+  ],
+  "candidate_matches": [],
+  "manual_pending_count": 0
+}

@@ -1,0 +1,181 @@
+{
+  "schema_version": "twinclip-stability-evidence-0.1",
+  "video_id": "nizzahhhhh",
+  "creator_video": {
+    "path": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+    "sha256": "4d6fa65b268490137209ef0dd742ec4eaeb71ef150cfea935308e4fe5fca5c85",
+    "bytes": 9072945
+  },
+  "declared_duration_seconds": 41.333,
+  "observation_method": "agent_multimodal_review_with_vidlingo_asr",
+  "extraction_version": "vidlingo-funasr-1.0+prepared-video-1.2+evidence-scope-1.0",
+  "language_note": "Frozen legacy observation snapshot; original ASR/OCR channels are retained as supplied.",
+  "asr": {
+    "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/asr/creator__nizzahhhhh.json",
+    "sha256": "39d45062497880f492d74a26fb4fe119d11b113b8962c5ec42af5b87a7fb172a",
+    "bytes": 36099
+  },
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 41.333,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-41.333秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "从黑眼圈、眼袋和眼下细纹的用户问题进入。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "让目标用户先认出自己的处境",
+      "coverage_scope": "0.000-8.000秒的评论/生活痛点开场相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "主要是效果声称，没有前后对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "让用户看到自己可能面对的状态",
+      "coverage_scope": "8.000-38.000秒的问题状态的前后或具体呈现相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 3.0,
+      "end_seconds": 22.0,
+      "visual": "有眼下涂抹与清凉感表达，但质地展示有限。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "把产品融入真实使用过程",
+      "coverage_scope": "3.000-22.000秒的包装结构与自然使用相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 22.0,
+      "end_seconds": 41.333,
+      "visual": "一分钟见效是口头承诺，未见可核对结果。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "用持续使用经历建立可信度",
+      "coverage_scope": "22.000-41.333秒的具体使用时长/个人体验相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "主要是效果声称，没有前后对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "用个人结果让效果更像真实分享",
+      "coverage_scope": "8.000-38.000秒的个人结果与情绪反应相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 18.0,
+      "end_seconds": 41.333,
+      "visual": "主要聚焦眼下，扩展使用较弱。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "说明产品可以持续进入日常生活",
+      "coverage_scope": "18.000-41.333秒的日常场景与额外用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/nizzahhhhh.mp4",
+      "start_seconds": 31.333,
+      "end_seconds": 41.333,
+      "visual": "明确给出眼霜/价格和购物袋行动。",
+      "onscreen_text": "unknown",
+      "transcript": "Patutlah dah berjuta dah terjual tau. Dark circle ke, eye bag ke, ada garis-garis halus dekat bawah mata ke, semua dia tapau tau. Dalam masa satu minit sahaja, dia boleh kurangkan semua masalah tu. Sapa yang tengah tengok video ni, ada masalah dark circle, garis-garis halus bawah mata, mata nampak letih, lesu, nampak tua kan, garis-garis halus tu, ada masalah eye bag, tolong pakai eye cream daripada Papa Feel. Yang ini memang dah famous dekat luar negara, dah berjuta-juta terjual tau. So yang mana ada masalah yang macam gitu, tolonglah pakai ni. Kat dalam ni dia bantu untuk anti-aging. Kat dal",
+      "observed_function": "在个人分享后完成购买转化",
+      "coverage_scope": "31.333-41.333秒的社会证明/价格与自然CTA相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03",
+        "SB07"
+      ]
+    }
+  ],
+  "evidence_hash": "36a2db8f55a4817398dfb4767ccad04c168fdec8fedaae5d30b0b6135411c0fc"
+}

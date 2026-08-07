@@ -1,0 +1,198 @@
+{
+  "schema_version": "twinclip-stability-evidence-0.1",
+  "video_id": "ftiha.sd",
+  "creator_video": {
+    "path": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+    "sha256": "f01180d90cd684eb4412e154aef8cbd6448db462ff14298566aa83b430e513db",
+    "bytes": 10037995
+  },
+  "declared_duration_seconds": 48.567,
+  "observation_method": "agent_multimodal_review_with_vidlingo_asr",
+  "extraction_version": "vidlingo-funasr-1.0+prepared-video-1.2+evidence-scope-1.0",
+  "language_note": "Frozen legacy observation snapshot; original ASR/OCR channels are retained as supplied.",
+  "asr": {
+    "path": "/Users/wangbo5/Downloads/twinclip shortvideo/twinclip-run/asr/creator__ftiha.sd.json",
+    "sha256": "9e182b1b414fe916a11f33d9c6e3d2f6960133f262db71b1ac084a7efbd1edb8",
+    "bytes": 44722
+  },
+  "evidence_records": [
+    {
+      "id": "EV-FULL",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 48.567,
+      "visual": "已逐秒抽帧检查整条达人视频；该记录用于确认未出现的参考功能。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "完整视频销售结构观察",
+      "coverage_scope": "完整0.0-48.567秒；用于缺失项的完整范围核验。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "full_video",
+      "storyboard_node_ids": [
+        "SB01",
+        "SB02",
+        "SB03",
+        "SB04",
+        "SB05",
+        "SB06",
+        "SB07"
+      ]
+    },
+    {
+      "id": "EV-01",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 0.0,
+      "end_seconds": 8.0,
+      "visual": "直接列出黑眼圈、眼袋、细纹、提亮和紧致需求。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "用问题和即时测试制造悬念",
+      "coverage_scope": "0.000-8.000秒的测试式问题钩子相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB01"
+      ]
+    },
+    {
+      "id": "EV-02",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 3.0,
+      "end_seconds": 22.0,
+      "visual": "展示打开、放到眼下并反复涂抹，强调轻薄不油。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "让观众看懂产品如何使用并降低使用门槛",
+      "coverage_scope": "3.000-22.000秒的动作化使用与质地展示相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB02"
+      ]
+    },
+    {
+      "id": "EV-03",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 8.0,
+      "end_seconds": 38.0,
+      "visual": "没有前后结果对比。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "把效果从口头主张变成可观察结果",
+      "coverage_scope": "8.000-38.000秒的单侧实测与前后对比相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-04",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 20.0,
+      "end_seconds": 48.567,
+      "visual": "有“很多人买/很多销量”的泛化表达，缺少具体数字。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "降低陌生产品的不确定性",
+      "coverage_scope": "20.000-48.567秒的具体销量与市场背书相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB03"
+      ]
+    },
+    {
+      "id": "EV-05",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 22.0,
+      "end_seconds": 48.567,
+      "visual": "未观察到临床或个人前后证据。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "让效果主张有独立证据支撑",
+      "coverage_scope": "22.000-48.567秒的研究/数据或真实结果证据相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB04"
+      ]
+    },
+    {
+      "id": "EV-06",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 18.0,
+      "end_seconds": 48.0,
+      "visual": "明确拓展到额头和法令纹。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "扩大适用场景和购买理由",
+      "coverage_scope": "18.000-48.000秒的眼下以外的多区域用途相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB05"
+      ]
+    },
+    {
+      "id": "EV-07",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 25.0,
+      "end_seconds": 48.567,
+      "visual": "未观察到5D机制。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "给效果主张提供可理解的产品理由",
+      "coverage_scope": "25.000-48.567秒的5D胶原/肽机制解释相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB06"
+      ]
+    },
+    {
+      "id": "EV-08",
+      "creator_video": "/Users/wangbo5/Downloads/twinclip shortvideo/ftiha.sd.mp4",
+      "start_seconds": 38.567,
+      "end_seconds": 48.567,
+      "visual": "明确面向18岁以上人群并引导黄色购物袋。",
+      "onscreen_text": "unknown",
+      "transcript": "Nak kurangkan dark circle dekat bawah mata, nak hilangkan eye bag, nak hilangkan garis halus dekat bawah mata, nak hilangkan dark circle, nak cerahkan, nak tegangkan balik bawah mata ni, please lah kau orang pakai ni. Yang ni serius menjadi ya, yang ni dah berapa banyak sold, banyak gila dah orang beli. Yang ini nak pakai pun senang, kau orang just buka macam ni je, lepas tu kau orang pakai, kau orang letak ni dekat bawah mata kau orang, and then kau orang sapu, sapu, sapu. Tekstur dia jenis light weight tau, tak rasa melekit atau tak rasa berminyak langsung. Ini bukannya setakat boleh sapu ba",
+      "observed_function": "把兴趣转为下单动作",
+      "coverage_scope": "38.567-48.567秒的价值理由与黄色购物袋行动相关片段；以盲观察事实为底层证据。",
+      "scope_complete": true,
+      "observation_mode": "blind",
+      "human_confirmation": "not_required",
+      "candidate_id": null,
+      "evidence_scope": "segment",
+      "storyboard_node_ids": [
+        "SB07"
+      ]
+    }
+  ],
+  "evidence_hash": "1baa6b092aff1744bc0c030207394776b314af402601ab6803e59910eab955a9"
+}
