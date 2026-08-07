@@ -19,6 +19,7 @@ from semantic_pipeline import (
     compile_report,
     load_run_manifest,
     read_json,
+    stability_result,
     validate_task,
 )
 from semantic_test_helpers import write_semantic_run
@@ -61,6 +62,8 @@ class SemanticPipelineTests(unittest.TestCase):
         self.assertNotIn('"depth"', task_text)
         self.assertNotIn('"T_center"', task_text)
         self.assertIn('"depth": 2', json.dumps(compiled["analysis"]["teaching_point_assessments"]))
+        stability = stability_result(compiled, load_run_manifest(semantic_dir / "run.json"))
+        self.assertEqual(stability["compiler_version"], "twinclip-compiler-0.2")
 
     def test_confidence_m_is_bound_to_locked_anchor_boundary(self) -> None:
         decisions = [{"evidence_clarity": "clear", "evidence_ids": ["EV01"], "manual_review": False}]
