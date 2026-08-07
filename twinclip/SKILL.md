@@ -1,11 +1,17 @@
 ---
 name: twinclip
-description: Analyze creator shoppable short videos against a breakdown or teaching video and a Storyboard PDF. Use when Codex needs to measure overall learning similarity, breakdown-point similarity, storyboard similarity, borrowing evidence, creator adaptation risks, anchor-relative rankings, or batch adoption results with auditable timestamps instead of surface-level visual matching.
+description: Analyze creator shoppable short videos against a breakdown or teaching video and a Storyboard PDF. Use when Codex needs to measure overall learning similarity, breakdown-point similarity, storyboard similarity, borrowing evidence, creator adaptation risks, anchor-relative rankings, or batch adoption results with auditable timestamps instead of surface-level visual matching. 当用户提到复盘达人视频、对比达人视频和拆解视频或 Storyboard、评估复刻或学习落地、视频拆解要点相似度、Storyboard 相似度、借鉴点分析或 TwinClip 时使用；不要用于生成全新带货脚本，也不要用于两条无参考关系视频的通用相似度比较。
 ---
 
 # TwinClip
 
 Analyze whether one or more creator videos learned and applied the mechanisms taught by a breakdown video and Storyboard. Produce one validated report per creator video plus a batch manifest with four core outputs per report: overall learning result, breakdown-point similarity, Storyboard similarity, and structured borrowing analysis.
+
+## 适用范围
+
+本 skill 的中文触发范围包括“复盘达人视频”“看看达人视频复刻得怎么样”“对比达人视频和爆款拆解”“拆解要点相似度”“Storyboard 相似度”“借鉴点分析”“学习落地分”“总落地分”以及“评估这条内容是否适合这个达人”。
+
+它要求存在有明确参考关系的拆解或教学视频和 Storyboard。两条没有参考关系的视频之间的通用相似度比较、全新带货脚本生成和内容策划，应交给其他 skill。
 
 ## Required inputs
 
@@ -68,7 +74,7 @@ Record cross-node logic as explicit reference-graph relationships, including pre
 
 When one breakdown contains multiple complete benchmark replays, lock one lane per benchmark and score the shared creator observations against every lane. Select the primary lane by `effective_coverage_rate`, then `T`; if both are exactly tied, use the declared lane order as a deterministic tie-breaker and record that tie. Keep the alternate lane summaries and their scores in the report. Do not treat mechanisms unique to the unselected lane as primary-lane omissions.
 
-Version the graph as a `reference_bundle`. Lock it before scoring a batch. Bind its `content_hash` to the path-free content identities of the breakdown video and Storyboard. A changed source creates a new bundle identity and requires anchor revalidation. Read [scoring-model.md](references/scoring-model.md) for point and node rubrics.
+Version the graph as a `reference_bundle`. Lock it before scoring a batch. Bind its `content_hash` to the path-free content identities of the breakdown video and Storyboard. A changed source creates a new bundle identity and requires anchor revalidation. Read [reference-graph-example.md](references/reference-graph-example.md) for a compact end-to-end graph example, and [scoring-model.md](references/scoring-model.md) for point and node rubrics.
 
 ### 3. Blindly observe the creator video
 
@@ -112,7 +118,7 @@ Follow [report-schema.md](references/report-schema.md). Put these four items at 
 1. T: total learning band, interval, center index, and confidence.
 2. L: breakdown-point similarity and coverage statistics.
 3. S: Storyboard similarity and sales-logic diagnosis.
-4. Borrowing summary: missing, surface, effective, and innovative counts.
+4. Borrowing summary: missing, surface, effective, and innovative counts, plus `surface_share` and `surface_error_rate` with their distinct denominators.
 
 Keep full borrowing commentary and adaptation detail in the backend section unless requested. Always include why the video is not one band higher, why it is not one band lower, and up to three highest-impact next actions.
 

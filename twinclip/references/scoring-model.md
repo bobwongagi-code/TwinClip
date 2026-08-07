@@ -67,8 +67,21 @@ Also calculate:
 coverage_rate           = count(depth >= 1) / N
 effective_coverage_rate = count(depth >= 2) / N
 innovation_rate         = count(depth == 3) / N
+surface_share           = count(depth == 1) / N
 surface_error_rate      = count(depth == 1) / max(count(depth >= 1), 1)
 ```
+
+`surface_share` and `surface_error_rate` answer different questions and must both
+be retained:
+
+- `surface_share` uses all teaching points as the denominator. It shows how much
+  of the reference teaching list is occupied by surface or incorrect imitation.
+- `surface_error_rate` uses adopted points as the denominator. It shows how often
+  an observed adoption attempt is only surface-level, excluding points that were
+  completely missed.
+
+Do not rename one metric to the other or compare their values without naming the
+denominator.
 
 ## 3. Storyboard score S
 

@@ -127,6 +127,8 @@ class RunAnalysisTests(unittest.TestCase):
         self.assertEqual(batch["creator_video_count"], 2)
         self.assertEqual(batch["teaching_points"][0]["adoption_rate"], 1.0)
         self.assertEqual(batch["teaching_points"][0]["per_creator"][0]["first_appearance_seconds"], 0.1)
+        self.assertEqual(batch["reports"][0]["surface_share"], 0.0)
+        self.assertEqual(batch["reports"][0]["surface_error_rate"], 0.0)
 
     def test_run_analysis_rejects_semantically_different_same_version_bundle(self) -> None:
         draft_one = self.write_draft(self.creator_one, "draft-one.json")

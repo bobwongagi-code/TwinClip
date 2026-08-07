@@ -38,7 +38,7 @@ class QACheckTests(unittest.TestCase):
         self.batch.write_text(
             json.dumps(
                 {
-                    "schema_version": "1.3",
+                    "schema_version": "1.4",
                     "reference_bundle_content_hash": "bundle-hash",
                     "method_fingerprint": "method-hash",
                     "creator_video_count": 5,

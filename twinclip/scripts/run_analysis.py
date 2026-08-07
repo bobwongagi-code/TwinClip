@@ -206,6 +206,8 @@ def build_batch_summary(reports: list[tuple[str, Path, dict[str, Any]]], output_
                 "T_center": report["analysis"]["scores"]["T_center"],
                 "L": report["analysis"]["scores"]["L"],
                 "S": report["analysis"]["scores"]["S"],
+                "surface_share": report["analysis"]["coverage"]["surface_share"],
+                "surface_error_rate": report["analysis"]["coverage"]["surface_error_rate"],
                 "has_anchors": report["analysis"]["anchor_placement"]["has_anchors"],
                 "review_status": report["analysis"]["review_status"],
             }

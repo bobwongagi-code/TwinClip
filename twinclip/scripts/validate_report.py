@@ -812,6 +812,7 @@ def validate_report(
             "coverage_rate": adopted / len(depths),
             "effective_coverage_rate": sum(depth >= 2 for depth in depths) / len(depths),
             "innovation_rate": depths.count(3) / len(depths),
+            "surface_share": depths.count(1) / len(depths),
             "surface_error_rate": depths.count(1) / adopted if adopted else 0.0,
         }
         for key, expected in coverage_expected.items():

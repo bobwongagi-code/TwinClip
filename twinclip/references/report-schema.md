@@ -1,12 +1,12 @@
 # TwinClip Report Schema
 
-Emit UTF-8 JSON with `schema_version: "1.3"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
+Emit UTF-8 JSON with `schema_version: "1.4"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must bind every source path to its current SHA-256 content and must pass `scripts/validate_report.py` without `--allow-draft`.
 
 ## Top-level structure
 
 ```json
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "reference_bundle": {},
   "scoring_config": {},
   "analysis": {},
@@ -108,7 +108,7 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 {
   "analysis_id": "deterministic-id-from-reference-creator-and-method",
   "provenance": {
-    "analysis_version": "1.2",
+    "analysis_version": "1.3",
     "observation_method": "agent_multimodal_review",
     "model_id": "model-name-or-human-review",
     "prompt_version": "twinclip-prompt-1",
@@ -312,11 +312,28 @@ The status is derived: unresolved applicability is `unknown`; failed with no suc
 
 The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
 
+`coverage` must include these ratios:
+
+```json
+{
+  "coverage_rate": 0.0,
+  "effective_coverage_rate": 0.0,
+  "innovation_rate": 0.0,
+  "surface_share": 0.0,
+  "surface_error_rate": 0.0
+}
+```
+
+`surface_share` is `surface / N`, where `N` is the complete teaching-point
+list. `surface_error_rate` is `surface / adopted`, where `adopted` counts points
+with depth at least 1; when `adopted` is zero, emit `0.0`. They must not be
+treated as interchangeable.
+
 Keep detailed borrowing prose and adaptation explanation under backend fields. Keep the four core outputs at the top of any rendered human report.
 
 ## Batch manifest
 
-`scripts/run_analysis.py` emits one validated report per creator video and a `batch.json` containing the shared reference-bundle content hash, analysis-method fingerprint, each video's immutable analysis ID and source hash, T/L/S/band, final `review_status`, plus, for every teaching point:
+`scripts/run_analysis.py` emits one validated report per creator video and a `batch.json` containing the shared reference-bundle content hash, analysis-method fingerprint, each video's immutable analysis ID and source hash, T/L/S/band, `surface_share`, `surface_error_rate`, final `review_status`, plus, for every teaching point:
 
 - group adoption rate, effective adoption rate, innovation rate, and persistence rate;
 - per-creator depth;

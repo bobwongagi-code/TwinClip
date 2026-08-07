@@ -256,6 +256,7 @@ class ReportFixture(unittest.TestCase):
                     "coverage_rate": 1.0,
                     "effective_coverage_rate": 1.0,
                     "innovation_rate": 0.0,
+                    "surface_share": 0.0,
                     "surface_error_rate": 0.0,
                 },
                 "borrowing_summary": {
@@ -658,6 +659,94 @@ class ReportFixture(unittest.TestCase):
             lambda report: report["analysis"]["scores"].update({"T_range": [0, 100]})
         )
         self.assertTrue(any("T_range must equal" in error for error in errors))
+
+    def test_surface_metrics_use_distinct_denominators(self) -> None:
+        report = self.report()
+        report["reference_bundle"]["teaching_points"].append(
+            {
+                "id": "TP02",
+                "source_type": "breakdown_explicit",
+                "source_locator": "breakdown 00:01-00:02, teaching point 2",
+                "stage": "Transition",
+                "name": "Proof transition",
+                "content_function": "Connect the problem to the proof",
+                "core_meaning": "Move from the problem into the product proof",
+                "persuasion_element": "problem-to-proof bridge",
+                "evidence_method": "observable transition",
+                "logical_role": "transition",
+                "allowed_substitutions": ["another clear bridge into proof"],
+                "minimum_evidence": ["the transition is observable"],
+                "false_positive_guards": ["a generic cut does not count"],
+                "source_ranges": [[1, 2]],
+                "storyboard_node_ids": ["SB02"],
+            }
+        )
+        report["reference_bundle"]["content_hash"] = reference_bundle_hash(report["reference_bundle"])
+        provenance = report["analysis"]["provenance"]
+        provenance["reference_bundle_hash"] = report["reference_bundle"]["content_hash"]
+        provenance["method_fingerprint"] = provenance_fingerprint(provenance)
+        report["analysis"]["analysis_id"] = analysis_id(
+            report["reference_bundle"]["content_hash"],
+            provenance["source_hashes"]["creator_video"]["sha256"],
+            provenance["method_fingerprint"],
+        )
+        assessment = report["analysis"]["teaching_point_assessments"][0]
+        assessment.update(
+            {
+                "depth": 1,
+                "reason": "A related cue is present but the complete mechanism is not established",
+                "missing_or_misused": "The observable proof is incomplete",
+            }
+        )
+        report["analysis"]["teaching_point_assessments"].append(
+            {
+                "teaching_point_id": "TP02",
+                "depth": 0,
+                "evidence_ids": ["EV-FULL"],
+                "reason": "The complete video scope does not show this transition",
+                "missing_or_misused": "The transition is not present",
+                "manual_review": False,
+                "evidence_clarity": "clear",
+                "absence_verified": True,
+                "primary_failure_dimension": None,
+                "failure_id": None,
+                "adaptation_required": "no",
+                "adaptation_result": "not_needed",
+            }
+        )
+        report["analysis"]["scores"].update(
+            {
+                "L": 16.6666667,
+                "S": 53.3333333,
+                "T_center": 27.6666667,
+                "T_range": [22, 34],
+                "formula_band": "表层模仿",
+                "band": "表层模仿",
+            }
+        )
+        report["analysis"]["coverage"].update(
+            {
+                "coverage_rate": 0.5,
+                "effective_coverage_rate": 0.0,
+                "innovation_rate": 0.0,
+                "surface_share": 0.5,
+                "surface_error_rate": 1.0,
+            }
+        )
+        report["analysis"]["borrowing_summary"].update(
+            {"missing": 1, "surface": 1, "effective": 0, "innovative": 0}
+        )
+        errors, _, _ = validate_report(report)
+        self.assertEqual(errors, [])
+
+        report["analysis"]["coverage"]["surface_share"] = 1.0
+        errors, _, _ = validate_report(report)
+        self.assertTrue(any("coverage.surface_share must equal 0.5000" in error for error in errors))
+
+        report["analysis"]["coverage"]["surface_share"] = 0.5
+        report["analysis"]["coverage"]["surface_error_rate"] = 0.5
+        errors, _, _ = validate_report(report)
+        self.assertTrue(any("coverage.surface_error_rate must equal 1.0000" in error for error in errors))
 
     def test_pending_guided_candidate_cannot_be_final(self) -> None:
         report = self.report()
