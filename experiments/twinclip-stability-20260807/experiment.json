@@ -1,7 +1,9 @@
 {
   "schema_version": "twinclip-stability-experiment-0.1",
   "experiment_id": "twinclip-stability-PAPAFEEL-20260806-multi-ref-20260807",
-  "status": "completed_with_audit_caveat",
+  "status": "legacy_nonformal_audit",
+  "formal_sample_eligible": false,
+  "formal_rejection_reason": "This artifact predates twinclip-stability-run-0.2 and lacks immutable execution contexts and compiler-bound fixed-evidence identities.",
   "replicates": 5,
   "video_count": 16,
   "expected_run_count": 80,

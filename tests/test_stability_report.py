@@ -14,7 +14,7 @@ import unittest
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "twinclip" / "scripts"
 SCRIPT = SCRIPT_DIR / "stability_report.py"
 sys.path.insert(0, str(SCRIPT_DIR))
-from stability_report import judgment_fingerprint, normalize_run, numeric_summary, selected_evidence_ids  # noqa: E402
+from stability_report import COMPILER_VERSION, judgment_fingerprint, normalize_run, numeric_summary, selected_evidence_ids  # noqa: E402
 
 
 class StabilityReportTests(unittest.TestCase):
@@ -51,6 +51,7 @@ class StabilityReportTests(unittest.TestCase):
         }
         raw = {
             "schema_version": "twinclip-stability-run-0.2",
+            "compiler_version": COMPILER_VERSION,
             "reference_bundle_hash": "ref-hash",
             "scores": {"L": 20, "S": 20, "T_center": 20, "band": "表层模仿"},
             "primary_lane": "DEFAULT",
@@ -74,20 +75,16 @@ class StabilityReportTests(unittest.TestCase):
                 "video_count": 1,
                 "replicates": 2,
                 "runs": [
-                    {"run_id": "r01-v01", "video_id": "v01", "replicate_index": 1, "round": 1},
-                    {"run_id": "r02-v01", "video_id": "v01", "replicate_index": 2, "round": 2},
+                    {"run_id": "r01-v01", "experiment_id": "exp-1", "video_id": "v01", "replicate_index": 1, "round": 1,
+                     "execution_context_id": "ctx-r01-v01", "fixed_evidence_hash": "1" * 64},
+                    {"run_id": "r02-v01", "experiment_id": "exp-1", "video_id": "v01", "replicate_index": 2, "round": 2,
+                     "execution_context_id": "ctx-r02-v01", "fixed_evidence_hash": "1" * 64},
                 ],
                 "fixed_observation": {"mode": "fixed"},
-                "method": {"score_formula": "T=0.70*L+0.30*S"},
-                "videos": [],
+                "method": {"score_formula": "T=0.70*L+0.30*S", "compiler_version": COMPILER_VERSION},
+                "videos": [{"video_id": "v01", "fixed_evidence_hash": "1" * 64}],
             }
             (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
-            (results / "r01-v01.json").write_text(json.dumps({
-                "run_id": "r01-v01",
-                "video_id": "v01",
-                "scores": {"L": 20, "S": 20, "T_center": 20, "band": "表层模仿"},
-                "teaching_points": [], "storyboard_nodes": [], "relationships": [],
-            }), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), "--manifest", str(root / "manifest.json"),
                  "--results-dir", str(results), "--output-json", str(root / "report.json"),
@@ -99,6 +96,51 @@ class StabilityReportTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("missing result", result.stderr)
 
+    def test_strict_mode_rejects_legacy_plan_without_execution_identity(self) -> None:
+        manifest = {
+            "experiment_id": "exp-1",
+            "runs": [{"run_id": "r01-v01", "video_id": "v01", "replicate_index": 1, "round": 1}],
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results = root / "results"
+            results.mkdir()
+            manifest_path = root / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--manifest", str(manifest_path), "--results-dir", str(results),
+                 "--output-json", str(root / "report.json"), "--output-md", str(root / "report.md"), "--strict"],
+                text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("missing immutable identity", result.stderr)
+
+    def test_strict_mode_rejects_reused_execution_context(self) -> None:
+        manifest = {
+            "experiment_id": "exp-1",
+            "method": {"compiler_version": COMPILER_VERSION},
+            "videos": [{"video_id": "v01", "fixed_evidence_hash": "1" * 64}],
+            "runs": [
+                {"run_id": "r01-v01", "experiment_id": "exp-1", "video_id": "v01", "replicate_index": 1,
+                 "round": 1, "execution_context_id": "same-context", "fixed_evidence_hash": "1" * 64},
+                {"run_id": "r02-v01", "experiment_id": "exp-1", "video_id": "v01", "replicate_index": 2,
+                 "round": 2, "execution_context_id": "same-context", "fixed_evidence_hash": "1" * 64},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results = root / "results"
+            results.mkdir()
+            manifest_path = root / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--manifest", str(manifest_path), "--results-dir", str(results),
+                 "--output-json", str(root / "report.json"), "--output-md", str(root / "report.md"), "--strict"],
+                text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("reuses execution_context_id", result.stderr)
+
     def test_cli_emits_raw_distributions_without_averaging_decision(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -109,19 +151,27 @@ class StabilityReportTests(unittest.TestCase):
                 "video_count": 1,
                 "replicates": 3,
                 "runs": [
-                    {"run_id": f"r0{index}-v01", "video_id": "v01", "replicate_index": index, "round": index}
+                    {"run_id": f"r0{index}-v01", "experiment_id": "exp-1", "video_id": "v01", "replicate_index": index,
+                     "round": index, "execution_context_id": f"ctx-r0{index}-v01", "fixed_evidence_hash": "1" * 64}
                     for index in range(1, 4)
                 ],
                 "fixed_observation": {"mode": "fixed"},
-                "method": {"score_formula": "T=0.70*L+0.30*S"},
-                "videos": [],
+                "method": {"score_formula": "T=0.70*L+0.30*S", "compiler_version": COMPILER_VERSION},
+                "videos": [{"video_id": "v01", "fixed_evidence_hash": "1" * 64}],
             }
             (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
             for index, t in enumerate((18, 22, 31), start=1):
                 (results / f"r0{index}-v01.json").write_text(json.dumps({
+                    "schema_version": "twinclip-stability-run-0.2",
+                    "compiler_version": COMPILER_VERSION,
+                    "run": {"run_id": f"r0{index}-v01", "experiment_id": "exp-1", "video_id": "v01",
+                            "round": index, "replicate_index": index,
+                            "execution_context_id": f"ctx-r0{index}-v01", "fixed_evidence_hash": "1" * 64},
                     "run_id": f"r0{index}-v01",
                     "video_id": "v01",
                     "scores": {"L": t, "S": t, "T_center": t, "band": "未采纳" if t < 20 else "表层模仿"},
+                    "primary_lane": "DEFAULT",
+                    "lane_comparison": {"DEFAULT": {"L": t, "S": t, "T_center": t, "effective_coverage_rate": 1.0}},
                     "teaching_points": [], "storyboard_nodes": [], "relationships": [],
                 }), encoding="utf-8")
             result = subprocess.run(

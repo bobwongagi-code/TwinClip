@@ -1321,6 +1321,7 @@ def stability_result(report: dict[str, Any], run: dict[str, Any]) -> dict[str, A
     execution = analysis["execution"]
     return {
         "schema_version": "twinclip-stability-run-0.2",
+        "compiler_version": COMPILER_VERSION,
         "run": {
             "run_id": execution["run_id"],
             "experiment_id": run.get("experiment_id"),

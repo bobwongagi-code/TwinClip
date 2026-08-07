@@ -20,7 +20,7 @@ import sys
 import tempfile
 from typing import Any, Iterable
 
-from contracts import BANDS  # noqa: E402
+from contracts import BANDS, COMPILER_VERSION  # noqa: E402
 
 
 REPORT_SCHEMA_VERSION = "twinclip-stability-report-0.1"
@@ -198,6 +198,8 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
     if planned_context is not None:
         if raw.get("schema_version") != STABILITY_RUN_SCHEMA_VERSION:
             raise ValueError(f"{path}: formal stability result must use {STABILITY_RUN_SCHEMA_VERSION}")
+        if raw.get("compiler_version") != COMPILER_VERSION:
+            raise ValueError(f"{path}: formal stability result must declare compiler_version={COMPILER_VERSION}")
         required_identity = ("run_id", "video_id", "replicate_index", "round", "execution_context_id")
         missing = [key for key in required_identity if key not in meta]
         if missing:
@@ -748,6 +750,51 @@ def load_runs(manifest: dict[str, Any], results_dir: Path, strict: bool) -> list
         if run_id in expected:
             raise ValueError(f"duplicate planned run_id: {run_id}")
         expected[run_id] = item
+    if strict:
+        manifest_experiment_id = manifest.get("experiment_id")
+        if not isinstance(manifest_experiment_id, str) or not manifest_experiment_id:
+            raise ValueError("strict stability manifests require a non-empty experiment_id")
+        contexts: set[str] = set()
+        for run_id, item in expected.items():
+            required = (
+                "experiment_id",
+                "video_id",
+                "replicate_index",
+                "round",
+                "execution_context_id",
+                "fixed_evidence_hash",
+            )
+            missing = [key for key in required if item.get(key) in (None, "")]
+            if missing:
+                raise ValueError(f"strict stability plan {run_id} is missing immutable identity: {missing}")
+            if item.get("experiment_id") != manifest_experiment_id:
+                raise ValueError(f"strict stability plan {run_id}.experiment_id does not match the manifest")
+            context_id = item.get("execution_context_id")
+            if context_id in contexts:
+                raise ValueError(f"strict stability plan reuses execution_context_id: {context_id}")
+            contexts.add(context_id)
+            digest = item.get("fixed_evidence_hash")
+            if (
+                not isinstance(digest, str)
+                or len(digest) != 64
+                or any(character not in "0123456789abcdef" for character in digest.lower())
+            ):
+                raise ValueError(f"strict stability plan {run_id}.fixed_evidence_hash must be a SHA-256 digest")
+        method = manifest.get("method")
+        if not isinstance(method, dict) or method.get("compiler_version") != COMPILER_VERSION:
+            raise ValueError(f"strict stability manifests must declare compiler_version={COMPILER_VERSION}")
+        videos = manifest.get("videos")
+        video_hashes = {
+            str(video.get("video_id")): video.get("fixed_evidence_hash")
+            for video in videos
+            if isinstance(video, dict) and video.get("video_id")
+        } if isinstance(videos, list) else {}
+        for run_id, item in expected.items():
+            planned_hash = video_hashes.get(str(item["video_id"]))
+            if planned_hash is None:
+                raise ValueError(f"strict stability plan {run_id} has no fixed-evidence record for video {item['video_id']}")
+            if planned_hash != item["fixed_evidence_hash"]:
+                raise ValueError(f"strict stability plan {run_id}.fixed_evidence_hash does not match its video record")
     runs: list[dict[str, Any]] = []
     seen: set[str] = set()
     reference_path = manifest.get("reference_bundle", {}).get("path") if isinstance(manifest.get("reference_bundle"), dict) else None

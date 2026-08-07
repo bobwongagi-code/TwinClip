@@ -88,6 +88,10 @@ confidence, coverage, and adaptation aggregates. It then validates the final
 report. The stability result is the only file consumed by
 `stability_report.py`.
 
+Formal results must use `twinclip-stability-run-0.2` and declare the current
+`compiler_version`. A legacy result or a plan without a fixed evidence hash is
+compatible-history input only; strict mode rejects it from the formal sample.
+
 The scoring configuration and anchor placement are locked into `run.json` by
 the initializer. Do not create or edit `scoring-config.json` or
 `anchor-placement.json` inside the run directory; mutable sidecars are
