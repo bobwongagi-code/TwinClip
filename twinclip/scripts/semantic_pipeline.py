@@ -76,6 +76,7 @@ DERIVED_KEYS = {
     "compensation_hit_rate",
     "adaptation_required",
     "adaptation_result",
+    "primary_failure_dimension",
     "failure_id",
     "absence_verified",
     "manual_pending_count",
@@ -100,10 +101,12 @@ DERIVED_KEYS = {
     "teaching_point_assessments",
     "storyboard_node_assessments",
     "relationship_assessments",
+    "logic_assessment",
     "candidate_matches",
     "report",
     "final_report",
     "draft_report",
+    "creator_video",
 }
 
 OBSERVED_STATES = {"observed", "not_observed", "unclear"}

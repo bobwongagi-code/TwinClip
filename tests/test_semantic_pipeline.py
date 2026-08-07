@@ -83,6 +83,11 @@ class SemanticPipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(SemanticContractError, "code-derived"):
             validate_task(task, run)
 
+        task = read_json(semantic_dir / "tasks" / "teaching-DEFAULT.json")
+        task["payload"]["judgments"][0]["primary_failure_dimension"] = "L"
+        with self.assertRaisesRegex(SemanticContractError, "code-derived"):
+            validate_task(task, run)
+
     def test_observation_cannot_smuggle_final_link_fields(self) -> None:
         semantic_dir = write_semantic_run(self.report, self.fixture.creator, self.root, "semantic-observation", self.reference_path)
         run = load_run_manifest(semantic_dir / "run.json")
