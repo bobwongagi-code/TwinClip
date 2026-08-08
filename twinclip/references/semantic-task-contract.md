@@ -7,8 +7,9 @@ TwinClip has two different contracts:
 
 The model must never emit the final report as one large JSON object. A task
 file contains one `task_type` and a small set of related semantic judgments.
-The compiler rejects derived fields such as `depth`, `score`, `L`, `S`, `T`,
-`band`, `confidence`, `coverage`, `primary_lane`, and `adaptation_diagnostic`.
+The compiler rejects derived fields such as `depth`, numeric `score`, `L`, `S`, `T`,
+`S_components`, `band`, `E`, `M`, `R`, `M_components`, `confidence`, `coverage`,
+`primary_lane`, and `adaptation_diagnostic`.
 
 ## Ownership
 
@@ -17,6 +18,7 @@ The compiler rejects derived fields such as `depth`, `score`, `L`, `S`, `T`,
 | ASR, OCR, raw timestamps, visible facts | VidLingo or the observation pass |
 | Whether a function is independently recognizable | model |
 | Whether minimum evidence and a mechanism are present | model |
+| Five sales-logic states | model, in one small checklist task |
 | Node, relationship, and adaptation semantic states | model, in separate task types |
 | ID existence, source hashes, time bounds, task identity | code |
 | Depth and node/relationship numeric scores | code |
@@ -67,7 +69,7 @@ Every task has this envelope:
 
 ```json
 {
-  "schema_version": "twinclip-semantic-task-0.2",
+  "schema_version": "twinclip-semantic-task-0.3",
   "task_type": "teaching_point",
   "task_id": "teach-ref-a",
   "run": {
@@ -89,17 +91,21 @@ The allowed task types are:
   numeric depth.
 - `storyboard_node`: all Storyboard nodes. Use one state for each node
   dimension, not numeric scores.
+- `logic_checklist`: exactly five independent sales-logic states shared by all
+  reference lanes. Use the check IDs and `met`/`not_met`/`unclear` states below,
+  never numeric scores.
 - `relationship`: one task per reference lane for that lane's graph. Use
-  `logic_state`, not a numeric relationship score. Shared Storyboard node IDs
-  do not imply that REF-A and REF-B share the same sales-logic edges.
+  `logic_state`, not a numeric relationship score. These are an audit view, not
+  the numeric S logic component. Shared Storyboard node IDs do not imply that
+  REF-A and REF-B share the same sales-logic edges.
 - `adaptation`: point-level applicability and compensation states. This is a
   separate question from L and cannot be smuggled into a teaching-point score.
 - `candidate_check`: subtle reference-guided candidates and guided evidence;
   pending candidates never score.
 
 The compiler requires exactly one observation, evidence-linking, Storyboard,
-and adaptation task. It requires one teaching-point and one relationship task
-per reference lane. Candidate checking is optional.
+logic-checklist, and adaptation task. It requires one teaching-point and one
+relationship task per reference lane. Candidate checking is optional.
 
 ## Atomic States
 
@@ -139,6 +145,21 @@ Storyboard tasks use these state maps:
 Relationship tasks use `logic_state`: `broken`, `jump`, `complete`, or
 `convincing`. Adaptation tasks use `applicability_state` and
 `compensation_state` rather than an A score.
+
+Logic-checklist tasks use these five IDs:
+
+```text
+hook_leads_need
+points_answer_problem
+claims_supported
+cta_has_reason
+coherent_if_reordered
+```
+
+Each item contains `check_id`, `state`, evidence IDs, evidence clarity,
+`manual_review`, and a reason. `score` is forbidden in the task and is derived
+from a clear `met` state by the compiler. Ambiguous or unavailable evidence is
+kept at zero until review.
 
 ## Compilation
 

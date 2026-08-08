@@ -14,13 +14,12 @@ from contracts import (  # noqa: E402
     band_bounds,
     default_s_weights as default_s_weights_for,
     registry_hash,
-    round_half_up,
 )
+from compute_scores import confidence_from_decisions, score_boundary_distance, score_interval  # noqa: E402
 from validation_support import (  # noqa: E402
     band_index,
     close,
     eligible_evidence,
-    expected_confidence,
     is_number,
     non_empty_string,
     read_json_file,
@@ -214,6 +213,8 @@ def validate_confidence_and_adaptation(
     t_center: Any,
     t_range: Any,
     teaching_assessments: list[Any],
+    lane_selection_review: bool,
+    lane_selection_margin: float | None,
     allow_draft: bool,
     errors: list[str],
     warnings: list[str],
@@ -234,37 +235,62 @@ def validate_confidence_and_adaptation(
         if decision.get("evidence_clarity") == "clear" and (eligible_ids or decision.get("absence_verified") is True):
             clear_supported += 1
     decision_count = len(decisions)
-    e_expected = clear_supported / decision_count if decision_count else 0.0
-    review_denominator = decision_count + pending_candidates
-    r_expected = (manual_review_count + pending_candidates) / review_denominator if review_denominator else 0.0
+    try:
+        expected = confidence_from_decisions(
+            clear_supported=clear_supported,
+            decision_count=decision_count,
+            manual_review_count=manual_review_count,
+            pending_candidates=pending_candidates,
+            has_anchors=has_anchors,
+            boundary_clarity=boundary_clarity,
+            score_boundary_distance_value=score_boundary_distance(float(t_center)) if is_number(t_center) else None,
+            lane_margin=lane_selection_margin,
+        )
+    except ValueError as exc:
+        errors.append(f"confidence deterministic recomputation failed: {exc}")
+        expected = {"E": 0.0, "M": 0.0, "M_components": {}, "R": 0.0, "level": "low"}
+    e_expected = expected["E"]
+    r_expected = expected["R"]
+    m_value = expected["M"]
     metrics["E"] = e_expected
+    metrics["M"] = m_value
     metrics["R"] = r_expected
     if not close(confidence.get("E"), e_expected):
         errors.append(f"confidence.E must equal {e_expected:.4f}")
     if not close(confidence.get("R"), r_expected):
         errors.append(f"confidence.R must equal {r_expected:.4f}")
-    m_value = confidence.get("M")
-    if m_value not in {0, 0.5, 1}:
+    if confidence.get("M") not in {0, 0.5, 1}:
         errors.append("confidence.M must be 0, 0.5, or 1")
-        m_value = 0
-    if boundary_clarity != m_value:
-        errors.append("confidence.M must equal anchor_placement.boundary_clarity")
-    level_expected = expected_confidence(e_expected, float(m_value), r_expected)
-    if not has_anchors and level_expected == "high":
-        level_expected = "medium"
+    elif confidence.get("M") != m_value:
+        errors.append(f"confidence.M must equal deterministic minimum {m_value}")
+    components = confidence.get("M_components")
+    if not isinstance(components, dict):
+        errors.append("confidence.M_components must be an object")
+    else:
+        if set(components) != set(expected["M_components"]):
+            errors.append("confidence.M_components must contain anchor_boundary, score_boundary, and lane_margin")
+        for key, expected_value in expected["M_components"].items():
+            if components.get(key) != expected_value:
+                errors.append(f"confidence.M_components.{key} must equal {expected_value}")
+    level_expected = expected["level"]
     if confidence.get("level") != level_expected:
         errors.append(f"confidence.level must be {level_expected}")
     level = confidence.get("level") if confidence.get("level") in {"high", "medium", "low"} else level_expected
     if is_number(t_center) and isinstance(t_range, list) and len(t_range) == 2:
-        width = {"high": 3, "medium": 6, "low": 10}[level]
-        expected_range = [max(0, round_half_up(float(t_center) - width)), min(100, round_half_up(float(t_center) + width))]
+        expected_range = score_interval(float(t_center), level)
         if t_range != expected_range:
             errors.append(f"scores.T_range must equal {expected_range} for {level} confidence")
 
     review_status = analysis.get("review_status")
     if review_status not in VALID_REVIEW_STATUS:
         errors.append("analysis.review_status must be pending or completed")
-    needs_review = level == "low" or manual_review_count > 0 or pending_candidates > 0 or formula_conflict
+    needs_review = (
+        level == "low"
+        or manual_review_count > 0
+        or pending_candidates > 0
+        or formula_conflict
+        or lane_selection_review
+    )
     if pending_candidates and review_status == "completed":
         errors.append("analysis.review_status cannot be completed while guided candidates are pending")
     if formula_conflict and review_status == "completed":

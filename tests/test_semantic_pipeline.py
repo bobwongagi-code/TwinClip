@@ -56,14 +56,14 @@ class SemanticPipelineTests(unittest.TestCase):
             interval=1.0,
             max_frames=300,
         )
-        self.assertEqual(compiled["analysis"]["scores"]["T_center"], 62.666666666666664)
-        self.assertEqual(compiled["analysis"]["provenance"]["compiler_version"], "twinclip-compiler-0.2")
+        self.assertEqual(compiled["analysis"]["scores"]["T_center"], 61.93666666666667)
+        self.assertEqual(compiled["analysis"]["provenance"]["compiler_version"], "twinclip-compiler-0.3")
         task_text = "\n".join(path.read_text(encoding="utf-8") for path in (semantic_dir / "tasks").glob("*.json"))
         self.assertNotIn('"depth"', task_text)
         self.assertNotIn('"T_center"', task_text)
         self.assertIn('"depth": 2', json.dumps(compiled["analysis"]["teaching_point_assessments"]))
         stability = stability_result(compiled, load_run_manifest(semantic_dir / "run.json"))
-        self.assertEqual(stability["compiler_version"], "twinclip-compiler-0.2")
+        self.assertEqual(stability["compiler_version"], "twinclip-compiler-0.3")
 
     def test_confidence_m_is_bound_to_locked_anchor_boundary(self) -> None:
         decisions = [{"evidence_clarity": "clear", "evidence_ids": ["EV01"], "manual_review": False}]
@@ -86,6 +86,21 @@ class SemanticPipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(SemanticContractError, "code-derived"):
             validate_task(task, run)
 
+        task = read_json(semantic_dir / "tasks" / "logic-checklist.json")
+        task["payload"]["checks"][0]["score"] = 1
+        with self.assertRaisesRegex(SemanticContractError, "code-derived"):
+            validate_task(task, run)
+
+        task["payload"]["checks"][0].pop("score")
+        task["payload"]["M_components"] = {"anchor_boundary": 1}
+        with self.assertRaisesRegex(SemanticContractError, "code-derived"):
+            validate_task(task, run)
+
+        task["payload"].pop("M_components")
+        task["payload"]["S_components"] = {"logic_coherence": 60}
+        with self.assertRaisesRegex(SemanticContractError, "code-derived"):
+            validate_task(task, run)
+
         task = read_json(semantic_dir / "tasks" / "teaching-DEFAULT.json")
         task["payload"]["judgments"][0]["primary_failure_dimension"] = "L"
         with self.assertRaisesRegex(SemanticContractError, "code-derived"):
@@ -98,6 +113,24 @@ class SemanticPipelineTests(unittest.TestCase):
         task["payload"]["evidence_records"][0]["storyboard_node_ids"] = ["SB01"]
         with self.assertRaisesRegex(SemanticContractError, "code-owned observation fields"):
             validate_task(task, run)
+
+    def test_observation_requires_explicit_source_channels_at_compile_time(self) -> None:
+        semantic_dir = write_semantic_run(self.report, self.fixture.creator, self.root, "missing-channel", self.reference_path)
+        observation_path = semantic_dir / "tasks" / "observation.json"
+        task = read_json(observation_path)
+        del task["payload"]["evidence_records"][0]["source_channels"]
+        observation_path.write_text(json.dumps(task, ensure_ascii=False, indent=2), encoding="utf-8")
+        with self.assertRaisesRegex(SemanticContractError, "source_channels"):
+            compile_report(
+                reference_path=self.reference_path,
+                breakdown_video=self.fixture.breakdown,
+                storyboard_pdf=self.fixture.storyboard,
+                creator_video=self.fixture.creator,
+                semantic_dir=semantic_dir,
+                duration=2.0,
+                interval=1.0,
+                max_frames=300,
+            )
 
     def test_publish_rejects_a_large_report_shape_and_never_writes_it(self) -> None:
         semantic_dir = write_semantic_run(self.report, self.fixture.creator, self.root, "semantic", self.reference_path)
@@ -215,10 +248,10 @@ class SemanticPipelineTests(unittest.TestCase):
             interval=1.0,
             max_frames=300,
         )
-        errors, _, _ = test_validate_report.validate_report(compiled)
+        errors, _, _ = test_validate_report.validate_report(compiled, allow_draft=True)
         self.assertEqual(errors, [])
         lanes = compiled["multi_reference"]["lane_comparison"]
-        self.assertNotEqual(lanes["REF-A"]["S_storyboard"], lanes["REF-B"]["S_storyboard"])
+        self.assertEqual(lanes["REF-A"]["S_storyboard"], lanes["REF-B"]["S_storyboard"])
         self.assertEqual(compiled["multi_reference"]["primary_reference_lane"], "REF-A")
 
         ref_a_relationship = semantic_dir / "tasks" / "relationships-REF-A.json"
@@ -237,9 +270,9 @@ class SemanticPipelineTests(unittest.TestCase):
             interval=1.0,
             max_frames=300,
         )
-        errors, _, _ = test_validate_report.validate_report(compiled_b)
+        errors, _, _ = test_validate_report.validate_report(compiled_b, allow_draft=True)
         self.assertEqual(errors, [])
-        self.assertEqual(compiled_b["multi_reference"]["primary_reference_lane"], "REF-B")
+        self.assertEqual(compiled_b["multi_reference"]["primary_reference_lane"], "REF-A")
 
     def test_mutable_scoring_sidecar_is_rejected(self) -> None:
         semantic_dir = write_semantic_run(self.report, self.fixture.creator, self.root, "sidecar", self.reference_path)

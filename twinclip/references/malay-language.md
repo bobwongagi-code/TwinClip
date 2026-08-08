@@ -34,7 +34,7 @@ translation can erase particles, slang, indirectness, or local trust cues before
 the model evaluates them.
 
 Keep `transcript` and `onscreen_text` in the evidence record as the original
-transcription/OCR text. The v1.4 JSON schema has no free-form
+transcription/OCR text. The v1.6 JSON schema has no free-form
 `evidence_description` field; in the rendered borrowing/evidence table's
 description column, include both pieces in the same entry:
 
@@ -43,8 +43,8 @@ description column, include both pieces in the same entry:
 简译: <Chinese translation for the business reader>
 ```
 
-The Chinese translation is a reader aid only. It must not replace the original
-evidence or become the basis of blind matching.
+Every evidence record also declares the observation channels used (`visual`,
+`onscreen_text`, and/or `voiceover`). The Chinese translation is a reader aid only. It must not replace the original evidence or become the basis of blind matching.
 
 ## Local persuasion signals
 

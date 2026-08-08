@@ -14,7 +14,14 @@ import unittest
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "twinclip" / "scripts"
 SCRIPT = SCRIPT_DIR / "stability_report.py"
 sys.path.insert(0, str(SCRIPT_DIR))
-from stability_report import COMPILER_VERSION, judgment_fingerprint, normalize_run, numeric_summary, selected_evidence_ids  # noqa: E402
+from stability_report import (  # noqa: E402
+    COMPILER_VERSION,
+    judgment_fingerprint,
+    normalize_run,
+    numeric_summary,
+    quality_summary,
+    selected_evidence_ids,
+)
 
 
 class StabilityReportTests(unittest.TestCase):
@@ -29,8 +36,30 @@ class StabilityReportTests(unittest.TestCase):
         result = {
             "evidence_records": [{"id": "EV-01"}, {"id": "EV-02"}],
             "teaching_points": [{"id": "TP-01", "evidence_ids": ["EV-02"]}],
+            "logic_assessment": {
+                "evidence_ids": ["EV-01"],
+                "checklist": [{"check_id": "claims_supported", "evidence_ids": ["EV-01"]}],
+            },
         }
-        self.assertEqual(selected_evidence_ids(result), {"EV-02"})
+        self.assertEqual(selected_evidence_ids(result), {"EV-01", "EV-02"})
+
+    def test_quality_summary_exposes_unknown_channel_denominator(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            snapshot = root / "fixed-evidence.json"
+            snapshot.write_text(json.dumps({
+                "evidence_records": [
+                    {"transcript": "unknown", "onscreen_text": "caption"},
+                    {"transcript": "spoken", "onscreen_text": "unknown"},
+                ]
+            }), encoding="utf-8")
+            result = quality_summary({"videos": [{"fixed_evidence_path": str(snapshot)}]})
+        self.assertEqual(result["evidence_records"], 2)
+        self.assertEqual(result["channel_slot_count"], 4)
+        self.assertEqual(result["unknown_channel_count"], 2)
+        self.assertEqual(result["unknown_channel_rate"], 0.5)
+        self.assertEqual(result["records_with_unknown_channel"], 2)
+        self.assertEqual(result["record_unknown_channel_rate"], 1.0)
 
     def test_judgment_fingerprint_is_sensitive_to_judgment_fields(self) -> None:
         base = {"scores": {"L": 20, "S": 20, "T_center": 20}, "primary_lane": "REF-A"}
@@ -50,7 +79,7 @@ class StabilityReportTests(unittest.TestCase):
             "fixed_evidence_hash": "e" * 64,
         }
         raw = {
-            "schema_version": "twinclip-stability-run-0.2",
+            "schema_version": "twinclip-stability-run-0.3",
             "compiler_version": COMPILER_VERSION,
             "reference_bundle_hash": "ref-hash",
             "scores": {"L": 20, "S": 20, "T_center": 20, "band": "表层模仿"},
@@ -64,6 +93,47 @@ class StabilityReportTests(unittest.TestCase):
         del raw["run"]["execution_context_id"]
         with self.assertRaisesRegex(ValueError, "missing nested run identity"):
             normalize_run(manifest, planned, raw, Path("r01-v01.json"))
+
+    def test_legacy_run_can_be_profiled_without_formal_identity(self) -> None:
+        manifest = {"reference_bundle": {}, "experiment_id": "exp-1"}
+        planned = {
+            "run_id": "r01-v01",
+            "experiment_id": "exp-1",
+            "video_id": "v01",
+            "replicate_index": 1,
+            "round": 1,
+            "fixed_evidence_hash": "e" * 64,
+        }
+        raw = {
+            "schema_version": "twinclip-stability-run-0.1",
+            "run": {},
+            "primary_lane": "REF-B",
+            "lane_comparison": {
+                "REF-A": {"L": 50, "S": 50, "T_center": 60, "effective_coverage_rate": 0.5},
+                "REF-B": {"L": 50, "S": 50, "T_center": 50, "effective_coverage_rate": 0.5},
+            },
+            "scores": {"L": 50, "S": 50, "T_center": 50, "band": "单点机制迁移"},
+        }
+        normalized = normalize_run(manifest, planned, raw, Path("legacy.json"))
+        self.assertEqual(normalized["primary_lane"], "REF-B")
+        self.assertEqual(normalized["primary_lane_margin"], 0.1)
+        self.assertEqual(normalized["lane_selection"]["basis"], "T_center")
+        self.assertFalse(normalized["lane_selection"]["observed_lane_matches_deterministic"])
+
+    def test_formula_residual_uses_manifest_weights(self) -> None:
+        manifest = {
+            "reference_bundle": {},
+            "experiment_id": "exp-1",
+            "method": {"l_weight": 0.6, "s_weight": 0.4},
+        }
+        planned = {"run_id": "r01-v01", "video_id": "v01", "replicate_index": 1, "round": 1}
+        raw = {
+            "scores": {"L": 50, "S": 25, "T_center": 40, "band": "单点机制迁移"},
+            "primary_lane": "DEFAULT",
+            "lane_comparison": {"DEFAULT": {"L": 50, "S": 25, "T_center": 40, "effective_coverage_rate": 1.0}},
+        }
+        normalized = normalize_run(manifest, planned, raw, Path("legacy.json"))
+        self.assertEqual(normalized["formula_residual"], 0.0)
 
     def test_cli_requires_all_planned_runs_in_strict_mode(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -162,7 +232,7 @@ class StabilityReportTests(unittest.TestCase):
             (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
             for index, t in enumerate((18, 22, 31), start=1):
                 (results / f"r0{index}-v01.json").write_text(json.dumps({
-                    "schema_version": "twinclip-stability-run-0.2",
+                    "schema_version": "twinclip-stability-run-0.3",
                     "compiler_version": COMPILER_VERSION,
                     "run": {"run_id": f"r0{index}-v01", "experiment_id": "exp-1", "video_id": "v01",
                             "round": index, "replicate_index": index,

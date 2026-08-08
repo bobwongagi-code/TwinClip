@@ -21,11 +21,21 @@ import tempfile
 from typing import Any, Iterable
 
 from contracts import BANDS, COMPILER_VERSION  # noqa: E402
+from compute_scores import T_WEIGHT_L, T_WEIGHT_S, score_band, select_lane  # noqa: E402
 
 
-REPORT_SCHEMA_VERSION = "twinclip-stability-report-0.1"
-STABILITY_RUN_SCHEMA_VERSION = "twinclip-stability-run-0.2"
+REPORT_SCHEMA_VERSION = "twinclip-stability-report-0.2"
+STABILITY_RUN_SCHEMA_VERSION = "twinclip-stability-run-0.3"
 BOUNDARIES = tuple(float(low) for low, _, _ in BANDS[1:])
+
+
+def experiment_t_weights(manifest: dict[str, Any]) -> tuple[float, float]:
+    method = manifest.get("method") if isinstance(manifest.get("method"), dict) else {}
+    l_weight = method.get("l_weight")
+    s_weight = method.get("s_weight")
+    if finite_number(l_weight) and finite_number(s_weight) and math.isclose(float(l_weight) + float(s_weight), 1.0, abs_tol=1e-6):
+        return float(l_weight), float(s_weight)
+    return T_WEIGHT_L, T_WEIGHT_S
 
 
 def parse_args() -> argparse.Namespace:
@@ -150,15 +160,6 @@ def jaccard(left: set[str], right: set[str]) -> float:
     return len(left & right) / len(union) if union else 1.0
 
 
-def score_band(value: float | None) -> str | None:
-    if value is None:
-        return None
-    for low, high, label in BANDS:
-        if low <= value <= high:
-            return label
-    return None
-
-
 def boundary_distance(value: float | None) -> float | None:
     if value is None:
         return None
@@ -177,6 +178,15 @@ def selected_evidence_ids(result: dict[str, Any]) -> set[str]:
             for evidence_id in item.get("evidence_ids", []):
                 if isinstance(evidence_id, str):
                     ids.add(evidence_id)
+    logic_assessment = result.get("logic_assessment")
+    if isinstance(logic_assessment, dict):
+        for evidence_id in logic_assessment.get("evidence_ids", []):
+            if isinstance(evidence_id, str):
+                ids.add(evidence_id)
+        for item in as_list(logic_assessment.get("checklist")):
+            for evidence_id in item.get("evidence_ids", []):
+                if isinstance(evidence_id, str):
+                    ids.add(evidence_id)
     return ids
 
 
@@ -187,6 +197,7 @@ def judgment_fingerprint(run: dict[str, Any]) -> str:
         "teaching_points": run.get("teaching_points"),
         "storyboard_nodes": run.get("storyboard_nodes"),
         "relationships": run.get("relationships"),
+        "logic_checklist": run.get("logic_checklist"),
     }
     serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(serialized.encode("utf-8")).hexdigest()[:16]
@@ -222,14 +233,14 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
         execution_context_id = meta.get("execution_context_id") or raw.get("execution_context_id")
     planned_experiment = planned.get("experiment_id")
     actual_experiment = meta.get("experiment_id") or raw.get("experiment_id")
-    if planned_experiment is not None and actual_experiment != planned_experiment:
+    if planned_context is not None and planned_experiment is not None and actual_experiment != planned_experiment:
         raise ValueError(f"{path}: experiment_id does not match the immutable run plan")
     planned_fixed_evidence = planned.get("fixed_evidence_hash")
     actual_fixed_evidence = meta.get("fixed_evidence_hash") or raw.get("fixed_evidence_hash")
-    if planned_fixed_evidence is not None and actual_fixed_evidence != planned_fixed_evidence:
+    if planned_context is not None and planned_fixed_evidence is not None and actual_fixed_evidence != planned_fixed_evidence:
         raise ValueError(f"{path}: fixed_evidence_hash does not match the immutable run plan")
     expected_reference_hash = manifest.get("reference_bundle", {}).get("content_hash") if isinstance(manifest.get("reference_bundle"), dict) else None
-    if expected_reference_hash is not None and raw.get("reference_bundle_hash") != expected_reference_hash:
+    if planned_context is not None and expected_reference_hash is not None and raw.get("reference_bundle_hash") != expected_reference_hash:
         raise ValueError(f"{path}: reference_bundle_hash does not match the frozen experiment manifest")
     scores = raw.get("scores") if isinstance(raw.get("scores"), dict) else {}
     l_score = number(scores, "L", "l")
@@ -237,7 +248,8 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
     t_score = number(scores, "T_center", "T", "t")
     if l_score is None or s_score is None or t_score is None:
         raise ValueError(f"{path}: scores must include L, S, and T_center/T")
-    formula_residual = t_score - (0.70 * l_score + 0.30 * s_score)
+    l_weight, s_weight = experiment_t_weights(manifest)
+    formula_residual = t_score - (l_weight * l_score + s_weight * s_score)
     band = scores.get("band") or scores.get("formula_band") or score_band(t_score)
     confidence = raw.get("confidence") if isinstance(raw.get("confidence"), dict) else {}
     points = raw.get("teaching_points")
@@ -249,18 +261,32 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
     relationships = raw.get("relationships")
     if relationships is None:
         relationships = raw.get("relationship_assessments")
+    logic_assessment = raw.get("logic_assessment") if isinstance(raw.get("logic_assessment"), dict) else {}
+    logic_checklist = logic_assessment.get("checklist") if isinstance(logic_assessment.get("checklist"), list) else []
     evidence_ids = selected_evidence_ids(raw)
     primary_lane = raw.get("primary_lane") or raw.get("primary_reference_lane") or (
         raw.get("multi_reference", {}).get("primary_reference_lane")
         if isinstance(raw.get("multi_reference"), dict) else None
     )
     lane_comparison_raw = raw.get("lane_comparison") if isinstance(raw.get("lane_comparison"), dict) else {}
+    lane_selection = raw.get("lane_selection") if isinstance(raw.get("lane_selection"), dict) else {}
     lane_effective_coverage = {
         str(lane_id): number(lane_value, "effective_coverage_rate", "effective_coverage")
         for lane_id, lane_value in lane_comparison_raw.items()
         if isinstance(lane_value, dict)
         and number(lane_value, "effective_coverage_rate", "effective_coverage") is not None
     }
+    lane_values = {
+        str(lane_id): {
+            "effective_coverage_rate": number(lane_value, "effective_coverage_rate", "effective_coverage"),
+            "T_center": number(lane_value, "T_center"),
+        }
+        for lane_id, lane_value in lane_comparison_raw.items()
+        if isinstance(lane_value, dict)
+        and number(lane_value, "effective_coverage_rate", "effective_coverage") is not None
+        and number(lane_value, "T_center") is not None
+    }
+    deterministic_lane_selection = select_lane(lane_values) if len(lane_values) >= 2 else None
     if planned_context is not None:
         selected_lane_value = lane_comparison_raw.get(str(primary_lane))
         if not isinstance(primary_lane, str) or not primary_lane or not isinstance(selected_lane_value, dict):
@@ -276,10 +302,15 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
                 raise ValueError(f"{path}: scores.{score_key} does not match the selected lane summary")
         if band not in {label for _, _, label in BANDS}:
             raise ValueError(f"{path}: scores.band is invalid")
-    primary_effective = lane_effective_coverage.get(str(primary_lane))
-    other_effective = [value for lane_id, value in lane_effective_coverage.items()
-                       if lane_id != str(primary_lane)]
-    primary_lane_margin = abs(primary_effective - other_effective[0]) if primary_effective is not None and other_effective else None
+        if deterministic_lane_selection is not None and primary_lane != deterministic_lane_selection["chosen_lane"]:
+            raise ValueError(f"{path}: primary_lane does not match deterministic lane selection")
+    if deterministic_lane_selection is not None:
+        primary_lane_margin = deterministic_lane_selection["margin"]
+    else:
+        primary_effective = lane_effective_coverage.get(str(primary_lane))
+        other_effective = [value for lane_id, value in lane_effective_coverage.items()
+                           if lane_id != str(primary_lane)]
+        primary_lane_margin = abs(primary_effective - other_effective[0]) if primary_effective is not None and other_effective else None
     normalized = {
         "schema_version": raw.get("schema_version", "unknown"),
         "run_id": run_id,
@@ -298,10 +329,21 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
             "M": number(confidence, "M"),
             "R": number(confidence, "R"),
             "level": confidence.get("level"),
+            "M_components": confidence.get("M_components") if isinstance(confidence.get("M_components"), dict) else None,
         },
         "primary_lane": primary_lane,
         "lane_effective_coverage": lane_effective_coverage,
         "primary_lane_margin": primary_lane_margin,
+        "lane_selection": {
+            "margin": primary_lane_margin,
+            "basis": deterministic_lane_selection["margin_basis"] if deterministic_lane_selection else lane_selection.get("margin_basis"),
+            "needs_manual_review": deterministic_lane_selection["needs_manual_review"] if deterministic_lane_selection else bool(lane_selection.get("needs_manual_review", False)),
+            "deterministic_chosen_lane": deterministic_lane_selection["chosen_lane"] if deterministic_lane_selection else None,
+            "observed_lane_matches_deterministic": (
+                primary_lane == deterministic_lane_selection["chosen_lane"]
+                if deterministic_lane_selection else None
+            ),
+        },
         "manual_pending": int(raw.get("manual_pending_count", 0) or 0) + sum(
             1 for item in as_list(raw.get("candidate_matches")) if item.get("status") == "manual_pending"
         ),
@@ -342,6 +384,17 @@ def normalize_run(manifest: dict[str, Any], planned: dict[str, Any], raw: dict[s
             }
             for item in as_list(relationships)
         ],
+        "logic_checklist": [
+            {
+                "id": item.get("check_id") or item.get("id"),
+                "score": item.get("score"),
+                "state": item.get("state"),
+                "manual_review": bool(item.get("manual_review", False)),
+                "evidence_clarity": item.get("evidence_clarity"),
+                "evidence_ids": sorted(str(value) for value in item.get("evidence_ids", []) if isinstance(value, str)),
+            }
+            for item in as_list(logic_checklist)
+        ],
     }
     normalized["judgment_fingerprint"] = judgment_fingerprint(normalized)
     return normalized
@@ -368,6 +421,13 @@ def per_video_profile(values: list[dict[str, Any]]) -> dict[str, Any]:
         key: numeric_summary(run["confidence"][key] for run in values if run["confidence"][key] is not None)
         for key in ("E", "M", "R")
     }
+    m_component_values: dict[str, list[float]] = defaultdict(list)
+    for run in values:
+        components = run["confidence"].get("M_components")
+        if isinstance(components, dict):
+            for key, value in components.items():
+                if finite_number(value):
+                    m_component_values[key].append(float(value))
     depths_by_point: dict[str, list[float]] = defaultdict(list)
     for run in values:
         for point in run["teaching_points"]:
@@ -379,6 +439,18 @@ def per_video_profile(values: list[dict[str, Any]]) -> dict[str, Any]:
             "switch_rate": categorical_switch_rate(depths),
         }
         for point_id, depths in sorted(depths_by_point.items())
+    }
+    logic_checks_by_id: dict[str, list[float]] = defaultdict(list)
+    for run in values:
+        for check in run["logic_checklist"]:
+            if check.get("id") and finite_number(check.get("score")):
+                logic_checks_by_id[str(check["id"])].append(float(check["score"]))
+    logic_checklist_stability = {
+        check_id: {
+            "score": numeric_summary(scores),
+            "switch_rate": categorical_switch_rate(scores),
+        }
+        for check_id, scores in sorted(logic_checks_by_id.items())
     }
     fingerprints = [run["judgment_fingerprint"] for run in values]
     distinct_fingerprints = len(set(fingerprints))
@@ -397,6 +469,9 @@ def per_video_profile(values: list[dict[str, Any]]) -> dict[str, Any]:
                                               if run["boundary_distance"] is not None),
         "formula_residual": formula_residuals,
         "confidence_components": confidence,
+        "confidence_M_components": {
+            key: numeric_summary(items) for key, items in sorted(m_component_values.items())
+        },
         "confidence_level_distribution": distribution(run["confidence"]["level"] for run in values),
         "manual_pending_rate": round(sum(run["manual_pending"] > 0 for run in values) / len(values), 6)
             if values else 0.0,
@@ -412,6 +487,7 @@ def per_video_profile(values: list[dict[str, Any]]) -> dict[str, Any]:
             1.0 - categorical_switch_rate(fingerprints), 6
         ) if len(fingerprints) > 1 else 0.0,
         "teaching_point_stability": point_summary,
+        "logic_checklist_stability": logic_checklist_stability,
     }
 
 
@@ -442,6 +518,8 @@ def atomic_profiles(runs: list[dict[str, Any]], collection: str, score_keys: tup
 def quality_summary(manifest: dict[str, Any]) -> dict[str, Any]:
     unknown_channels = 0
     evidence_records = 0
+    records_with_unknown_channel = 0
+    unknown_by_channel = {"transcript": 0, "onscreen_text": 0}
     for video in manifest.get("videos", []):
         path = video.get("fixed_evidence_path")
         if not path or not Path(path).is_file():
@@ -449,23 +527,52 @@ def quality_summary(manifest: dict[str, Any]) -> dict[str, Any]:
         snapshot = read_json(Path(path))
         for item in as_list(snapshot.get("evidence_records")):
             evidence_records += 1
-            unknown_channels += int(item.get("transcript") == "unknown") + int(item.get("onscreen_text") == "unknown")
+            transcript_unknown = item.get("transcript") == "unknown"
+            onscreen_unknown = item.get("onscreen_text") == "unknown"
+            unknown_channels += int(transcript_unknown) + int(onscreen_unknown)
+            unknown_by_channel["transcript"] += int(transcript_unknown)
+            unknown_by_channel["onscreen_text"] += int(onscreen_unknown)
+            records_with_unknown_channel += int(transcript_unknown or onscreen_unknown)
+    channel_slot_count = 2 * evidence_records
     return {
         "evidence_records": evidence_records,
+        "channel_slot_count": channel_slot_count,
         "unknown_channel_count": unknown_channels,
-        "unknown_channel_rate": round(unknown_channels / (2 * evidence_records), 6) if evidence_records else None,
+        "unknown_channel_rate": round(unknown_channels / channel_slot_count, 6) if channel_slot_count else None,
+        "records_with_unknown_channel": records_with_unknown_channel,
+        "record_unknown_channel_rate": round(records_with_unknown_channel / evidence_records, 6) if evidence_records else None,
+        "unknown_by_channel": unknown_by_channel,
         "interpretation": "Input/evidence quality is a separate confounder; it is not a model-randomness finding.",
     }
 
 
+def storyboard_dimension_summary(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Describe S sub-dimensions without using them as a replicate average."""
+    values: dict[str, list[float]] = {"logic": [], "function": [], "elements": [], "support": []}
+    for run in runs:
+        nodes = run["storyboard_nodes"]
+        values["function"].append(sum(float(item["function_score"]) for item in nodes) / len(nodes) / 3 * 100 if nodes else 0.0)
+        values["support"].append(sum(float(item["support_score"]) for item in nodes) / len(nodes) / 3 * 100 if nodes else 0.0)
+        element_scores = [float(item["element_score"]) for item in nodes if item.get("element_score") is not None]
+        values["elements"].append(sum(element_scores) / len(element_scores) / 3 * 100 if element_scores else 0.0)
+        checklist_scores = [float(item["score"]) for item in run["logic_checklist"] if finite_number(item.get("score"))]
+        if checklist_scores:
+            values["logic"].append(sum(checklist_scores) / len(checklist_scores) * 100)
+        else:
+            relationships = [float(item["score"]) for item in run["relationships"] if finite_number(item.get("score"))]
+            values["logic"].append(sum(relationships) / len(relationships) / 3 * 100 if relationships else 0.0)
+    return {key: numeric_summary(items) for key, items in values.items()}
+
+
 def root_cause_signals(runs: list[dict[str, Any]], profiles: dict[str, Any], atomic: dict[str, Any],
-                      manifest: dict[str, Any]) -> list[dict[str, Any]]:
+                      manifest: dict[str, Any], s_dimensions: dict[str, Any]) -> list[dict[str, Any]]:
     signals: list[dict[str, Any]] = []
     if any(abs(run["formula_residual"]) > 0.05 for run in runs):
+        l_weight, s_weight = experiment_t_weights(manifest)
         signals.append({
             "cause": "deterministic_aggregation_or_output_contract",
             "severity": "high",
-            "evidence": "At least one run violates T=0.70*L+0.30*S by more than 0.05.",
+            "evidence": f"At least one run violates T={l_weight:.2f}*L+{s_weight:.2f}*S by more than 0.05.",
             "action": "Recompute T and band in code after model output; reject mismatches before aggregation.",
         })
     lane_rates = [(video_id, profile["lane_switch_rate"], profile["primary_lane_margin"]["median"])
@@ -534,20 +641,42 @@ def root_cause_signals(runs: list[dict[str, Any]], profiles: dict[str, Any], ato
             "evidence": {"videos": score_drift_with_stable_evidence},
             "action": "Create contrastive boundary examples for the unstable points and require a short rubric reason tied to minimum evidence.",
         })
+    unstable_s_dimensions = {
+        key: summary
+        for key, summary in s_dimensions.items()
+        if summary.get("range") is not None and summary["range"] > 0
+    }
+    if unstable_s_dimensions:
+        signals.append({
+            "cause": "storyboard_atomic_judgment_drift",
+            "severity": "high",
+            "evidence": {"dimensions": unstable_s_dimensions},
+            "action": "Keep S aggregation in code; judge overall sales logic as five independent checks and calibrate each unstable node/check boundary with contrastive evidence.",
+        })
     confidence_levels = {run["confidence"]["level"] for run in runs if run["confidence"]["level"] is not None}
     confidence_component_distinct = {
         key: len({run["confidence"][key] for run in runs if run["confidence"][key] is not None})
         for key in ("E", "M", "R")
     }
-    if confidence_levels == {"medium"} and all(count <= 2 for count in confidence_component_distinct.values()):
+    m_component_distinct = {
+        key: len({run["confidence"]["M_components"].get(key) for run in runs
+                  if isinstance(run["confidence"].get("M_components"), dict)
+                  and run["confidence"]["M_components"].get(key) is not None})
+        for key in ("anchor_boundary", "score_boundary", "lane_margin")
+    }
+    m_components_collapsed = not any(m_component_distinct.values()) or all(
+        count <= 1 for count in m_component_distinct.values()
+    )
+    if confidence_levels == {"medium"} and all(count <= 2 for count in confidence_component_distinct.values()) and m_components_collapsed:
         signals.append({
             "cause": "confidence_output_collapse",
             "severity": "high",
             "evidence": {
                 "confidence_levels": sorted(confidence_levels),
                 "component_distinct_counts": confidence_component_distinct,
+                "M_component_distinct_counts": m_component_distinct,
             },
-            "action": "Derive confidence from evidence completeness, lane margin, boundary distance, language quality, and manual-review flags; reject a default medium label when its components do not vary.",
+            "action": "Derive confidence from evidence completeness, lane margin, score-boundary distance, and manual-review flags; keep language/ASR quality as a separate confounder and reject a default medium label when its components do not vary.",
         })
     depth_drift = [
         key for key, row in atomic.items()
@@ -600,6 +729,8 @@ def build_report(manifest: dict[str, Any], runs: list[dict[str, Any]]) -> dict[s
     atomic_points = atomic_profiles(runs, "teaching_points", ("depth",))
     atomic_nodes = atomic_profiles(runs, "storyboard_nodes", ("function_score", "element_score", "support_score"))
     atomic_relationships = atomic_profiles(runs, "relationships", ("score",))
+    atomic_logic_checks = atomic_profiles(runs, "logic_checklist", ("score",))
+    s_dimensions = storyboard_dimension_summary(runs)
     round_groups = group_runs(runs, "round")
     round_effect = {
         str(round_index): {
@@ -639,6 +770,15 @@ def build_report(manifest: dict[str, Any], runs: list[dict[str, Any]]) -> dict[s
                 key: numeric_summary(run["confidence"][key] for run in runs if run["confidence"][key] is not None)
                 for key in ("E", "M", "R")
             },
+            "confidence_M_components": {
+                key: numeric_summary(
+                    run["confidence"]["M_components"].get(key)
+                    for run in runs
+                    if isinstance(run["confidence"].get("M_components"), dict)
+                    and run["confidence"]["M_components"].get(key) is not None
+                )
+                for key in ("anchor_boundary", "score_boundary", "lane_margin")
+            },
             "manual_pending": distribution(run["manual_pending"] > 0 for run in runs),
         },
         "execution_repetition": {
@@ -662,8 +802,10 @@ def build_report(manifest: dict[str, Any], runs: list[dict[str, Any]]) -> dict[s
             "teaching_points": atomic_points,
             "storyboard_nodes": atomic_nodes,
             "relationships": atomic_relationships,
+            "logic_checklist": atomic_logic_checks,
         },
-        "root_cause_signals": root_cause_signals(runs, profiles, atomic_points, manifest),
+        "storyboard_dimension_stability": s_dimensions,
+        "root_cause_signals": root_cause_signals(runs, profiles, atomic_points, manifest, s_dimensions),
         "quality_confounder": quality_summary(manifest),
         "raw_runs": runs,
     }
@@ -677,6 +819,7 @@ def markdown_report(report: dict[str, Any]) -> str:
     experiment = report["experiment"]
     global_t = report["global_distributions"]["T_center"]
     variance = report["variance_decomposition"]
+    s_dimensions = report.get("storyboard_dimension_stability", {})
     profiles = report["per_video"]
     ranked = sorted(
         profiles.items(),
@@ -695,8 +838,14 @@ def markdown_report(report: dict[str, Any]) -> str:
         "本报告不把 5 次结果取平均作为最终分数。均值和中位数只用于描述分布位置；验收和改进依据是极差、总体标准差、平均绝对偏差、两两平均绝对差、档位/标杆切换和逐点不稳定性。",
         "",
         f"T 的全体运行分布为：中位数 {global_t['median']:.2f}，极差 {global_t['range']:.2f}，总体标准差 {global_t['population_std']:.2f}，平均绝对偏差 {global_t['mean_abs_deviation_from_mean']:.2f}，两两平均绝对差 {global_t['mean_pairwise_abs_difference']:.2f}。",
-        f"按方差分解，重复判断的组内方差占当前分解方差的 {variance['within_video_share_of_decomposed_variance']:.1%}；这个比例用于判断随机判断噪声相对视频间差异的大小，不用于生成新的总分。",
+        f"按方差分解，重复判断的组内方差占当前分解方差的 {variance['within_video_share_of_decomposed_variance']:.1%}；这是 16 条视频的总体描述，不代表每条视频都稳定，必须结合下方逐视频极差、标准差和切换率阅读。这个比例不用于生成新的总分。",
         f"另有 {report['execution_repetition']['videos_with_high_exact_or_consecutive_repetition']} 条视频出现较高的完整判断指纹重复或连续重复；这部分不能直接当作独立采样后的稳定性。",
+        "",
+        "S 分项的历史分布（旧版关系判断仅作为 logic 的代理）为：" + "；".join(
+            f"{key} 极差 {value.get('range'):.2f}、总体标准差 {value.get('population_std'):.2f}"
+            for key, value in s_dimensions.items()
+            if value.get("range") is not None and value.get("population_std") is not None
+        ) + "。这支持优先拆解 S 的原子判断，但不等于新 checklist 已经完成验证。",
         "",
         "## 波动最大的样本",
         "",
@@ -724,7 +873,7 @@ def markdown_report(report: dict[str, Any]) -> str:
         f"本轮固定了观察证据，未重新跑 ASR/OCR：`{experiment['fixed_observation'].get('mode')}`。因此本轮测到的主要是语义匹配、量表阈值、标杆选择和置信度判断的波动；不能把结果直接解释成端到端 ASR/OCR 稳定性。",
         "执行上下文审计由嵌套 `run` 身份、唯一 `execution_context_id` 和固定证据 hash 完成；代码不会把重复 fingerprint 当成独立性证明。fresh worker/process 的真实隔离仍必须由运行器记录，不能从分数反推。",
         "分层根因、修复优先级和修复后验收条件见同目录的 `POST-RUN-IMPROVEMENTS.md`；本轮没有把修复后的结果伪装成已验证。",
-        f"证据质量检查发现未知通道比例为 {report['quality_confounder']['unknown_channel_rate']!s}。语言或证据质量是混杂因素，需要单独实验验证，不能用放宽评分阈值解决。",
+        f"证据质量检查发现 {report['quality_confounder']['unknown_channel_count']} 个未知渠道槽位，占 {report['quality_confounder']['channel_slot_count']} 个槽位（{report['quality_confounder']['unknown_channel_rate']!s}）；有 {report['quality_confounder']['records_with_unknown_channel']} 条证据记录至少缺一个渠道（记录级比例 {report['quality_confounder']['record_unknown_channel_rate']!s}）。语言或证据质量是混杂因素，需要单独实验验证，不能用放宽评分阈值解决。",
         "",
         "## 下一步修复顺序",
         "",
@@ -733,7 +882,7 @@ def markdown_report(report: dict[str, Any]) -> str:
         "3. 对证据集合本身波动的样本，先修盲提取和证据 ID 链接，再评估评分波动。",
         "4. 修复后保留未参与调参的留出视频，重新跑同样的 5 次设计；比较分布收窄和档位切换率，而不是比较均值是否更好看。",
         "",
-        "原始运行记录见同目录的 `raw_runs` JSON；每个运行均保留 `run_id`、轮次、视频、证据集合、L/S/T、档位、置信度和逐点判断。",
+        "原始运行记录见同目录的 `raw-results/` JSON；每个运行均保留 `run_id`、轮次、视频、证据集合、L/S/T、档位、置信度和逐点判断。",
     ])
     return "\n".join(lines) + "\n"
 
@@ -809,6 +958,7 @@ def load_runs(manifest: dict[str, Any], results_dir: Path, strict: bool) -> list
         expected_relationships_by_lane = {
             "DEFAULT": {str(item.get("id")) for item in as_list(reference.get("relationships")) if item.get("id")}
         }
+    l_weight, s_weight = experiment_t_weights(manifest)
     expected_points_by_lane = {
         lane_id: {str(item.get("id")) for item in as_list(lane.get("teaching_points")) if item.get("id")}
         for lane_id, lane in (reference.get("lanes", {}) or {}).items()
@@ -845,7 +995,7 @@ def load_runs(manifest: dict[str, Any], results_dir: Path, strict: bool) -> list
             if expected_points and point_ids != expected_points:
                 raise ValueError(f"{path}: teaching_points do not cover the selected lane exactly")
             if abs(normalized["formula_residual"]) > 0.05:
-                raise ValueError(f"{path}: T does not equal 0.70*L+0.30*S")
+                raise ValueError(f"{path}: T does not equal {l_weight:.2f}*L+{s_weight:.2f}*S")
         if run_id in seen:
             raise ValueError(f"duplicate result: {run_id}")
         seen.add(run_id)

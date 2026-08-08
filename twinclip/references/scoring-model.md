@@ -98,10 +98,11 @@ denominator.
 
 ## 3. Storyboard score S
 
-Ignore exact duration and fixed order in the numeric score. Keep them only as diagnostic observations. Permit reordered sections when the sales logic remains coherent.
+Ignore exact duration and fixed order in the numeric score. Keep them only as diagnostic observations. Permit reordered sections when the sales logic remains coherent. A reordered section is not a failure by itself.
 
-The model returns one state per Storyboard dimension. The compiler maps those
-states to 0-3 and uses the resulting values in S:
+The model returns one state per Storyboard-node dimension and five independent
+sales-logic checks. The compiler maps those states to bounded numeric values and
+uses the resulting values in S. The model never supplies the numeric values:
 
 ### Content function
 
@@ -126,32 +127,54 @@ Use `null` when a node has no required persuasion element. Exclude null values f
 - 2: presentation supports the message;
 - 3: presentation makes the message especially clear.
 
-Score the whole video from 0 to 3 for sales-logic coherence:
+### Sales-logic checklist
 
-- 0: no coherent route from attention to purchase;
-- 1: understandable fragments with major unsupported jumps;
-- 2: a complete and understandable sales argument;
-- 3: a clear, convincing chain in which claims, proof, reasons to buy, and CTA support one another.
+Judge these five checks independently. Each check is `met`, `not_met`, or
+`unclear`; the compiler turns clear `met` into 1 and every other state into 0
+until a human resolves the ambiguity:
+
+| Check | Question |
+|---|---|
+| `hook_leads_need` | Does the opening attention lead to a concrete need or problem? |
+| `points_answer_problem` | Do the product point and explanation answer that need? |
+| `claims_supported` | Are important claims supported by an observable proof or appropriate trust signal? |
+| `cta_has_reason` | Is there a reason to buy before the CTA, rather than a bare request to click? |
+| `coherent_if_reordered` | Would the selling route remain understandable if sections moved, without penalizing order alone? |
+
+`logic_coherence` is the mean of these five checks on a 0-100 scale. The
+`coherent_if_reordered` check is about logical completeness, not sequence
+similarity. It must not reintroduce a fixed-order score.
 
 The compiler normalizes each dimension to 0-100. Use these initial, versioned priors:
 
 ```text
-S = 35% sales_logic
-  + 30% mean(node_content_function)
-  + 25% mean(non_null_node_element_use)
-  + 10% mean(node_presentation_support)
+S = 35% logic_coherence
+  + 65% node_score
+
+node_score = 46% mean(node_content_function)
+           + 38% mean(non_null_node_element_use)
+           + 16% mean(node_presentation_support)
 ```
+
+The equivalent flattened default configuration is `logic=0.35`,
+`function=0.299`, `elements=0.247`, and `support=0.104`. When no node has
+required elements, set `elements=0` and renormalize function/support within the
+remaining 65% node weight.
 
 Validate these weights against anchors. Do not treat them as universal constants.
 
-The model supplies one atomic `logic_state` per relationship. The compiler
-maps it to 0-3 and derives the overall logic score as the unrounded mean. This
-keeps the preference for a smooth selling argument continuous and separate
-from exact Storyboard order or duration.
+Reference-graph relationship tasks remain useful as an auditable claim-to-proof
+and stage-transition view. They use `logic_state` and must cover their lane's
+edges, but they are not the numeric S logic input. This prevents the number of
+reference edges from changing the meaning of the sales-logic dimension and
+prevents an overall holistic judgment from drifting as one large scalar.
 
 If a node has required persuasion elements, it must receive a non-null element score. If no node has required elements, set the elements weight to zero and renormalize the remaining S weights. A null element score cannot remove a required node from the denominator.
 
-If the reference graph has no relationships, set the logic score and logic weight to zero and renormalize the remaining S dimensions. Never replace missing relationships with a free-form logic impression.
+If the reference graph has no relationships, keep the five-check logic score
+active. The checklist assesses the creator video as a sales argument; the graph
+is only an additional audit view. The deterministic source of truth for these
+calculations is `scripts/compute_scores.py`.
 
 ## 4. Total learning score T
 
@@ -203,7 +226,7 @@ For every compiled teaching point record:
 - adaptation applicability and result;
 - manual-review state.
 
-For every Storyboard relationship record its score, evidence, and manual-review state. The relationship records are the auditable source for the overall sales-logic score.
+For every Storyboard relationship record its score, evidence, and manual-review state. These records are an auditable graph view for transition and failure diagnosis; the five-check checklist is the numeric source for the S logic component.
 
 Generate narrative detail from this structure. Do not make free text the source of scores.
 

@@ -10,30 +10,31 @@ import math
 from pathlib import Path
 from typing import Any
 
+from compute_scores import (  # noqa: E402
+    LOGIC_WEIGHT,
+    NODE_COMPONENT_WEIGHTS,
+    NODE_WEIGHT,
+    TIER_BOUNDARIES,
+)
 
-SCHEMA_VERSION = "1.5"
+
+SCHEMA_VERSION = "1.6"
 CALIBRATION_REGISTRY_SCHEMA_VERSION = "1.1"
 PREPARE_MANIFEST_SCHEMA_VERSION = "1.2"
 QA_HISTORY_SCHEMA_VERSION = "1.2"
-ANALYSIS_VERSION = "1.5"
-COMPILER_VERSION = "twinclip-compiler-0.2"
+ANALYSIS_VERSION = "1.6"
+COMPILER_VERSION = "twinclip-compiler-0.3"
 TOLERANCE = 0.02
 MIN_L_WEIGHT = 0.50
 DEFAULT_L_WEIGHT = 0.70
 DEFAULT_S_WEIGHT = 0.30
 DEFAULT_S_WEIGHTS = {
-    "logic": 0.35,
-    "function": 0.30,
-    "elements": 0.25,
-    "support": 0.10,
+    "logic": LOGIC_WEIGHT,
+    "function": NODE_WEIGHT * NODE_COMPONENT_WEIGHTS["function"],
+    "elements": NODE_WEIGHT * NODE_COMPONENT_WEIGHTS["elements"],
+    "support": NODE_WEIGHT * NODE_COMPONENT_WEIGHTS["support"],
 }
-BANDS = [
-    (0, 19, "未采纳"),
-    (20, 39, "表层模仿"),
-    (40, 59, "单点机制迁移"),
-    (60, 79, "多点结构化迁移"),
-    (80, 100, "二次创新"),
-]
+BANDS = list(TIER_BOUNDARIES)
 BAND_LABELS = tuple(label for _, _, label in BANDS)
 VALID_CLARITY = {"clear", "ambiguous", "unavailable"}
 VALID_EVIDENCE_SCOPES = {"segment", "full_video"}
@@ -111,11 +112,15 @@ def round_half_up(value: float) -> int:
 
 
 def default_s_weights(*, has_relationships: bool, has_required_elements: bool) -> dict[str, float]:
+    # Sales-logic coherence is now a five-item checklist, so it does not
+    # disappear merely because a reference graph has no explicit edge list.
+    del has_relationships
     weights = dict(DEFAULT_S_WEIGHTS)
-    if not has_relationships:
-        weights["logic"] = 0.0
     if not has_required_elements:
+        active_node_weight = NODE_COMPONENT_WEIGHTS["function"] + NODE_COMPONENT_WEIGHTS["support"]
+        weights["function"] = NODE_WEIGHT * NODE_COMPONENT_WEIGHTS["function"] / active_node_weight
         weights["elements"] = 0.0
+        weights["support"] = NODE_WEIGHT * NODE_COMPONENT_WEIGHTS["support"] / active_node_weight
     active_sum = sum(weights.values())
     if active_sum <= 0:
         raise ValueError("at least one S dimension must remain active")

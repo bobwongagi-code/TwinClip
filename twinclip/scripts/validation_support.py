@@ -12,9 +12,9 @@ from typing import Any
 from contracts import (  # noqa: E402
     BANDS,
     TOLERANCE,
-    round_half_up,
     sha256_file,
 )
+from compute_scores import score_band  # noqa: E402
 
 
 MAX_REPORT_BYTES = 20 * 1024 * 1024
@@ -229,21 +229,5 @@ def eligible_evidence(record: dict[str, Any]) -> bool:
     )
 
 
-def score_band(center: float) -> str:
-    rounded = min(100, max(0, round_half_up(center)))
-    for low, high, label in BANDS:
-        if low <= rounded <= high:
-            return label
-    raise AssertionError("unreachable")
-
-
 def band_index(label: str) -> int:
     return next(index for index, (_, _, name) in enumerate(BANDS) if name == label)
-
-
-def expected_confidence(e_value: float, m_value: float, r_value: float) -> str:
-    if e_value >= 0.85 and m_value == 1 and r_value <= 0.10:
-        return "high"
-    if e_value >= 0.65 and m_value >= 0.5 and r_value <= 0.30:
-        return "medium"
-    return "low"

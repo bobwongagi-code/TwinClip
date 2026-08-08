@@ -31,7 +31,7 @@ Accept optional anchor videos and prior TwinClip reports for calibration. Do not
 - Keep A as a non-numeric adaptation diagnosis. Never include A in the total learning score.
 - Keep every nonzero judgment traceable to creator-video evidence.
 - Treat the model/code boundary as architectural: the model emits observable facts and small semantic task judgments; code owns IDs, links, aggregation, lane selection, formulas, bands, confidence, and publication.
-- Never ask one model call to emit a final report. Use separate observation, evidence-linking, teaching-point, Storyboard-node, lane-specific relationship, adaptation, and optional candidate tasks. Read [semantic-task-contract.md](references/semantic-task-contract.md) for the task envelope and state maps.
+- Never ask one model call to emit a final report. Use separate observation, evidence-linking, teaching-point, Storyboard-node, five-check sales-logic, lane-specific relationship audit, adaptation, and optional candidate tasks. Read [semantic-task-contract.md](references/semantic-task-contract.md) for the task envelope and state maps.
 - Prefer a band, score interval, and confidence components over a falsely precise standalone score.
 - Never infer missing visual proof from speech or missing speech from visuals. Record unavailable ASR/OCR channels as `unknown`.
 - When any breakdown, Storyboard, or creator video contains Malaysian Malay or Malay-English code-switching, read [malay-language.md](references/malay-language.md) before extraction. Keep language/evidence quality separate from content-match uncertainty; never relax scoring thresholds because ASR or semantic language quality is weak.
@@ -75,7 +75,7 @@ Never place a mechanism inferred only from the Storyboard into `teaching_points`
 
 Record cross-node logic as explicit reference-graph relationships, including preview-to-payoff, problem-to-solution, claim-to-proof, and reason-to-buy-to-CTA links.
 
-When one breakdown contains multiple complete benchmark replays, lock one lane per benchmark and score the shared creator observations against every lane. Select the primary lane by `effective_coverage_rate`, then `T`; if both are exactly tied, use the declared lane order as a deterministic tie-breaker and record that tie. Keep the alternate lane summaries and their scores in the report. Do not treat mechanisms unique to the unselected lane as primary-lane omissions.
+When one breakdown contains multiple complete benchmark replays, lock one lane per benchmark and score the shared creator observations against every lane. Select the primary lane by `effective_coverage_rate`, then `T`; if both are exactly tied, use the declared lane order as a deterministic tie-breaker and record that tie. Record the first separating margin and flag a margin below `0.05` for manual review. Keep the alternate lane summaries and their scores in the report. Do not treat mechanisms unique to the unselected lane as primary-lane omissions.
 
 Version the graph as a `reference_bundle`. Lock it before scoring a batch. Bind its `content_hash` to the path-free content identities of the breakdown video and Storyboard. A changed source creates a new bundle identity and requires anchor revalidation. Read [reference-graph-example.md](references/reference-graph-example.md) for a compact end-to-end graph example, and [scoring-model.md](references/scoring-model.md) for point and node rubrics.
 
@@ -87,6 +87,7 @@ Perform the first observation pass without exposing the reference teaching-point
 - people, product, action, result, and setting;
 - on-screen text in its original language;
 - transcript in its original language;
+- observation source channels used: `visual`, `onscreen_text`, and/or `voiceover`;
 - independently recognizable content function.
 
 Use this blind pass as the only automatic scoring evidence. Publish it as an `observation` task. Then run a separate reference-guided candidate check for subtle possible matches missed by the blind pass. Put those matches in `manual_pending`; do not score them unless a human confirms them.
@@ -102,9 +103,9 @@ Assign each failure at most one `primary_failure_dimension`: `L`, `S`, or `A`. T
 Apply [scoring-model.md](references/scoring-model.md).
 
 - Ask the model only for the atomic semantic states defined in [semantic-task-contract.md](references/semantic-task-contract.md).
-- Run `scripts/compile_report.py` or the batch compiler in `scripts/run_analysis.py`. Code derives L, S, T, lane selection, coverage, borrowing counts, bands, intervals, adaptation counts/status, and confidence from those states.
+- Run `scripts/compile_report.py` or the batch compiler in `scripts/run_analysis.py`. Code derives L, S, T, lane selection, coverage, borrowing counts, bands, intervals, adaptation counts/status, and confidence from those states. S logic is the mean of five code-aggregated 0/1 checks; relationship judgments remain an auditable graph view and do not replace that checklist.
 - Produce a non-numeric adaptation status plus compensation counts and a short backend explanation from the compiled structure.
-- Never accept model-supplied `depth`, numeric node/relationship scores, `L`, `S`, `T`, `band`, `confidence`, or `primary_lane` fields as scoring input.
+- Never accept model-supplied `depth`, numeric node/relationship/checklist scores, `L`, `S`, `T`, `band`, `confidence`, or `primary_lane` fields as scoring input.
 
 ### 6. Calibrate against anchors
 
@@ -133,7 +134,7 @@ python3 scripts/validate_report.py /absolute/path/to/report.json
 
 Fix every validation error. Disclose warnings, missing media channels, provisional weights, absent anchors, and unresolved manual candidates.
 
-Evidence records must declare whether they are a functional `segment` or a complete `full_video` absence scope, and must link the Storyboard nodes they actually observe. A `full_video` record must span the declared creator-video duration, can verify a clear absence only, and cannot support a positive L, S, or relationship score. Positive overall logic assessments need segment evidence; positive relationship assessments must contain eligible segment evidence for both endpoint nodes. This prevents a generic whole-video note from inflating Storyboard or logic scores.
+Evidence records must declare whether they are a functional `segment` or a complete `full_video` absence scope, declare the source channels used, and link the Storyboard nodes they actually observe. A `full_video` record must span the declared creator-video duration, can verify a clear absence only, and cannot support a positive L, S, or relationship score. Positive logic-check assessments need segment evidence; positive relationship assessments must contain eligible segment evidence for both endpoint nodes. This prevents a generic whole-video note from inflating Storyboard or logic scores.
 
 For a batch, bind semantic runs to the actual source files and produce reports plus group adoption statistics with:
 
@@ -176,5 +177,6 @@ The QA command passes only when at least four of five bands agree and no result 
 - When less than 65% of scoring decisions have clear evidence, mark confidence low and require manual review.
 - When an anchor placement conflicts with the formula band, do not silently clamp the score. Mark a calibration conflict and request review.
 - When no anchors exist, use the default weights and bands provisionally; cap confidence at medium.
+- Derive `M` as the weakest of anchor-boundary clarity, score-band boundary clarity, and multi-reference lane-margin clarity; expose all three `M_components` so a medium/low result has an actionable cause.
 - When a guided-only candidate remains unconfirmed, keep it out of L, S, and T.
 - When a final report has low confidence or resolved manual-review decisions, require `review_status=completed`. Pending candidates and anchor conflicts keep it pending and block final delivery.

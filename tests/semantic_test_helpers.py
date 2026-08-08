@@ -7,12 +7,14 @@ import json
 from pathlib import Path
 from typing import Any
 
-from contracts import canonical_json, sha256_bytes, sha256_file
+from contracts import COMPILER_VERSION, canonical_json, sha256_bytes, sha256_file
+from compute_scores import LOGIC_CHECK_IDS
+from semantic_pipeline import SEMANTIC_RUN_SCHEMA_VERSION, SEMANTIC_TASK_SCHEMA_VERSION
 
 
 def _write_task(task_dir: Path, task_type: str, task_id: str, run: dict[str, Any], payload: dict[str, Any]) -> None:
     task = {
-        "schema_version": "twinclip-semantic-task-0.2",
+        "schema_version": SEMANTIC_TASK_SCHEMA_VERSION,
         "task_type": task_type,
         "task_id": task_id,
         "run": {
@@ -38,7 +40,7 @@ def write_semantic_run(report: dict[str, Any], creator: Path, root: Path, name: 
     tasks_dir = semantic_dir / "tasks"
     tasks_dir.mkdir(parents=True)
     run = {
-        "schema_version": "twinclip-semantic-run-0.2",
+        "schema_version": SEMANTIC_RUN_SCHEMA_VERSION,
         "run_id": f"{name}-run",
         "execution_context_id": f"{name}-context",
         "reference_bundle_hash": report["reference_bundle"]["content_hash"],
@@ -49,8 +51,8 @@ def write_semantic_run(report: dict[str, Any], creator: Path, root: Path, name: 
         "observation_method": "fixture_multimodal_review",
         "temperature": 0.0,
         "seed": 1,
-        "compiler_version": "twinclip-compiler-0.2",
-        "task_schema_version": "twinclip-semantic-task-0.2",
+        "compiler_version": COMPILER_VERSION,
+        "task_schema_version": SEMANTIC_TASK_SCHEMA_VERSION,
         "source_hashes": copy.deepcopy(provenance["source_hashes"]),
         "scoring_config": copy.deepcopy(report["scoring_config"]),
         "anchor_placement": copy.deepcopy(analysis["anchor_placement"]),
@@ -135,6 +137,27 @@ def write_semantic_run(report: dict[str, Any], creator: Path, root: Path, name: 
         for item in analysis["storyboard_node_assessments"]
     ]
     _write_task(tasks_dir, "storyboard_node", "storyboard-nodes", run, {"judgments": node_judgments})
+
+    logic_checks = []
+    source_logic = report["analysis"].get("logic_assessment", {}).get("checklist", [])
+    source_logic_by_id = {item["check_id"]: item for item in source_logic}
+    for check_id in LOGIC_CHECK_IDS:
+        item = source_logic_by_id.get(check_id, {
+            "state": "met",
+            "evidence_ids": ["EV01"],
+            "evidence_clarity": "clear",
+            "manual_review": False,
+            "reason": "Fixture logic checklist judgment.",
+        })
+        logic_checks.append({
+            "check_id": check_id,
+            "state": item["state"],
+            "evidence_ids": item["evidence_ids"],
+            "evidence_clarity": item["evidence_clarity"],
+            "manual_review": item["manual_review"],
+            "reason": item["reason"],
+        })
+    _write_task(tasks_dir, "logic_checklist", "logic-checklist", run, {"checks": logic_checks})
 
     relationship_states = {0: "broken", 1: "jump", 2: "complete", 3: "convincing"}
     source_relationship_by_id = {item["relationship_id"]: item for item in analysis["relationship_assessments"]}

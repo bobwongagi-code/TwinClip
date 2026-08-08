@@ -24,7 +24,7 @@ from semantic_pipeline import SEMANTIC_TASK_SCHEMA_VERSION  # noqa: E402
 
 
 EXPERIMENT_SCHEMA_VERSION = "twinclip-stability-experiment-0.1"
-RUN_SCHEMA_VERSION = "twinclip-stability-run-0.2"
+RUN_SCHEMA_VERSION = "twinclip-stability-run-0.3"
 DEFAULT_REPLICATES = 5
 
 
@@ -113,6 +113,26 @@ def fixed_evidence_snapshot(video: Path, report: dict[str, Any], asr_dir: Path) 
     ]
     if not blind_evidence:
         raise ValueError(f"report has no blind evidence_records: {video}")
+    legacy_channel_inference = False
+    for record in blind_evidence:
+        if "source_channels" not in record:
+            inferred_channels = [
+                channel
+                for channel, field in (
+                    ("visual", "visual"),
+                    ("onscreen_text", "onscreen_text"),
+                    ("voiceover", "transcript"),
+                )
+                if isinstance(record.get(field), str) and record[field] != "unknown"
+            ]
+            if not inferred_channels:
+                raise ValueError(
+                    f"legacy evidence {record.get('id')} has no non-unknown observation channel; "
+                    "re-extract it before starting a formal rerun"
+                )
+            record["source_channels"] = inferred_channels
+            record["source_channels_inferred"] = True
+            legacy_channel_inference = True
     snapshot = {
         "schema_version": "twinclip-stability-evidence-0.1",
         "video_id": safe_id(video.stem),
@@ -121,7 +141,12 @@ def fixed_evidence_snapshot(video: Path, report: dict[str, Any], asr_dir: Path) 
             analysis.get("media_durations", {}).get(str(video.resolve()))),
         "observation_method": provenance.get("observation_method"),
         "extraction_version": provenance.get("extraction_version"),
-        "language_note": "Frozen legacy observation snapshot; original ASR/OCR channels are retained as supplied.",
+        "language_note": (
+            "Frozen legacy observation snapshot; source_channels were mechanically inferred from non-unknown "
+            "legacy fields. Re-extract ASR/OCR for a clean channel audit."
+            if legacy_channel_inference
+            else "Frozen observation snapshot; original ASR/OCR channels are retained as supplied."
+        ),
         "asr": source_hash(asr_path) if asr_path.is_file() else {"path": str(asr_path), "missing": True},
         "evidence_records": blind_evidence,
         "excluded_guided_evidence_count": len(evidence) - len(blind_evidence),
@@ -139,6 +164,7 @@ def method_fingerprint(repo_root: Path) -> str:
         repo_root / "twinclip" / "references" / "malay-language.md",
         repo_root / "twinclip" / "references" / "semantic-task-contract.md",
         repo_root / "twinclip" / "scripts" / "contracts.py",
+        repo_root / "twinclip" / "scripts" / "compute_scores.py",
         repo_root / "twinclip" / "scripts" / "semantic_pipeline.py",
         repo_root / "twinclip" / "scripts" / "semantic_run.py",
         repo_root / "twinclip" / "scripts" / "compile_report.py",
@@ -233,6 +259,8 @@ def build_experiment(args: argparse.Namespace) -> dict[str, Any]:
                 "semantic_task_schema_version": SEMANTIC_TASK_SCHEMA_VERSION,
                 "method_fingerprint": method_fingerprint(repo_root),
                 "score_formula": "T=0.70*L+0.30*S",
+                "l_weight": 0.70,
+                "s_weight": 0.30,
                 "final_score_aggregation": "descriptive_only; no replicate averaging used as a decision",
             },
             "videos": videos,

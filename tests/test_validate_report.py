@@ -116,11 +116,11 @@ class ReportFixture(unittest.TestCase):
                 "s_weight": 0.3,
                 "s_weights": {
                     "logic": 0.35,
-                    "function": 0.30,
-                    "elements": 0.25,
-                    "support": 0.10,
+                    "function": 0.299,
+                    "elements": 0.247,
+                    "support": 0.104,
                 },
-                "weights_version": "1.0-default",
+                "weights_version": "2.0-checklist-default",
             },
             "analysis": {
                 "creator_videos": [creator],
@@ -134,6 +134,7 @@ class ReportFixture(unittest.TestCase):
                         "visual": "Creator points to the visible problem area",
                         "onscreen_text": "unknown",
                         "transcript": "Here is the problem",
+                        "source_channels": ["visual", "voiceover"],
                         "observed_function": "Problem demonstration",
                         "coverage_scope": "Hook segment",
                         "scope_complete": True,
@@ -150,6 +151,7 @@ class ReportFixture(unittest.TestCase):
                         "visual": "A transition into the product proof",
                         "onscreen_text": "unknown",
                         "transcript": "unknown",
+                        "source_channels": ["visual"],
                         "observed_function": "Transition to proof",
                         "coverage_scope": "Transition through end of video",
                         "scope_complete": True,
@@ -166,6 +168,7 @@ class ReportFixture(unittest.TestCase):
                         "visual": "The complete creator video was inspected",
                         "onscreen_text": "unknown",
                         "transcript": "unknown",
+                        "source_channels": ["visual"],
                         "observed_function": "Complete video scope inspection",
                         "coverage_scope": "Entire creator video",
                         "scope_complete": True,
@@ -221,15 +224,75 @@ class ReportFixture(unittest.TestCase):
                     },
                 ],
                 "logic_assessment": {
-                    "score": 2,
+                    "score": 1.8,
+                    "checklist_mean": 0.6,
+                    "checklist": [
+                        {
+                            "check_id": "hook_leads_need",
+                            "state": "met",
+                            "score": 1,
+                            "evidence_ids": ["EV01"],
+                            "reason": "The hook establishes the problem.",
+                            "manual_review": False,
+                            "evidence_clarity": "clear",
+                            "absence_verified": False,
+                        },
+                        {
+                            "check_id": "points_answer_problem",
+                            "state": "met",
+                            "score": 1,
+                            "evidence_ids": ["EV01", "EV02"],
+                            "reason": "The point responds to the problem.",
+                            "manual_review": False,
+                            "evidence_clarity": "clear",
+                            "absence_verified": False,
+                        },
+                        {
+                            "check_id": "claims_supported",
+                            "state": "met",
+                            "score": 1,
+                            "evidence_ids": ["EV01", "EV02"],
+                            "reason": "The claim has observable support.",
+                            "manual_review": False,
+                            "evidence_clarity": "clear",
+                            "absence_verified": False,
+                        },
+                        {
+                            "check_id": "cta_has_reason",
+                            "state": "not_met",
+                            "score": 0,
+                            "evidence_ids": ["EV-FULL"],
+                            "reason": "The full video does not establish a purchase reason before CTA.",
+                            "manual_review": False,
+                            "evidence_clarity": "clear",
+                            "absence_verified": True,
+                        },
+                        {
+                            "check_id": "coherent_if_reordered",
+                            "state": "not_met",
+                            "score": 0,
+                            "evidence_ids": ["EV-FULL"],
+                            "reason": "The full route remains incomplete.",
+                            "manual_review": False,
+                            "evidence_clarity": "clear",
+                            "absence_verified": True,
+                        },
+                    ],
                     "relationship_ids": ["REL01"],
                     "evidence_ids": ["EV01", "EV02"],
-                    "reason": "The route from problem to proof is understandable",
+                    "reason": "The route is derived from five independent checks.",
                     "manual_review": False,
                     "evidence_clarity": "clear",
                     "absence_verified": False,
                     "primary_failure_dimension": None,
                     "failure_id": None,
+                },
+                "S_components": {
+                    "logic_coherence": 60.0,
+                    "node_average": 46.0,
+                    "function": 33.33333333333333,
+                    "elements": 66.66666666666667,
+                    "support": 33.33333333333333,
                 },
                 "relationship_assessments": [
                     {
@@ -247,9 +310,9 @@ class ReportFixture(unittest.TestCase):
                 "candidate_matches": [],
                 "scores": {
                     "L": 66.6666667,
-                    "S": 53.3333333,
-                    "T_center": 62.6666667,
-                    "T_range": [57, 69],
+                    "S": 50.9,
+                    "T_center": 61.9366667,
+                    "T_range": [52, 72],
                     "formula_band": "多点结构化迁移",
                     "band": "多点结构化迁移",
                     "provisional": True,
@@ -267,7 +330,13 @@ class ReportFixture(unittest.TestCase):
                     "effective": 1,
                     "innovative": 0,
                 },
-                "confidence": {"E": 1.0, "M": 0.5, "R": 0.0, "level": "medium"},
+                "confidence": {
+                    "E": 1.0,
+                    "M": 0,
+                    "M_components": {"anchor_boundary": 0.5, "score_boundary": 0.0, "lane_margin": 1.0},
+                    "R": 0.0,
+                    "level": "low",
+                },
                 "anchor_placement": {
                     "has_anchors": False,
                     "anchor_set_id": None,
@@ -304,7 +373,7 @@ class ReportFixture(unittest.TestCase):
             "model_id": "fixture-model",
             "prompt_version": "fixture-prompt-1",
             "extraction_version": "fixture-extractor-1",
-            "compiler_version": "twinclip-compiler-0.2",
+            "compiler_version": "twinclip-compiler-0.3",
             "reference_bundle_hash": report["reference_bundle"]["content_hash"],
             "media_preparation": {
                 "manifest_schema_version": PREPARE_MANIFEST_SCHEMA_VERSION,
@@ -358,8 +427,8 @@ class ReportFixture(unittest.TestCase):
     def test_valid_report(self) -> None:
         errors, warnings, metrics = validate_report(self.report())
         self.assertEqual(errors, [])
-        self.assertEqual(warnings, [])
-        self.assertTrue(math.isclose(metrics["T"], 62.6666667, abs_tol=0.02))
+        self.assertEqual(warnings, ["low-confidence report requires human review"])
+        self.assertTrue(math.isclose(metrics["T"], 61.9366667, abs_tol=0.02))
 
     def test_final_report_requires_execution_identity(self) -> None:
         report = self.report()
@@ -388,9 +457,9 @@ class ReportFixture(unittest.TestCase):
                 "s_weight": 0.3,
                 "s_weights": {
                     "logic": 0.35,
-                    "function": 0.30,
-                    "elements": 0.25,
-                    "support": 0.10,
+                    "function": 0.299,
+                    "elements": 0.247,
+                    "support": 0.104,
                 },
             },
             "boundaries": [
@@ -428,9 +497,15 @@ class ReportFixture(unittest.TestCase):
             }
         )
         report["analysis"]["scores"].update(
-            {"T_range": [60, 66], "provisional": False}
+            {"T_range": [52, 72], "provisional": False}
         )
-        report["analysis"]["confidence"].update({"M": 1, "level": "high"})
+        report["analysis"]["confidence"].update(
+            {
+                "M": 0,
+                "M_components": {"anchor_boundary": 1.0, "score_boundary": 0.0, "lane_margin": 1.0},
+                "level": "low",
+            }
+        )
         report["analysis"]["anchor_placement"] = {
             "has_anchors": True,
             "anchor_set_id": "anchors-1",
@@ -472,7 +547,7 @@ class ReportFixture(unittest.TestCase):
         )
         errors, warnings, _ = validate_report(report)
         self.assertEqual(errors, [])
-        self.assertEqual(warnings, [])
+        self.assertEqual(warnings, ["low-confidence report requires human review"])
 
         report["scoring_config"]["l_weight"] = 0.6
         report["scoring_config"]["s_weight"] = 0.4
@@ -493,6 +568,21 @@ class ReportFixture(unittest.TestCase):
             )
         )
         self.assertTrue(any("observed_function" in error or "not scoring-eligible" in error for error in errors))
+
+    def test_evidence_requires_explicit_source_channels(self) -> None:
+        errors = self.errors_for(
+            lambda report: report["analysis"]["evidence_records"][0].pop("source_channels")
+        )
+        self.assertTrue(any("source_channels" in error for error in errors))
+
+    def test_ambiguous_logic_cannot_keep_a_positive_derived_score(self) -> None:
+        def mutate(report: dict) -> None:
+            report["analysis"]["logic_assessment"]["checklist"][0].update(
+                {"evidence_clarity": "ambiguous", "manual_review": True}
+            )
+
+        errors = self.errors_for(mutate)
+        self.assertTrue(any("score must be derived from its state" in error for error in errors))
 
     def test_rejected_blind_evidence_is_not_eligible(self) -> None:
         errors = self.errors_for(
@@ -531,11 +621,11 @@ class ReportFixture(unittest.TestCase):
 
     def test_positive_logic_requires_segment_evidence(self) -> None:
         errors = self.errors_for(
-            lambda report: report["analysis"]["logic_assessment"].update(
+            lambda report: report["analysis"]["logic_assessment"]["checklist"][0].update(
                 {"evidence_ids": ["EV-FULL"]}
             )
         )
-        self.assertTrue(any("logic assessment cannot use full_video evidence" in error for error in errors))
+        self.assertTrue(any("logic checklist hook_leads_need cannot use full_video" in error for error in errors))
 
     def test_multi_reference_primary_lane_is_validated(self) -> None:
         def mutate(report: dict) -> None:
@@ -550,8 +640,8 @@ class ReportFixture(unittest.TestCase):
                         "L": 66.6666667,
                         "effective_coverage_rate": 1.0,
                         "coverage_rate": 1.0,
-                        "S_storyboard": 53.3333333,
-                        "T_center": 62.6666667,
+                        "S_storyboard": 50.9,
+                        "T_center": 61.9366667,
                         "depths": [2],
                     },
                     "REF-B": {
@@ -559,10 +649,16 @@ class ReportFixture(unittest.TestCase):
                         "L": 0.0,
                         "effective_coverage_rate": 0.0,
                         "coverage_rate": 0.0,
-                        "S_storyboard": 0.0,
-                        "T_center": 0.0,
+                        "S_storyboard": 50.9,
+                        "T_center": 15.27,
                         "depths": [0],
                     },
+                },
+                "selection_margin": {
+                    "value": 1.0,
+                    "basis": "effective_coverage_rate",
+                    "threshold": 0.05,
+                    "needs_manual_review": False,
                 },
             }
 
@@ -582,8 +678,8 @@ class ReportFixture(unittest.TestCase):
                         "L": 66.6666667,
                         "effective_coverage_rate": 1.0,
                         "coverage_rate": 1.0,
-                        "S_storyboard": 53.3333333,
-                        "T_center": 62.6666667,
+                        "S_storyboard": 50.9,
+                        "T_center": 61.9366667,
                         "depths": [2],
                     },
                     "REF-B": {
@@ -595,6 +691,12 @@ class ReportFixture(unittest.TestCase):
                         "T_center": 0.0,
                         "depths": [0],
                     },
+                },
+                "selection_margin": {
+                    "value": 1.0,
+                    "basis": "effective_coverage_rate",
+                    "threshold": 0.05,
+                    "needs_manual_review": False,
                 },
             }
 
@@ -614,8 +716,8 @@ class ReportFixture(unittest.TestCase):
                         "L": 66.6666667,
                         "effective_coverage_rate": 1.0,
                         "coverage_rate": 1.0,
-                        "S_storyboard": 53.3333333,
-                        "T_center": 62.6666667,
+                    "S_storyboard": 50.9,
+                    "T_center": 61.9366667,
                         "depths": [2],
                     },
                     "REF-B": {
@@ -623,10 +725,16 @@ class ReportFixture(unittest.TestCase):
                         "L": 66.6666667,
                         "effective_coverage_rate": 1.0,
                         "coverage_rate": 1.0,
-                        "S_storyboard": 53.3333333,
-                        "T_center": 62.6666667,
+                    "S_storyboard": 50.9,
+                    "T_center": 61.9366667,
                         "depths": [2],
                     },
+                },
+                "selection_margin": {
+                    "value": 0.0,
+                    "basis": "declared_lane_order",
+                    "threshold": 0.05,
+                    "needs_manual_review": True,
                 },
             }
 
@@ -750,11 +858,18 @@ class ReportFixture(unittest.TestCase):
         report["analysis"]["scores"].update(
             {
                 "L": 16.6666667,
-                "S": 53.3333333,
-                "T_center": 27.6666667,
-                "T_range": [22, 34],
+                "S": 50.9,
+                "T_center": 26.9366667,
+                "T_range": [21, 33],
                 "formula_band": "表层模仿",
                 "band": "表层模仿",
+            }
+        )
+        report["analysis"]["confidence"].update(
+            {
+                "M": 0.5,
+                "M_components": {"anchor_boundary": 0.5, "score_boundary": 1.0, "lane_margin": 1.0},
+                "level": "medium",
             }
         )
         report["analysis"]["coverage"].update(
@@ -859,8 +974,12 @@ class ReportFixture(unittest.TestCase):
             provenance["method_fingerprint"],
         )
         report["analysis"]["logic_assessment"].update(
-            {"score": 2.5, "relationship_ids": ["REL01", "REL02"]}
+            {"score": 2.4, "checklist_mean": 0.8, "relationship_ids": ["REL01", "REL02"]}
         )
+        report["analysis"]["logic_assessment"]["checklist"][3].update(
+            {"state": "met", "score": 1, "evidence_ids": ["EV02"], "absence_verified": False}
+        )
+        report["analysis"]["S_components"]["logic_coherence"] = 80.0
         report["analysis"]["relationship_assessments"].append(
             {
                 "relationship_id": "REL02",
@@ -875,13 +994,20 @@ class ReportFixture(unittest.TestCase):
             }
         )
         report["analysis"]["scores"].update(
-            {"S": 59.1666667, "T_center": 64.4166667, "T_range": [58, 70]}
+            {"S": 57.9, "T_center": 64.0366667, "T_range": [58, 70]}
+        )
+        report["analysis"]["confidence"].update(
+            {
+                "M": 0.5,
+                "M_components": {"anchor_boundary": 0.5, "score_boundary": 0.5, "lane_margin": 1.0},
+                "level": "medium",
+            }
         )
         errors, _, metrics = validate_report(report)
         self.assertEqual(errors, [])
-        self.assertTrue(math.isclose(metrics["S"], 59.1666667, abs_tol=0.02))
+        self.assertTrue(math.isclose(metrics["S"], 57.9, abs_tol=0.02))
 
-    def test_missing_relationships_disable_logic_dimension(self) -> None:
+    def test_missing_relationships_do_not_disable_logic_checklist(self) -> None:
         report = self.report()
         report["reference_bundle"]["relationships"] = []
         report["reference_bundle"]["content_hash"] = reference_bundle_hash(report["reference_bundle"])
@@ -893,12 +1019,6 @@ class ReportFixture(unittest.TestCase):
             provenance["source_hashes"]["creator_video"]["sha256"],
             provenance["method_fingerprint"],
         )
-        report["scoring_config"]["s_weights"] = {
-            "logic": 0.0,
-            "function": 0.4615384615,
-            "elements": 0.3846153846,
-            "support": 0.1538461538,
-        }
         provenance["scoring_config_hash"] = sha256_bytes(canonical_json(report["scoring_config"]).encode("utf-8"))
         provenance["method_fingerprint"] = provenance_fingerprint(provenance)
         report["analysis"]["analysis_id"] = analysis_id(
@@ -908,18 +1028,10 @@ class ReportFixture(unittest.TestCase):
         )
         report["analysis"]["logic_assessment"].update(
             {
-                "score": 0,
                 "relationship_ids": [],
-                "evidence_ids": [],
-                "evidence_clarity": "unavailable",
-                "manual_review": True,
             }
         )
         report["analysis"]["relationship_assessments"] = []
-        report["analysis"]["scores"].update(
-            {"S": 46.1538462, "T_center": 60.5128205, "T_range": [55, 67]}
-        )
-        report["analysis"]["confidence"].update({"E": 0.75, "R": 0.25, "level": "medium"})
         errors, _, _ = validate_report(report)
         self.assertEqual(errors, [])
 

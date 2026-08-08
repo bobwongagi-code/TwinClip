@@ -139,6 +139,7 @@ class RunAnalysisTests(unittest.TestCase):
                 str(output_dir),
                 "--interval",
                 "0.5",
+                "--allow-draft",
             ],
             text=True,
             stdout=subprocess.PIPE,
@@ -154,7 +155,7 @@ class RunAnalysisTests(unittest.TestCase):
         self.assertEqual(batch["reports"][0]["surface_share"], 0.0)
         self.assertEqual(batch["reports"][0]["surface_error_rate"], 0.0)
         compiled = json.loads((output_dir / "reports" / "creator_001.json").read_text(encoding="utf-8"))
-        self.assertEqual(compiled["analysis"]["provenance"]["compiler_version"], "twinclip-compiler-0.2")
+        self.assertEqual(compiled["analysis"]["provenance"]["compiler_version"], "twinclip-compiler-0.3")
 
     def test_run_analysis_rejects_task_identity_drift(self) -> None:
         semantic_one, reference_path = self.write_semantic(self.creator_one, "semantic-one")
@@ -183,6 +184,7 @@ class RunAnalysisTests(unittest.TestCase):
                 str(semantic_two),
                 "--output-dir",
                 str(self.root / "run-drift"),
+                "--allow-draft",
             ],
             text=True,
             stdout=subprocess.PIPE,

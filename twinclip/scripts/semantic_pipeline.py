@@ -30,21 +30,32 @@ from contracts import (  # noqa: E402
     default_s_weights,
     provenance_fingerprint,
     reference_bundle_hash,
-    round_half_up,
     sha256_bytes,
     sha256_file,
 )
-from validation_support import score_band  # noqa: E402
+from compute_scores import (  # noqa: E402
+    LOGIC_CHECK_IDS,
+    LOGIC_CHECK_STATES,
+    compute_learning,
+    compute_storyboard,
+    compute_total,
+    confidence_from_decisions,
+    score_boundary_distance,
+    score_band,
+    score_interval,
+    select_lane,
+)
 
 
-SEMANTIC_TASK_SCHEMA_VERSION = "twinclip-semantic-task-0.2"
-SEMANTIC_RUN_SCHEMA_VERSION = "twinclip-semantic-run-0.2"
+SEMANTIC_TASK_SCHEMA_VERSION = "twinclip-semantic-task-0.3"
+SEMANTIC_RUN_SCHEMA_VERSION = "twinclip-semantic-run-0.3"
 TASK_TYPES = {
     "observation",
     "evidence_linking",
     "teaching_point",
     "storyboard_node",
     "relationship",
+    "logic_checklist",
     "adaptation",
     "candidate_check",
 }
@@ -54,6 +65,7 @@ DERIVED_KEYS = {
     "L",
     "S",
     "S_storyboard",
+    "S_components",
     "T",
     "T_center",
     "T_range",
@@ -71,6 +83,12 @@ DERIVED_KEYS = {
     "surface_error_rate",
     "borrowing_summary",
     "confidence",
+    "E",
+    "M",
+    "R",
+    "M_components",
+    "score_boundary_distance",
+    "lane_margin",
     "level",
     "adaptation_diagnostic",
     "compensation_hit_rate",
@@ -102,6 +120,11 @@ DERIVED_KEYS = {
     "storyboard_node_assessments",
     "relationship_assessments",
     "logic_assessment",
+    "logic_checklist",
+    "checklist_score",
+    "logic_coherence",
+    "selection_margin",
+    "needs_manual_review",
     "candidate_matches",
     "report",
     "final_report",
@@ -117,6 +140,7 @@ NODE_FUNCTION_SCORES = {"missing": 0, "fragment": 1, "understandable": 2, "compl
 NODE_ELEMENT_SCORES = {"not_required": None, "missing": 0, "partial": 1, "correct": 2, "clear": 3}
 NODE_SUPPORT_SCORES = {"contradictory": 0, "weak": 1, "supportive": 2, "especially_clear": 3}
 RELATIONSHIP_SCORES = {"broken": 0, "jump": 1, "complete": 2, "convincing": 3}
+EVIDENCE_CHANNELS = {"visual", "onscreen_text", "voiceover"}
 
 
 class SemanticContractError(ValueError):
@@ -268,7 +292,7 @@ def default_scoring_config(reference: dict[str, Any]) -> dict[str, Any]:
             has_relationships=bool(relationships),
             has_required_elements=any(bool(node.get("required_elements")) for node in nodes if isinstance(node, dict)),
         ),
-        "weights_version": "1.0-default",
+        "weights_version": "2.0-checklist-default",
         "calibration_registry": None,
     }
 
@@ -475,7 +499,17 @@ def _relationship_index(relationships: list[dict[str, Any]]) -> dict[str, dict[s
 
 
 def _validate_evidence_shape(record: dict[str, Any], label: str) -> None:
-    for key in ("id", "start_seconds", "end_seconds", "visual", "onscreen_text", "transcript", "observed_function", "coverage_scope"):
+    for key in (
+        "id",
+        "start_seconds",
+        "end_seconds",
+        "visual",
+        "onscreen_text",
+        "transcript",
+        "source_channels",
+        "observed_function",
+        "coverage_scope",
+    ):
         if key not in record:
             raise SemanticContractError(f"{label}.{key} is required")
     if not isinstance(record["start_seconds"], (int, float)) or isinstance(record["start_seconds"], bool):
@@ -486,6 +520,11 @@ def _validate_evidence_shape(record: dict[str, Any], label: str) -> None:
         raise SemanticContractError(f"{label} must have start_seconds < end_seconds")
     for key in ("visual", "onscreen_text", "transcript", "observed_function", "coverage_scope"):
         _required_string(record[key], f"{label}.{key}")
+    channels = _unique_strings(record["source_channels"], f"{label}.source_channels")
+    if not channels or set(channels) - EVIDENCE_CHANNELS:
+        raise SemanticContractError(
+            f"{label}.source_channels must contain one or more of {sorted(EVIDENCE_CHANNELS)}"
+        )
     if record.get("evidence_scope") not in {"segment", "full_video"}:
         raise SemanticContractError(f"{label}.evidence_scope must be segment or full_video")
     if record.get("scope_complete") is not True:
@@ -853,6 +892,57 @@ def _relationship_assessments(
     return [by_id[relationship_id] for relationship_id in relationships]
 
 
+def _logic_checklist_assessments(
+    task: dict[str, Any], evidence: dict[str, dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Validate five independent sales-logic checks from one small task."""
+    raw_items = _required_list(task["payload"].get("checks"), "logic_checklist task.payload.checks")
+    by_id: dict[str, dict[str, Any]] = {}
+    for index, raw in enumerate(raw_items):
+        if not isinstance(raw, dict):
+            raise SemanticContractError(f"logic checklist item {index} must be an object")
+        check_id = _required_string(raw.get("check_id"), f"logic checklist item {index}.check_id")
+        if check_id not in LOGIC_CHECK_IDS:
+            raise SemanticContractError(f"logic checklist item {check_id} has an invalid check_id")
+        if check_id in by_id:
+            raise SemanticContractError(f"duplicate logic checklist item {check_id}")
+        state = _state(raw, "state", LOGIC_CHECK_STATES, f"logic checklist item {check_id}")
+        evidence_ids = _ensure_ids(raw.get("evidence_ids"), set(evidence), f"logic checklist item {check_id}.evidence_ids")
+        clarity, manual_review = _clarity_and_review(raw, f"logic checklist item {check_id}")
+        if state == "unclear" and not manual_review:
+            raise SemanticContractError(f"logic checklist item {check_id} must require manual review when unclear")
+        if state == "met":
+            if not evidence_ids:
+                raise SemanticContractError(f"logic checklist item {check_id} needs evidence when met")
+            if any(evidence[evidence_id].get("evidence_scope") == "full_video" for evidence_id in evidence_ids):
+                raise SemanticContractError(f"logic checklist item {check_id} cannot use full_video evidence for a positive check")
+        absence_verified = state == "not_met" and clarity == "clear" and any(
+            evidence[evidence_id].get("evidence_scope") == "full_video" for evidence_id in evidence_ids
+        )
+        if state == "not_met" and clarity == "clear" and not absence_verified:
+            raise SemanticContractError(f"logic checklist item {check_id} needs full_video evidence to verify a clear negative")
+        # A positive semantic state is not enough to score when its evidence
+        # is ambiguous or unavailable. Keep the item conservative until a
+        # reviewer supplies clear evidence, just like teaching-point depth.
+        score = 1 if state == "met" and clarity == "clear" else 0
+        by_id[check_id] = {
+            "check_id": check_id,
+            "state": state,
+            "score": score,
+            "evidence_ids": evidence_ids,
+            "reason": _required_string(raw.get("reason"), f"logic checklist item {check_id}.reason"),
+            "manual_review": manual_review,
+            "evidence_clarity": clarity,
+            "absence_verified": absence_verified,
+        }
+    if set(by_id) != set(LOGIC_CHECK_IDS):
+        raise SemanticContractError(
+            f"logic checklist must cover exactly {list(LOGIC_CHECK_IDS)}; "
+            f"missing={sorted(set(LOGIC_CHECK_IDS)-set(by_id))}, extra={sorted(set(by_id)-set(LOGIC_CHECK_IDS))}"
+        )
+    return [by_id[check_id] for check_id in LOGIC_CHECK_IDS]
+
+
 def _adaptation_assessments(task: dict[str, Any], points: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
     raw_items = _required_list(task["payload"].get("judgments"), "adaptation task.payload.judgments")
     result: dict[str, dict[str, Any]] = {}
@@ -895,6 +985,8 @@ def _derived_confidence(
     *,
     has_anchors: bool,
     boundary_clarity: float,
+    score_boundary_distance_value: float | None = None,
+    lane_margin: float | None = None,
 ) -> dict[str, Any]:
     clear_supported = sum(
         item.get("evidence_clarity") == "clear"
@@ -902,22 +994,20 @@ def _derived_confidence(
         for item in decisions
     )
     decision_count = len(decisions)
-    e_value = clear_supported / decision_count if decision_count else 0.0
     manual_count = sum(bool(item.get("manual_review")) for item in decisions)
-    denominator = decision_count + pending_candidates
-    r_value = (manual_count + pending_candidates) / denominator if denominator else 0.0
-    if boundary_clarity not in {0, 0.5, 1}:
-        raise SemanticContractError("anchor_placement.boundary_clarity must be 0, 0.5, or 1")
-    m_value = boundary_clarity
-    if e_value >= 0.85 and m_value == 1 and r_value <= 0.10:
-        level = "high"
-    elif e_value >= 0.65 and m_value >= 0.5 and r_value <= 0.30:
-        level = "medium"
-    else:
-        level = "low"
-    if not has_anchors and level == "high":
-        level = "medium"
-    return {"E": round(e_value, 6), "M": m_value, "R": round(r_value, 6), "level": level}
+    try:
+        return confidence_from_decisions(
+            clear_supported=clear_supported,
+            decision_count=decision_count,
+            manual_review_count=manual_count,
+            pending_candidates=pending_candidates,
+            has_anchors=has_anchors,
+            boundary_clarity=boundary_clarity,
+            score_boundary_distance_value=score_boundary_distance_value,
+            lane_margin=lane_margin,
+        )
+    except ValueError as exc:
+        raise SemanticContractError(str(exc)) from exc
 
 
 def _adaptation_summary(values: dict[str, dict[str, Any]]) -> dict[str, Any]:
@@ -949,11 +1039,6 @@ def _adaptation_summary(values: dict[str, dict[str, Any]]) -> dict[str, Any]:
         "status": status,
         "summary": f"Derived from {required_count} point-level adaptation judgments; status={status}.",
     }
-
-
-def _score_range(t_center: float, level: str) -> list[int]:
-    width = {"high": 3, "medium": 6, "low": 10}[level]
-    return [max(0, round_half_up(t_center - width)), min(100, round_half_up(t_center + width))]
 
 
 def _next_actions(points: list[dict[str, Any]], teaching: list[dict[str, Any]]) -> list[str]:
@@ -1043,6 +1128,7 @@ def compile_report(
     observation_task = _one_task(tasks, "observation")
     linking_task = _one_task(tasks, "evidence_linking")
     node_task = _one_task(tasks, "storyboard_node")
+    logic_task = _one_task(tasks, "logic_checklist")
     adaptation_task = _one_task(tasks, "adaptation")
     evidence = _merge_observation(observation_task, linking_task, creator_video, duration, set(node_map))
     candidate_tasks = _tasks_by_type(tasks, "candidate_check")
@@ -1051,6 +1137,7 @@ def compile_report(
     candidates, guided = _merge_candidates(candidate_tasks[0] if candidate_tasks else None, evidence, creator_video, set(node_map))
     evidence.update(guided)
     node_assessments = _node_assessments(node_task, node_map, evidence)
+    logic_check_assessments = _logic_checklist_assessments(logic_task, evidence)
     relationship_assessments_by_lane: dict[str, list[dict[str, Any]]] = {}
     relationship_maps = {
         lane_id: _relationship_index(relationships)
@@ -1115,87 +1202,93 @@ def compile_report(
     for lane_id, points in lanes.items():
         assessments = point_assessments_by_lane[lane_id]
         depths = [item["depth"] for item in assessments]
-        l_score = 100 * sum(depths) / (3 * len(depths))
+        l_score, l_stats = compute_learning(depths)
+        if l_score is None:
+            raise SemanticContractError(f"reference lane {lane_id} has no teaching points")
         relationship_assessments = relationship_assessments_by_lane[lane_id]
-        s_dimension_values = {
-            "logic": sum(item["score"] for item in relationship_assessments) / len(relationship_assessments) / 3 * 100 if relationship_assessments else 0.0,
-            "function": sum(item["function_score"] for item in node_assessments) / len(node_assessments) / 3 * 100,
-            "elements": (
-                sum(item["element_score"] for item in node_assessments if item["element_score"] is not None)
-                / len([item for item in node_assessments if item["element_score"] is not None])
-                / 3
-                * 100
-                if any(item["element_score"] is not None for item in node_assessments)
-                else 0.0
-            ),
-            "support": sum(item["support_score"] for item in node_assessments) / len(node_assessments) / 3 * 100,
-        }
-        s_score = sum(
-            s_dimension_values[key] * float(s_weights["s_weights"][key])
-            for key in ("logic", "function", "elements", "support")
-        )
-        t_score = l_score * float(s_weights["l_weight"]) + s_score * float(s_weights["s_weight"])
+        checklist_scores = {item["check_id"]: item["score"] for item in logic_check_assessments}
+        try:
+            s_score, s_stats = compute_storyboard(
+                node_assessments,
+                checklist_scores,
+                s_weights=s_weights["s_weights"],
+            )
+            t_score = compute_total(
+                l_score,
+                s_score,
+                l_weight=float(s_weights["l_weight"]),
+                s_weight=float(s_weights["s_weight"]),
+            )
+        except ValueError as exc:
+            raise SemanticContractError(str(exc)) from exc
         lane_summaries[lane_id] = {
             "label": reference.get("lanes", {}).get(lane_id, {}).get("label", lane_id) if isinstance(reference.get("lanes"), dict) else lane_id,
             "L": l_score,
             "S_storyboard": s_score,
             "T_center": t_score,
-            "effective_coverage_rate": sum(depth >= 2 for depth in depths) / len(depths),
-            "coverage_rate": sum(depth >= 1 for depth in depths) / len(depths),
+            "effective_coverage_rate": l_stats["effective_coverage_rate"],
+            "coverage_rate": l_stats["coverage_rate"],
             "depths": depths,
+            "S_components": s_stats,
         }
-    lane_ids = list(lanes)
-    best_effective = max(lane_summaries[lane_id]["effective_coverage_rate"] for lane_id in lane_ids)
-    effective_candidates = [lane_id for lane_id in lane_ids if math.isclose(lane_summaries[lane_id]["effective_coverage_rate"], best_effective, abs_tol=1e-9)]
-    best_t = max(lane_summaries[lane_id]["T_center"] for lane_id in effective_candidates)
-    t_candidates = [lane_id for lane_id in effective_candidates if math.isclose(lane_summaries[lane_id]["T_center"], best_t, abs_tol=1e-9)]
-    primary_lane = t_candidates[0]
+    lane_selection = select_lane(lane_summaries)
+    primary_lane = lane_selection["chosen_lane"]
+    t_candidates = [lane_id for lane_id in lane_summaries if math.isclose(
+        lane_summaries[lane_id]["effective_coverage_rate"],
+        lane_summaries[primary_lane]["effective_coverage_rate"],
+        abs_tol=1e-9,
+    ) and math.isclose(lane_summaries[lane_id]["T_center"], lane_summaries[primary_lane]["T_center"], abs_tol=1e-9)]
     selected_points = lanes[primary_lane]
     selected_teaching = point_assessments_by_lane[primary_lane]
     relationship_assessments = relationship_assessments_by_lane[primary_lane]
     s_score = lane_summaries[primary_lane]["S_storyboard"]
-    s_dimension_values = {
-        "logic": sum(item["score"] for item in relationship_assessments) / len(relationship_assessments) / 3 * 100 if relationship_assessments else 0.0,
-        "function": sum(item["function_score"] for item in node_assessments) / len(node_assessments) / 3 * 100,
-        "elements": (
-            sum(item["element_score"] for item in node_assessments if item["element_score"] is not None)
-            / len([item for item in node_assessments if item["element_score"] is not None])
-            / 3
-            * 100
-            if any(item["element_score"] is not None for item in node_assessments)
-            else 0.0
-        ),
-        "support": sum(item["support_score"] for item in node_assessments) / len(node_assessments) / 3 * 100,
-    }
+    s_stats = copy.deepcopy(lane_summaries[primary_lane]["S_components"])
     selected_point_ids = {point["id"] for point in selected_points}
     selected_candidates = [item for item in candidates if item.get("teaching_point_id") in selected_point_ids]
     selected_candidate_ids = {item["candidate_id"] for item in selected_candidates}
     selected_guided = {evidence_id: record for evidence_id, record in guided.items() if record.get("candidate_id") in selected_candidate_ids}
     final_evidence = {**{key: value for key, value in evidence.items() if key not in guided}, **selected_guided}
-    logic_evidence_ids = sorted({evidence_id for item in relationship_assessments for evidence_id in item["evidence_ids"]})
-    logic_positive = s_dimension_values["logic"] > 0
-    logic_clarity = "clear" if all(item["evidence_clarity"] == "clear" for item in relationship_assessments) else "ambiguous"
-    logic_manual = any(item["manual_review"] for item in relationship_assessments)
+    positive_logic_evidence_ids = sorted({
+        evidence_id
+        for item in logic_check_assessments
+        if item["score"] > 0
+        for evidence_id in item["evidence_ids"]
+    })
+    negative_logic_evidence_ids = sorted({
+        evidence_id
+        for item in logic_check_assessments
+        if item["score"] == 0
+        for evidence_id in item["evidence_ids"]
+    })
+    logic_score = sum(item["score"] for item in logic_check_assessments) / len(logic_check_assessments) * 3
+    logic_positive = logic_score > 0
+    logic_clarity = "clear" if all(item["evidence_clarity"] == "clear" for item in logic_check_assessments) else "ambiguous"
+    logic_manual = any(item["manual_review"] for item in logic_check_assessments)
+    logic_evidence_ids = positive_logic_evidence_ids if logic_positive else negative_logic_evidence_ids
     logic_assessment = {
-        "score": sum(item["score"] for item in relationship_assessments) / len(relationship_assessments) if relationship_assessments else 0.0,
+        "score": logic_score,
+        "checklist": copy.deepcopy(logic_check_assessments),
+        "checklist_mean": logic_score / 3,
         "relationship_ids": list(relationship_maps[primary_lane]),
         "evidence_ids": logic_evidence_ids,
-        "reason": "Derived deterministically from the relationship judgments.",
+        "reason": "Derived deterministically from five independently judged sales-logic checks.",
         "manual_review": logic_manual,
         "evidence_clarity": logic_clarity,
-        "absence_verified": not logic_positive and any(final_evidence.get(evidence_id, {}).get("evidence_scope") == "full_video" for evidence_id in logic_evidence_ids),
+        "absence_verified": not logic_positive and all(item["absence_verified"] for item in logic_check_assessments),
         "primary_failure_dimension": None,
         "failure_id": None,
     }
-    decisions = selected_teaching + node_assessments + relationship_assessments + [logic_assessment]
+    decisions = selected_teaching + node_assessments + relationship_assessments + logic_check_assessments
     pending_count = sum(item.get("status") == "manual_pending" for item in selected_candidates)
+    t_center = lane_summaries[primary_lane]["T_center"]
     confidence = _derived_confidence(
         decisions,
         pending_count,
         has_anchors=bool(anchor_placement.get("has_anchors")),
         boundary_clarity=anchor_placement.get("boundary_clarity", 0.5),
+        score_boundary_distance_value=score_boundary_distance(t_center),
+        lane_margin=lane_selection.get("margin"),
     )
-    t_center = lane_summaries[primary_lane]["T_center"]
     formula_band = score_band(t_center)
     selected_adaptation = {item["teaching_point_id"]: adaptation_by_point[item["teaching_point_id"]] for item in selected_teaching}
     adaptation = _adaptation_summary(selected_adaptation)
@@ -1209,13 +1302,14 @@ def compile_report(
         pending_count
         or any(item["manual_review"] for item in decisions)
         or confidence["level"] == "low"
+        or lane_selection["needs_manual_review"]
         or anchor_placement.get("formula_conflict") is True
     )
     scores = {
         "L": lane_summaries[primary_lane]["L"],
         "S": s_score,
         "T_center": t_center,
-        "T_range": _score_range(t_center, confidence["level"]),
+        "T_range": score_interval(t_center, confidence["level"]),
         "formula_band": formula_band,
         "band": formula_band,
         "provisional": not bool(anchor_placement.get("has_anchors")),
@@ -1246,6 +1340,7 @@ def compile_report(
         "logic_assessment": logic_assessment,
         "relationship_assessments": relationship_assessments,
         "candidate_matches": selected_candidates,
+        "S_components": s_stats,
         "scores": scores,
         "coverage": {
             "coverage_rate": lane_summaries[primary_lane]["coverage_rate"],
@@ -1262,6 +1357,7 @@ def compile_report(
         },
         "confidence": confidence,
         "anchor_placement": anchor_placement,
+        "lane_selection": lane_selection,
         "review_status": "pending" if review_pending else "completed",
         "adaptation_diagnostic": adaptation,
         "why_not_higher": next((f"教学点“{point.get('name', point['id'])}”尚未达到功能性迁移。" for point, item in zip(selected_points, selected_teaching) if item["depth"] < 3), "当前各教学点均达到较高迁移深度。"),
@@ -1290,6 +1386,12 @@ def compile_report(
             "selection_rule": "effective coverage, then T, then declared lane order",
             "storyboard_scope": "shared reference-bundle Storyboard nodes and relationships",
             "lane_comparison": lane_summaries,
+            "selection_margin": {
+                "value": lane_selection["margin"],
+                "basis": lane_selection["margin_basis"],
+                "threshold": 0.05,
+                "needs_manual_review": lane_selection["needs_manual_review"],
+            },
             "selection_tie": len(t_candidates) > 1,
             "tie_breaker": "declared_lane_order" if len(t_candidates) > 1 else None,
         }
@@ -1320,7 +1422,7 @@ def stability_result(report: dict[str, Any], run: dict[str, Any]) -> dict[str, A
         }
     execution = analysis["execution"]
     return {
-        "schema_version": "twinclip-stability-run-0.2",
+        "schema_version": "twinclip-stability-run-0.3",
         "compiler_version": COMPILER_VERSION,
         "run": {
             "run_id": execution["run_id"],
@@ -1335,9 +1437,11 @@ def stability_result(report: dict[str, Any], run: dict[str, Any]) -> dict[str, A
         "scoring_config_hash": analysis["provenance"].get("scoring_config_hash"),
         "anchor_placement_hash": analysis["provenance"].get("anchor_placement_hash"),
         "primary_lane": primary_lane,
+        "lane_selection": copy.deepcopy(analysis.get("lane_selection", {})),
         "lane_comparison": lane_comparison,
         "scores": copy.deepcopy(analysis["scores"]),
         "confidence": copy.deepcopy(analysis["confidence"]),
+        "logic_assessment": copy.deepcopy(analysis["logic_assessment"]),
         "teaching_points": copy.deepcopy(analysis["teaching_point_assessments"]),
         "storyboard_nodes": copy.deepcopy(analysis["storyboard_node_assessments"]),
         "relationships": copy.deepcopy(analysis["relationship_assessments"]),

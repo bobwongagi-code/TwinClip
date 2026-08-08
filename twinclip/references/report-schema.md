@@ -1,12 +1,12 @@
 # TwinClip Report Schema
 
-Emit UTF-8 JSON with `schema_version: "1.5"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must be produced by the deterministic semantic compiler, bind every source path to its current SHA-256 content, and pass `scripts/validate_report.py` without `--allow-draft`.
+Emit UTF-8 JSON with `schema_version: "1.6"`. Use decimal ratios from 0 to 1 and scores from 0 to 100. Use seconds for timestamps. A final report must be produced by the deterministic semantic compiler, bind every source path to its current SHA-256 content, and pass `scripts/validate_report.py` without `--allow-draft`.
 
 ## Top-level structure
 
 ```json
 {
-  "schema_version": "1.5",
+  "schema_version": "1.6",
   "reference_bundle": {},
   "scoring_config": {},
   "analysis": {},
@@ -14,7 +14,7 @@ Emit UTF-8 JSON with `schema_version: "1.5"`. Use decimal ratios from 0 to 1 and
 }
 ```
 
-`multi_reference` is optional. When one breakdown contains multiple complete benchmark replays, include one lane summary per benchmark. The selected lane must maximize `effective_coverage_rate`, then `T_center`; an exact tie uses the declared lane order and must set `selection_tie=true` with `tie_breaker=declared_lane_order`. The selected lane's `L`, `S`, and `T_center` must equal the report's primary scores. Keep alternate lanes separate and do not treat their unique teaching points as omissions from the selected lane.
+`multi_reference` is optional. When one breakdown contains multiple complete benchmark replays, include one lane summary per benchmark. The selected lane must maximize `effective_coverage_rate`, then `T_center`; an exact tie uses the declared lane order and must set `selection_tie=true` with `tie_breaker=declared_lane_order`. Record the first separating margin and flag a margin below `0.05` for manual review. The selected lane's `L`, `S`, and `T_center` must equal the report's primary scores. Keep alternate lanes separate and do not treat their unique teaching points as omissions from the selected lane.
 
 For a multi-reference bundle, `reference_bundle.teaching_points` may be a lane
 map keyed by the declared lane IDs. The compiler uses
@@ -96,16 +96,16 @@ Teaching points require all of the semantic fields shown above, a verifiable sou
   "s_weight": 0.30,
   "s_weights": {
     "logic": 0.35,
-    "function": 0.30,
-    "elements": 0.25,
-    "support": 0.10
+    "function": 0.299,
+    "elements": 0.247,
+    "support": 0.104
   },
-  "weights_version": "1.0-default",
+  "weights_version": "2.0-checklist-default",
   "calibration_registry": null
 }
 ```
 
-Every weight group must sum to 1. L must retain at least 0.50 weight. Reports without anchors must use the default T weights `0.70/0.30` and the default S weights. When no node has required persuasion elements, the S elements weight must be zero and the remaining S weights must be renormalized. When no reference relationships exist, the S logic weight and logic score must be zero and the other S weights must be renormalized. Reports with anchors must point to an independent locked calibration registry file whose own content hash, reference-bundle hash, anchor boundaries, and anchor records all match the report.
+Every weight group must sum to 1. L must retain at least 0.50 weight. Reports without anchors must use the default T weights `0.70/0.30` and the default S weights. S logic is the five-check sales-logic checklist, not a relationship mean. When no node has required persuasion elements, the S elements weight must be zero and the remaining node weights must be renormalized. Reports with anchors must point to an independent locked calibration registry file whose own content hash, reference-bundle hash, anchor boundaries, and anchor records all match the report.
 
 ## Analysis provenance
 
@@ -115,12 +115,12 @@ Every report must include an `analysis.provenance` object. It identifies the sem
 {
   "analysis_id": "deterministic-id-from-reference-creator-and-method",
   "provenance": {
-    "analysis_version": "1.5",
+    "analysis_version": "1.6",
     "observation_method": "agent_multimodal_review",
     "model_id": "model-name-or-human-review",
     "prompt_version": "twinclip-prompt-1",
     "extraction_version": "asr-ocr-workflow-1",
-    "compiler_version": "twinclip-compiler-0.2",
+    "compiler_version": "twinclip-compiler-0.3",
     "scoring_config_hash": "...",
     "anchor_placement_hash": "...",
     "calibration_registry_sha256": null,
@@ -154,9 +154,10 @@ report without this execution identity is invalid.
   "creator_video": "/absolute/path/creator.mp4",
   "start_seconds": 32.1,
   "end_seconds": 38.5,
-  "visual": "Creator shows the problem area and the result",
-  "onscreen_text": "Visible subtitle or unknown",
-  "transcript": "Spoken content or unknown",
+    "visual": "Creator shows the problem area and the result",
+    "onscreen_text": "Visible subtitle or unknown",
+    "transcript": "Spoken content or unknown",
+    "source_channels": ["visual", "voiceover"],
   "observed_function": "Result proof",
   "coverage_scope": "The complete 32-50 second proof segment",
   "scope_complete": true,
@@ -168,7 +169,7 @@ report without this execution identity is invalid.
 }
 ```
 
-Every evidence record requires a real creator-video file, a finite non-empty time range inside that video's declared duration, all four observation strings, an independently recognizable `observed_function`, a scope description, an `evidence_scope`, and a list of linked Storyboard node IDs. Use `evidence_scope=segment` for a functional clip. Use `evidence_scope=full_video` only for a complete inspected video-wide absence record; it must cover every Storyboard node, span the declared creator-video duration, and cannot support a positive L, S, or relationship score. At least one observation channel must contain something other than `unknown`. Empty evidence cannot support a score or E.
+Every evidence record requires a real creator-video file, a finite non-empty time range inside that video's declared duration, all four observation strings, an explicit non-empty unique `source_channels` list from `visual`, `onscreen_text`, and `voiceover`, an independently recognizable `observed_function`, a scope description, an `evidence_scope`, and a list of linked Storyboard node IDs. Use `evidence_scope=segment` for a functional clip. Use `evidence_scope=full_video` only for a complete inspected video-wide absence record; it must cover every Storyboard node, span the declared creator-video duration, and cannot support a positive L, S, or relationship score. At least one observation channel must contain something other than `unknown`. Empty evidence cannot support a score or E.
 
 For Malaysian Malay or Manglish, keep the original ASR/OCR text in `transcript` and `onscreen_text`. The JSON schema has no free-form `evidence_description` field; a rendered evidence-description column may add a Chinese translation alongside the original, but must not replace or become the source of the original-language evidence.
 
@@ -222,7 +223,31 @@ Use integer scores from 0 to 3. A node with required elements must have a non-nu
 
 Use one unique `failure_id` per primary failure. Reusing the same evidence for different primary failure dimensions is rejected, so one mistake cannot be deducted twice.
 
-## Sales-logic relationships
+## Sales-logic checklist and relationship audit
+
+The numeric S logic component comes from one shared five-check assessment:
+
+```json
+{
+  "check_id": "claims_supported",
+  "state": "met",
+  "score": 1,
+  "evidence_ids": ["EV01"],
+  "reason": "The important claim has an observable support signal.",
+  "manual_review": false,
+  "evidence_clarity": "clear",
+  "absence_verified": false
+}
+```
+
+The allowed check IDs are `hook_leads_need`, `points_answer_problem`,
+`claims_supported`, `cta_has_reason`, and `coherent_if_reordered`. The compiler
+derives `score` as 1 only for a clear `met` state, otherwise 0. The overall
+`logic_assessment.score` is the five-check mean on a 0-3 scale and
+`checklist_mean` is the same mean on a 0-1 scale. It must not be the mean of
+relationship scores.
+
+Reference relationships remain a separate audit view:
 
 When the selected reference lane contains relationships, add exactly one
 assessment per relationship in that lane. For a multi-reference bundle, the
@@ -243,7 +268,15 @@ the primary lane:
 }
 ```
 
-`logic_assessment.relationship_ids` must cover every relationship, and its score must equal the unrounded mean of the relationship scores. This keeps S's logic component continuous while making it an aggregation of explicit claim, proof, problem, solution, reason-to-buy, and CTA links rather than an unsupported free-text impression.
+`logic_assessment.relationship_ids` must cover every relationship in the
+selected lane. Relationship scores are derived from `logic_state` for audit and
+failure diagnosis; they do not replace the five-check S logic component. A
+reference with no relationships still uses the five checks.
+
+The compiler also emits `analysis.S_components` with exactly five deterministic
+values: `logic_coherence`, `node_average`, `function`, `elements`, and
+`support`. These are an audit projection of the checklist and Storyboard-node
+states; they are recomputed by the validator and are not accepted from a task.
 
 ## Candidate matches
 
@@ -275,6 +308,11 @@ Allowed statuses are `manual_pending`, `confirmed`, and `rejected`. Candidate ID
   "confidence": {
     "E": 0.80,
     "M": 0.5,
+    "M_components": {
+      "anchor_boundary": 0.5,
+      "score_boundary": 1.0,
+      "lane_margin": 1.0
+    },
     "R": 0.20,
     "level": "medium"
   },
@@ -284,7 +322,7 @@ Allowed statuses are `manual_pending`, `confirmed`, and `rejected`. Candidate ID
 
 `T_center=70%L+30%S`. `formula_band` is always derived from the center. Without anchors, `band=formula_band`, `provisional=true`, and confidence is capped at medium. The interval must be exactly rounded center +/- 3, 6, or 10 for high, medium, or low confidence, clamped to 0-100.
 
-E, M, and R are recomputed from decision records. Low confidence and resolved manual-review decisions require `review_status=completed` for final delivery. Pending candidates and formula-anchor conflicts keep `review_status=pending` and block final delivery. Use `review_status=pending` only with `--allow-draft`.
+E and R are recomputed from decision records. M is the minimum of three code-derived clarity components: the locked anchor boundary (`anchor_boundary`), distance from `T_center` to the nearest score-band boundary (`score_boundary`), and the multi-reference lane margin (`lane_margin`). A score distance below 3 points is ambiguous, 3 to below 6 is intermediate, and 6 or more is clear. A lane margin below 0.05 is ambiguous, 0.05 to below 0.10 is intermediate, and 0.10 or more is clear; a single lane has no lane ambiguity. Without anchors, `anchor_boundary=0.5` and confidence remains capped at medium unless another component makes it low. `M` and `M_components` are recomputed from the same deterministic function, never accepted as model judgments. Low confidence and resolved manual-review decisions require `review_status=completed` for final delivery. Pending candidates and formula-anchor conflicts keep `review_status=pending` and block final delivery. Use `review_status=pending` only with `--allow-draft`.
 
 ## Anchor placement
 
@@ -330,7 +368,7 @@ The status is derived: unresolved applicability is `unknown`; failed with no suc
 
 ## Complete analysis fields
 
-The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `execution`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
+The `analysis` object must contain exactly one `creator_videos` path per report, `analysis_id`, `provenance`, `execution`, `media_durations`, `evidence_records`, all assessment lists, `scores`, `coverage`, `borrowing_summary`, `confidence`, `anchor_placement`, `review_status`, `adaptation_diagnostic`, `why_not_higher`, `why_not_lower`, and one to three `next_actions`. Deterministic compiler output also includes `lane_selection`; for a multi-reference report its margin must agree with `multi_reference.selection_margin`. `done_well`, `missing_or_misused`, and adaptation narrative are optional backend detail fields; the structured evidence and counts are the scoring source of truth.
 
 `coverage` must include these ratios:
 

@@ -37,6 +37,7 @@ from contracts import (  # noqa: E402
     sha256_bytes,
     sha256_file,
 )
+from compute_scores import LOGIC_CHECK_IDS, compute_learning, compute_storyboard, compute_total, select_lane  # noqa: E402
 from validation_support import (  # noqa: E402
     MAX_REPORT_BYTES,
     close,
@@ -104,10 +105,9 @@ def validate_multi_reference(
         if any(not isinstance(depth, int) or isinstance(depth, bool) or depth not in range(4) for depth in depths):
             errors.append(f"multi_reference lane {lane_id}.depths must contain only integers 0-3")
             continue
-        count = len(depths)
-        expected_l = 100 * sum(depths) / (3 * count)
-        expected_coverage = sum(depth >= 1 for depth in depths) / count
-        expected_effective = sum(depth >= 2 for depth in depths) / count
+        expected_l, learning_stats = compute_learning(depths)
+        expected_coverage = learning_stats["coverage_rate"]
+        expected_effective = learning_stats["effective_coverage_rate"]
         if not close(lane.get("L"), expected_l):
             errors.append(f"multi_reference lane {lane_id}.L must equal {expected_l:.2f}")
         if not close(lane.get("coverage_rate"), expected_coverage):
@@ -117,9 +117,18 @@ def validate_multi_reference(
                 f"multi_reference lane {lane_id}.effective_coverage_rate must equal {expected_effective:.4f}"
             )
         if is_number(lane.get("L")) and is_number(lane.get("S_storyboard")) and is_number(l_weight) and is_number(s_weight):
-            expected_t = float(lane["L"]) * float(l_weight) + float(lane["S_storyboard"]) * float(s_weight)
-            if not close(lane.get("T_center"), expected_t):
-                errors.append(f"multi_reference lane {lane_id}.T_center must equal {expected_t:.2f}")
+            try:
+                expected_t = compute_total(
+                    float(lane["L"]),
+                    float(lane["S_storyboard"]),
+                    l_weight=float(l_weight),
+                    s_weight=float(s_weight),
+                )
+            except ValueError as exc:
+                errors.append(f"multi_reference lane {lane_id}.T_center deterministic recomputation failed: {exc}")
+            else:
+                if not close(lane.get("T_center"), expected_t):
+                    errors.append(f"multi_reference lane {lane_id}.T_center must equal {expected_t:.2f}")
         if all(is_number(lane.get(key)) for key in ("L", "S_storyboard", "T_center", "effective_coverage_rate")):
             lane_values[lane_id] = {
                 "effective_coverage_rate": float(lane["effective_coverage_rate"]),
@@ -132,19 +141,17 @@ def validate_multi_reference(
         return
     if not lane_values:
         return
-    best_effective = max(item["effective_coverage_rate"] for item in lane_values.values())
-    effective_candidates = [
-        lane_id for lane_id in lane_ids
-        if lane_id in lane_values and math.isclose(
-            lane_values[lane_id]["effective_coverage_rate"], best_effective, abs_tol=1e-9
-        )
-    ]
-    best_t = max(lane_values[lane_id]["T_center"] for lane_id in effective_candidates)
+    selection = select_lane(lane_values)
+    expected_primary = selection["chosen_lane"]
     t_candidates = [
-        lane_id for lane_id in effective_candidates
-        if math.isclose(lane_values[lane_id]["T_center"], best_t, abs_tol=1e-9)
+        lane_id for lane_id in lane_ids
+        if math.isclose(
+            lane_values[lane_id]["effective_coverage_rate"],
+            lane_values[expected_primary]["effective_coverage_rate"],
+            abs_tol=1e-9,
+        )
+        and math.isclose(lane_values[lane_id]["T_center"], lane_values[expected_primary]["T_center"], abs_tol=1e-9)
     ]
-    expected_primary = t_candidates[0]
     if len(t_candidates) > 1:
         if value.get("selection_tie") is not True:
             errors.append("multi_reference exact ties must set selection_tie=true")
@@ -156,6 +163,21 @@ def validate_multi_reference(
         errors.append(
             "multi_reference.primary_reference_lane must follow effective coverage, then T, then declared lane order"
         )
+    selection_margin = value.get("selection_margin")
+    if not isinstance(selection_margin, dict):
+        errors.append("multi_reference.selection_margin must be an object")
+    else:
+        if not is_number(selection_margin.get("threshold")) or not math.isclose(
+            float(selection_margin.get("threshold")), 0.05, abs_tol=1e-9
+        ):
+            errors.append("multi_reference.selection_margin.threshold must be 0.05")
+        for key, expected in (
+            ("value", selection["margin"]),
+            ("basis", selection["margin_basis"]),
+            ("needs_manual_review", selection["needs_manual_review"]),
+        ):
+            if selection_margin.get(key) != expected:
+                errors.append(f"multi_reference.selection_margin.{key} does not match deterministic lane selection")
     primary_lane = lanes.get(primary)
     if isinstance(primary_lane, dict):
         for score_key, lane_key in (("L", "L"), ("S", "S_storyboard"), ("T_center", "T_center")):
@@ -332,10 +354,8 @@ def validate_report(
     s_weight_values = [s_weights.get(key) for key in ("logic", "function", "elements", "support")]
     s_weights_valid = validate_weight_group(s_weight_values, "S", errors)
     has_relationships = bool(relationship_ids)
-    if has_relationships and is_number(s_weights.get("logic")) and float(s_weights.get("logic")) <= 0:
-        errors.append("S logic weight must be positive when reference relationships exist")
-    if not has_relationships and is_number(s_weights.get("logic")) and not math.isclose(float(s_weights.get("logic")), 0.0, abs_tol=1e-6):
-        errors.append("S logic weight must be 0 when no reference relationships exist")
+    if is_number(s_weights.get("logic")) and float(s_weights.get("logic")) <= 0:
+        errors.append("S logic checklist weight must be positive")
     if any_required_elements and is_number(s_weights.get("elements")) and float(s_weights.get("elements")) <= 0:
         errors.append("S elements weight must be positive when any node has required elements")
     if not any_required_elements and is_number(s_weights.get("elements")) and not math.isclose(float(s_weights.get("elements")), 0.0, abs_tol=1e-6):
@@ -489,6 +509,16 @@ def validate_report(
         for key in ("visual", "onscreen_text", "transcript", "observed_function", "coverage_scope"):
             if not non_empty_string(record.get(key)):
                 errors.append(f"evidence {evidence_id}.{key} must be a non-empty string")
+        channels = record.get("source_channels")
+        if (
+            not isinstance(channels, list)
+            or not channels
+            or len(channels) != len(set(channels))
+            or any(channel not in {"visual", "onscreen_text", "voiceover"} for channel in channels)
+        ):
+            errors.append(
+                f"evidence {evidence_id}.source_channels must contain unique channels from visual/onscreen_text/voiceover"
+            )
         if not non_empty_string(record.get("observed_function")) or record.get("observed_function") == "unknown":
             errors.append(f"evidence {evidence_id}.observed_function must be independently recognizable")
         validate_range([record.get("start_seconds"), record.get("end_seconds")], f"evidence {evidence_id}.time_range", errors)
@@ -776,17 +806,50 @@ def validate_report(
         errors.append("logic_assessment.score must be a finite number from 0 to 3")
         logic_score = 0
     logic_relationship_ids = validate_id_list(logic.get("relationship_ids", []), "logic_assessment.relationship_ids", relationship_id_set, errors)
-    logic_eligible_ids = validate_decision(logic, "logic assessment", logic_score > 0, logic_score == 0, point_id_set)
-    logic_eligible_records = [evidence[evidence_id] for evidence_id in logic_eligible_ids]
-    if logic_score > 0:
-        if any(record.get("evidence_scope") == "full_video" for record in logic_eligible_records):
-            errors.append("logic assessment cannot use full_video evidence for a positive score")
-        if not any(record.get("evidence_scope") == "segment" for record in logic_eligible_records):
-            errors.append("logic assessment needs eligible segment evidence for a positive score")
-    elif logic.get("absence_verified") is True and not any(
-        record.get("evidence_scope") == "full_video" for record in logic_eligible_records
-    ):
-        errors.append("logic assessment requires full_video evidence to verify absence")
+    checklist = require_list(logic, "checklist", "analysis.logic_assessment", errors)
+    checklist_by_id: dict[str, dict[str, Any]] = {}
+    checklist_scores: dict[str, int] = {}
+    for index, item in enumerate(checklist):
+        if not isinstance(item, dict):
+            errors.append(f"logic_assessment.checklist[{index}] must be an object")
+            continue
+        check_id = item.get("check_id")
+        if check_id not in LOGIC_CHECK_IDS:
+            errors.append(f"logic_assessment.checklist[{index}].check_id is invalid")
+            continue
+        if check_id in checklist_by_id:
+            errors.append(f"duplicate logic checklist item: {check_id}")
+            continue
+        state = item.get("state")
+        if state not in {"met", "not_met", "unclear"}:
+            errors.append(f"logic checklist {check_id}.state is invalid")
+        score = item.get("score")
+        expected_score = 1 if state == "met" and item.get("evidence_clarity") == "clear" else 0
+        if not isinstance(score, int) or isinstance(score, bool) or score not in {0, 1}:
+            errors.append(f"logic checklist {check_id}.score must be 0 or 1")
+            score = 0
+        elif score != expected_score:
+            errors.append(f"logic checklist {check_id}.score must be derived from its state")
+        checklist_by_id[check_id] = item
+        checklist_scores[check_id] = score
+        check_eligible_ids = validate_decision(
+            item,
+            f"logic checklist {check_id}",
+            state == "met",
+            state == "not_met",
+            None,
+        )
+        check_records = [evidence[evidence_id] for evidence_id in check_eligible_ids]
+        if state == "met" and any(record.get("evidence_scope") == "full_video" for record in check_records):
+            errors.append(f"logic checklist {check_id} cannot use full_video evidence for a positive check")
+        if state == "unclear" and item.get("manual_review") is not True:
+            errors.append(f"logic checklist {check_id} must require manual review when unclear")
+    if set(checklist_by_id) != set(LOGIC_CHECK_IDS):
+        errors.append("logic_assessment.checklist must cover all five logic checks exactly once")
+    if checklist_scores:
+        expected_logic_score = sum(checklist_scores.get(check_id, 0) for check_id in LOGIC_CHECK_IDS) / len(LOGIC_CHECK_IDS) * 3
+        if not close(logic_score, expected_logic_score):
+            errors.append(f"logic_assessment.score must equal the five-check mean: {expected_logic_score:.4f}")
 
     relationship_assessments = require_list(analysis, "relationship_assessments", "analysis", errors)
     relationship_assessment_by_id: dict[str, dict[str, Any]] = {}
@@ -846,16 +909,8 @@ def validate_report(
             errors.append(f"relationship {relationship_id} requires full_video evidence to verify absence")
     if set(relationship_assessment_by_id) != relationship_id_set:
         errors.append("relationship assessments must cover every reference relationship exactly once")
-    if relationship_scores:
-        if set(logic_relationship_ids) != relationship_id_set:
-            errors.append("logic_assessment.relationship_ids must cover every relationship")
-        relationship_expected = sum(relationship_scores) / len(relationship_scores)
-        if not close(logic_score, relationship_expected, tolerance=1e-6):
-            errors.append(f"logic_assessment.score must equal the relationship mean: {relationship_expected:.4f}")
-    elif logic_relationship_ids:
-        errors.append("logic_assessment.relationship_ids must be empty when no relationships exist")
-    elif not close(logic_score, 0, tolerance=1e-6):
-        errors.append("logic_assessment.score must be 0 when no relationships exist")
+    if set(logic_relationship_ids) != relationship_id_set:
+        errors.append("logic_assessment.relationship_ids must cover every relationship")
 
     for evidence_id, dimensions in failure_evidence_dimensions.items():
         if len(dimensions) > 1:
@@ -877,7 +932,7 @@ def validate_report(
     borrowing = require_mapping(analysis, "borrowing_summary", "analysis", errors)
     score_values_available = len(depths) == len(point_ids) and len(function_scores) == len(node_ids) and len(support_scores) == len(node_ids)
     if score_values_available:
-        l_expected = 100 * sum(depths) / (3 * len(depths))
+        l_expected, learning_stats = compute_learning(depths)
         metrics["L"] = l_expected
         if not close(scores.get("L"), l_expected):
             errors.append(f"scores.L must equal {l_expected:.2f}")
@@ -885,35 +940,59 @@ def validate_report(
         for key, expected in counts.items():
             if borrowing.get(key) != expected:
                 errors.append(f"borrowing_summary.{key} must equal {expected}")
-        adopted = sum(depth >= 1 for depth in depths)
-        coverage_expected = {
-            "coverage_rate": adopted / len(depths),
-            "effective_coverage_rate": sum(depth >= 2 for depth in depths) / len(depths),
-            "innovation_rate": depths.count(3) / len(depths),
-            "surface_share": depths.count(1) / len(depths),
-            "surface_error_rate": depths.count(1) / adopted if adopted else 0.0,
-        }
+        coverage_expected = learning_stats
         for key, expected in coverage_expected.items():
             if not close(coverage.get(key), expected):
                 errors.append(f"coverage.{key} must equal {expected:.4f}")
 
-        elements_expected = sum(element_scores) / len(element_scores) / 3 * 100 if element_scores else 0.0
-        dimension_scores = {
-            "logic": float(logic_score) / 3 * 100,
-            "function": sum(function_scores) / len(function_scores) / 3 * 100,
-            "elements": elements_expected,
-            "support": sum(support_scores) / len(support_scores) / 3 * 100,
-        }
-        if s_weights_valid:
-            s_expected = sum(dimension_scores[key] * float(s_weights[key]) for key in ("logic", "function", "elements", "support"))
-            metrics["S"] = s_expected
-            if not close(scores.get("S"), s_expected):
-                errors.append(f"scores.S must equal {s_expected:.2f}")
-            if t_weights_valid and is_number(l_weight) and is_number(s_weight):
-                t_expected = l_expected * float(l_weight) + s_expected * float(s_weight)
-                metrics["T"] = t_expected
-                if not close(scores.get("T_center"), t_expected):
-                    errors.append(f"scores.T_center must equal {t_expected:.2f}")
+        if s_weights_valid and set(checklist_scores) == set(LOGIC_CHECK_IDS):
+            try:
+                s_expected, s_components_expected = compute_storyboard(
+                    [
+                        {
+                            "function_score": assessment.get("function_score"),
+                            "element_score": assessment.get("element_score"),
+                            "support_score": assessment.get("support_score"),
+                        }
+                        for assessment in node_assessment_by_id.values()
+                    ],
+                    checklist_scores,
+                    s_weights=s_weights,
+                )
+            except ValueError as exc:
+                errors.append(f"S deterministic recomputation failed: {exc}")
+            else:
+                metrics["S"] = s_expected
+                if not close(scores.get("S"), s_expected):
+                    errors.append(f"scores.S must equal {s_expected:.2f}")
+                reported_components = require_mapping(analysis, "S_components", "analysis", errors)
+                expected_component_keys = {"logic_coherence", "node_average", "function", "elements", "support"}
+                if set(reported_components) != expected_component_keys:
+                    errors.append("analysis.S_components must contain exactly the deterministic S dimensions")
+                for key, expected in s_components_expected.items():
+                    if not close(reported_components.get(key), expected):
+                        errors.append(f"analysis.S_components.{key} must equal {expected:.2f}")
+                if t_weights_valid and is_number(l_weight) and is_number(s_weight):
+                    try:
+                        t_expected = compute_total(
+                            l_expected,
+                            s_expected,
+                            l_weight=float(l_weight),
+                            s_weight=float(s_weight),
+                        )
+                    except ValueError as exc:
+                        errors.append(f"T deterministic recomputation failed: {exc}")
+                    else:
+                        metrics["T"] = t_expected
+                        if not close(scores.get("T_center"), t_expected):
+                            errors.append(f"scores.T_center must equal {t_expected:.2f}")
+                multi_reference = data.get("multi_reference")
+                if isinstance(multi_reference, dict) and isinstance(multi_reference.get("lane_comparison"), dict):
+                    for lane_id, lane in multi_reference["lane_comparison"].items():
+                        if isinstance(lane, dict) and not close(lane.get("S_storyboard"), s_expected):
+                            errors.append(
+                                f"multi_reference lane {lane_id}.S_storyboard must equal shared S {s_expected:.2f}"
+                            )
 
     t_center = scores.get("T_center")
     if not is_number(t_center) or not 0 <= float(t_center) <= 100:
@@ -958,6 +1037,24 @@ def validate_report(
         errors=errors,
     )
 
+    lane_selection_value = (
+        require_mapping(analysis, "lane_selection", "analysis", errors)
+        if "lane_selection" in analysis else {}
+    )
+    multi_selection_margin = (
+        data.get("multi_reference", {}).get("selection_margin")
+        if isinstance(data.get("multi_reference"), dict)
+        else None
+    )
+    if isinstance(multi_selection_margin, dict):
+        if is_number(lane_selection_value.get("margin")) and is_number(multi_selection_margin.get("value")) and not close(
+            lane_selection_value.get("margin"), multi_selection_margin.get("value")
+        ):
+            errors.append("analysis.lane_selection.margin must match multi_reference.selection_margin.value")
+        lane_selection_value = dict(lane_selection_value)
+        lane_selection_value["margin"] = multi_selection_margin.get("value")
+        lane_selection_value["needs_manual_review"] = multi_selection_margin.get("needs_manual_review", False)
+    lane_margin = lane_selection_value.get("margin") if is_number(lane_selection_value.get("margin")) else None
     validate_confidence_and_adaptation(
         analysis=analysis,
         decisions=decisions,
@@ -970,6 +1067,8 @@ def validate_report(
         t_center=t_center,
         t_range=t_range,
         teaching_assessments=teaching_assessments,
+        lane_selection_review=bool(lane_selection_value.get("needs_manual_review", False)),
+        lane_selection_margin=lane_margin,
         allow_draft=allow_draft,
         errors=errors,
         warnings=warnings,

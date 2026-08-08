@@ -35,6 +35,15 @@ keep the anchor/QA state unresolved and disclose that limitation.
 
 Run the default scoring formula on the initial anchors. Treat five anchors as a veto test, not a training set. A candidate placement is valid only when its T center is between the selected lower and upper anchor centers, its band is between their bands, and its displayed interval overlaps its human-resolved band.
 
+The S prior is `35%` five-check logic plus `65%` Storyboard node score. The node
+score is `46%` function, `38%` required elements, and `16%` presentation support.
+Before changing these weights, inspect the repeated-run distributions for the
+corresponding atomic judgments. The first 80-run audit showed drift in all four
+old S proxies, so changing only a final S weight would hide the source rather
+than repair it. Calibrate the five logic checks and unstable node boundaries
+with contrastive examples, then use held-out videos to test distribution width
+and band/lane switch rates.
+
 - Keep the prior weights when anchor ordering is correct.
 - When a clearly different band is reversed, identify the responsible dimension from evidence.
 - Change one relevant weight at a time in increments of 0.10.
